@@ -1,0 +1,113 @@
+<div class="row" ng-controller="LangController">
+    <div id="game-start-wrapper" class="well">
+        <div class="quiz-area" ng-show="inProgress">
+            <div ng-show="!quizOver">
+
+                <!-- Show question and question number -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 id="question">
+                            <div>שאלה מספר: {{ qnumber }}</div>
+                            <br> {{ question }}
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Show answer options -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list-group" id="options">
+                            <li class="list-group-item answer-option col-sm-12 col-md-6"
+                                ng-repeat="option in options">
+                                <label class="answer-option-label">
+                                    <input type="radio" name="answer" ng-model="checked" value="{{option.id}}">
+                                    {{ $index+1 }}. {{option.body}}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Submit answer & next question button -->
+                <div class="row quiz-button-wrapper">
+                    <div class="col-md-12">
+                        <button class="game-btn center-block" ng-click="checkAnswer()" ng-show="answerMode">המשך
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="" ng-show="!inProgress">
+            <button class="game-btn center-block" id="startQuiz" ng-click="start()">{{ 'BTN_START_GAME' | translate }}
+            </button>
+        </div>
+
+    </div>
+
+
+    <footer>
+        <div class="wrapper">
+            <div class="row col-md-12">
+                <span class="logo col-xs-6"> © 2014-2016 Midburn Abracadabra</span>
+                <ul class="links col-xs-6">
+                    <!--<a href="" target="_blank"><li> </li></a>-->
+                    <a href="http://midburn.org/en/" target="_blank">
+                        <li>The Website</li>
+                    </a>
+                    <a href="http://midburn.org/en-event/" target="_blank">
+                        <li>The Event</li>
+                    </a>
+                    <a href="http://midburn.org/en-ten-principles/" target="_blank">
+                        <li>The Ten Principles</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<div id="quiz-is-over" class="fade-screen">
+    <div class="container">
+        <div class="clearfix">
+            <div class="jumbotron">
+
+                <h1>Good Job!</h1>
+
+                <p>
+                <h3>You passed the quiz, and may proceed to ticket sale!</h3>
+                </p>
+
+                <p><a class="btn game-btn" href="#" role="button">Click here</a></p>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div id="quiz-alert" class="fade-screen">
+    <div class="container">
+        <div class="clearfix">
+            <div class="jumbotron">
+
+                <h1>Choose an answer!</h1>
+
+                <p><a class="btn game-btn" href="#" role="button" onclick="$('#quiz-alert').toggle();">Okey..</a></p>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    // Hide quiz is over
+    $("#quiz-is-over").toggle();
+
+    // Hide quiz alert
+    $('#quiz-alert').toggle();
+</script>
