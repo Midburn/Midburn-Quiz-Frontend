@@ -22,6 +22,12 @@ app.constant('CON', {
     // API Url
     API_URL: "//burner-games.herokuapp.com/api/v1/",
 
+    // Game Token
+    gameToken: "",
+
+    // User Id
+    userId: 0,
+
     // The correct answers client needs to reach to pass our quizzy
     correctAnswers: 10
 });
@@ -39,24 +45,25 @@ var gameQuestions = {
 // Set-up new game
 app.controller('quizInit', function ($scope, $http, CON) {
 
+
     // Get user id from url param
-    userId = getUrlParams('userId');
+    CON.userId = getUrlParams('userId');
 
     // New game request
-    if (userId !== undefined)
+    if (CON.userId !== undefined)
         $scope.Init = function () {
             var new_gameRequest = {
                 method: 'POST',
                 url: CON.API_URL + '/games/new/',
                 contentType: 'application/json',
                 dataType: 'json',
-                data: '{"user_id": ' + userId + '}'
+                data: '{"user_id": ' + CON.userId + '}'
             }
 
             $http(new_gameRequest).then(function (data) {
 
                 // If Success, here is the received token.
-                gameToken = data.data.token;
+                CON.gameToken = data.data.token;
 
             }, function () {
                 // New game init failure
@@ -103,14 +110,14 @@ app.directive('quiz', function (quizFactory, $http, CON) {
                 // Get question request
                 var get_questionsRequest = {
                     method: 'POST',
-                    url: CON.API_URL + "/games/" + gameToken + '/new_question/',
+                    url: CON.API_URL + "/games/" + CON.gameToken + '/new_question/',
                     contentType: 'application/json',
                     dataType: 'json',
                     data: '{}'
                 }
 
                 $http(get_questionsRequest).then(function (data) {
-                    console.log(data.data);
+                    //console.log(data.data);
                     gameQuestions.id = data.data.id;
                     gameQuestions.question = data.data.body;
                     gameQuestions.options = data.data.answers;
@@ -149,17 +156,20 @@ app.directive('quiz', function (quizFactory, $http, CON) {
             // Quiz check answer
             scope.checkAnswer = function () {
 
-                if (!$('input[name=answer]:checked').length) {
-                    $('#quiz-alert').toggle();
+                var AnswerButton = $('input[name=answer]:checked');
+
+                // Empty answer
+                if (!AnswerButton.length) {
+                    $('#quiz-no-answer-alert').toggle();
                     return;
                 }
 
-                var UserAnswer = $('input[name=answer]:checked').val();
+                var UserAnswer = AnswerButton.val();
 
                 // POST user answer to API
                 var post_checkAnswer = {
                     method: 'POST',
-                    url: CON.API_URL + "/games/" + gameToken + '/answer',
+                    url: CON.API_URL + "/games/" + CON.gameToken + '/answer',
                     contentType: 'application/json',
                     dataType: 'json',
                     data: '{"question_id": "' + gameQuestions.id + '", "answer_ids":["' + UserAnswer + '"]}'
@@ -167,16 +177,19 @@ app.directive('quiz', function (quizFactory, $http, CON) {
 
                 $http(post_checkAnswer).then(function (data) {
                     correctAnswers = data.data.game.answered_correctly;
-                    console.log("Correct Answers: " + correctAnswers);
+                    if(data.data.response == "correct" && correctAnswers < CON.correctAnswers-1)
+                        $("#quiz-correct-answer-alert").fadeIn();
                 });
 
                 // Call for the next question
-                if (correctAnswers < CON.correctAnswers)
+                if (correctAnswers < CON.correctAnswers-1)
+                    // A Little more effort alert
+                    // if(correctAnswers > 8)
                     this.nextQuestion();
                 else {
 
                     // Quiz is over - pass token to ticket system
-                    $("#quiz-is-over").toggle();
+                    $("#quiz-is-over-alert").toggle();
                 }
 
                 scope.answerMode = false;
@@ -195,7 +208,7 @@ app.factory('quizFactory', function ($http, CON) {
             // Get question request
             var get_questionsRequest = {
                 method: 'POST',
-                url: CON.API_URL + "/games/" + gameToken + '/new_question/',
+                url: CON.API_URL + "/games/" + CON.gameToken + '/new_question/',
                 contentType: 'application/json',
                 dataType: 'json',
                 data: '{}'
@@ -213,7 +226,7 @@ app.factory('quizFactory', function ($http, CON) {
 
             }, function () {
                 // Get questions failure
-                console.log("Error: can't get questions from api");
+                //console.log("Error: can't get questions from api");
             });
 
             return gameQuestions;
@@ -258,7 +271,7 @@ app.config(function ($translateProvider) {
     };
     var dic_HE = {
         TITLE: 'ברוכים הבאות לשאלון מידברן',
-        DESC: 'על מנת להיות זכאי\ת לכרטיס למידברן 2016, ראשית את\ה חייב\ת להראות שאכפת לך מהתרבות שלנו, על ידי מענה של 10 שאלות בצורה נכונה.',
+        DESC: 'על מנת להיות זכאי\\ת לכרטיס למידברן 2016, ראשית את\\ה חייב\\ת להראות שאכפת לך מהתרבות שלנו, על ידי מענה של 10 שאלות בצורה נכונה.',
         INFO: 'רגע, מה זה מידברן?',
         BTN_START_GAME: 'התחלה במשחק'
     };
@@ -270,11 +283,11 @@ app.config(function ($translateProvider) {
     $translateProvider.translations('he', dic_HE);
 
     // Default language
-    $translateProvider.preferredLanguage('en');
+    $translateProvider.preferredLanguage('he');
 });
 
 
-// Controller
+// Language Support Controller
 app.controller('LangController', function ($scope, $translate) {
 
     // Lang switch method

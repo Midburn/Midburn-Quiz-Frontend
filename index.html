@@ -10,6 +10,7 @@
 
     <!-- STYLESHEETS -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="statics/content/style.css"/>
 
     <!-- SCRIPTS -->
@@ -22,7 +23,7 @@
 
 </head>
 
-<body>
+<body class="lanHE">
 
 <div class="midburn-logo"></div>
 
@@ -31,7 +32,8 @@
 
         <div id="intro" ng-controller="LangController">
 
-            <div class="btn-group translate-buttons">
+            <!-- Language support unavailable yet (You might help us fixing it :) ) -->
+            <div class="btn-group translate-buttons hidden">
                 <button class="btn-lang btn-en" ng-click="changeLanguage('en')">EN</button>
                 <button class="btn-lang btn-he" ng-click="changeLanguage('he')">HE</button>
             </div>
@@ -53,6 +55,6 @@
     <quiz/>
 
 </div>
-
+<script></script>
 </body>
 </html>

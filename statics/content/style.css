@@ -38,7 +38,7 @@
 }
 
 * {
-    font-family: 'Alef', 'Lato', sans-serif !important;
+    font-family: 'Alef', 'Lato', sans-serif;
 }
 
 /* END FONTS */
@@ -79,6 +79,11 @@ body {
     opacity: 0.9;
     margin: 60px auto 29px;
     background: url(logo.png) no-repeat center;
+}
+
+.link-special
+{
+    color: #c9302c;
 }
 
 /* Intro */
