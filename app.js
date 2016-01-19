@@ -10,12 +10,6 @@
 var app = angular.module('quizApp', ['ngResource', 'pascalprecht.translate']);
 
 //
-// Variables
-var gameToken = "";
-var userId = 0;
-var sessionToken = "";
-
-//
 // Constants
 app.constant('CON', {
 
