@@ -259,7 +259,7 @@ app.config(function ($translateProvider) {
 
     var dic_EN = {
         TITLE: 'Welcome to the Midburn quiz',
-        DESC: 'In order to be eligible for a ticket for Midburn 2016, you must first show that you care about our culture, by answering 10 questions correctly.',
+        DESC: 'In order to be eligible for a ticket for Midburn 2016, you must first show that you understand our culture, by answering 10 questions correctly.',
         INFO: 'Wait, what’s Midburn?',
         BTN_START_GAME: 'Start Game'
     };
