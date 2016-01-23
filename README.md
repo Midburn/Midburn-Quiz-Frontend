@@ -1,5 +1,7 @@
 # QuizBurn - Midburn 2016 Quiz Game
 
+See also [the backend repo](https://github.com/Midburn/burner-games/).
+
 >Version: 1.0
 
 >Description
