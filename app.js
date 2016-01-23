@@ -258,14 +258,14 @@ var getUrlParams = function getUrlParameter(sParam) {
 app.config(function ($translateProvider) {
 
     var dic_EN = {
-        TITLE: 'Welcome to the Midburn quiz',
-        DESC: 'In order to be eligible for a ticket for Midburn 2016, you must first show that you care about our culture, by answering 10 questions correctly.',
+        TITLE: 'Welcome to the Burner Games',
+        DESC: 'In order to be eligible for a ticket for Midburn 2016, you must first show that you understand our culture, by answering 10 questions correctly.',
         INFO: 'Wait, what’s Midburn?',
         BTN_START_GAME: 'Start Game'
     };
     var dic_HE = {
-        TITLE: 'ברוכים הבאות לשאלון מידברן',
-        DESC: 'על מנת להיות זכאי\\ת לכרטיס למידברן 2016, ראשית את\\ה חייב\\ת להראות שאכפת לך מהתרבות שלנו, על ידי מענה של 10 שאלות בצורה נכונה.',
+        TITLE: 'ברוכים הבאות למשחקי הברן',
+        DESC: 'על מנת להיות זכאי\\ת לכרטיס למידברן 2016, ראשית את\\ה חייב\\ת להראות שאתה מכיר את התרבות שלנו, על ידי מענה של 10 שאלות בצורה נכונה.',
         INFO: 'רגע, מה זה מידברן?',
         BTN_START_GAME: 'התחלה במשחק'
     };
