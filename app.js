@@ -32,7 +32,8 @@ var gameQuestions = {
     id: null,
     question: null,
     options: null,
-    answer: null
+    answer: null,
+    subject: null
 }
 
 //
@@ -66,7 +67,9 @@ app.controller('quizInit', function ($scope, $http, CON) {
 
         }
     else {
-        $(function(){$("#game-start-wrapper").hide();});
+        $(function () {
+            $("#game-start-wrapper").hide();
+        });
         alert("User id is missing!")
     }
     ;
@@ -77,6 +80,7 @@ app.controller('quizInit', function ($scope, $http, CON) {
 //
 app.directive('quiz', function (quizFactory, $http, CON) {
     var qnumber;
+    var qsubject;
     var correctAnswers;
 
     return {
@@ -111,10 +115,11 @@ app.directive('quiz', function (quizFactory, $http, CON) {
                 }
 
                 $http(get_questionsRequest).then(function (data) {
-                    //console.log(data.data);
+                    console.log(data.data);
                     gameQuestions.id = data.data.id;
                     gameQuestions.question = data.data.body;
                     gameQuestions.options = data.data.answers;
+                    gameQuestions.subject = data.data.category;
                     gameQuestions.answer = 0;
 
                     if (gameQuestions) {
@@ -122,6 +127,7 @@ app.directive('quiz', function (quizFactory, $http, CON) {
                         scope.question = gameQuestions.question;
                         scope.options = gameQuestions.options;
                         scope.answer = gameQuestions.answer;
+                        scope.subject = gameQuestions.subject;
                         scope.answerMode = true;
                     } else {
                         scope.quizOver = true;
@@ -139,6 +145,11 @@ app.directive('quiz', function (quizFactory, $http, CON) {
                 qnumber++;
                 scope.id++;
                 scope.getQuestion();
+            };
+
+            // Quiz cut two wrong answers
+            scope.cutTwoAnswers = function () {
+                console.log("Cutting edge");
             };
 
             // Quiz reset
@@ -171,17 +182,16 @@ app.directive('quiz', function (quizFactory, $http, CON) {
 
                 $http(post_checkAnswer).then(function (data) {
                     correctAnswers = data.data.game.answered_correctly;
-                    if(data.data.response == "correct" && correctAnswers < CON.correctAnswers-1)
+                    if (data.data.response == "correct" && correctAnswers < CON.correctAnswers - 1)
                         $("#quiz-correct-answer-alert").fadeIn();
                 });
 
                 // Call for the next question
-                if (correctAnswers < CON.correctAnswers-1)
-                    // A Little more effort alert
-                    // if(correctAnswers > 8)
+                if (correctAnswers < CON.correctAnswers - 1)
+                // A Little more effort alert
+                // if(correctAnswers > 8)
                     this.nextQuestion();
                 else {
-
                     // Quiz is over - pass token to ticket system
                     $("#quiz-is-over-alert").toggle();
                 }
@@ -302,4 +312,21 @@ app.controller('LangController', function ($scope, $translate) {
             }
         }
     };
+});
+
+app.controller('TemplateController', function ($scope) {
+
+    // Current Year
+    $scope.CurrentYear = new Date().getFullYear();
+
+    // Theme Name
+    $scope.ThemeName = "Abracadabra";
+
+    // Footer links => {Text: "text", Href: "href", Class: "class"}
+    $scope.Links = [
+        {Text: "Help us make it better", Href: "//github.com/Midburn/Midburn-Quiz-Frontend", Class: "link-special"},
+        {Text: "Midburn Website", Href: "//midburn.org/en/", Class: ""},
+        {Text: "About The Event", Href: "//midburn.org/en-event/", Class: ""},
+        {Text: "The Ten Principles", Href: "//midburn.org/en-ten-principles/", Class: ""}
+    ];
 });

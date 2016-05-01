@@ -1,5 +1,11 @@
 /* Midburn 2016 Abracadabra Quiz app - )'( let it burn! */
 
+/* RESETS */
+.row {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
 /* FONTS */
 
 /* Google Lato - latin-ext */
@@ -81,8 +87,7 @@ body {
     background: url(logo.png) no-repeat center;
 }
 
-.link-special
-{
+.link-special {
     color: #c9302c;
 }
 
@@ -106,13 +111,30 @@ body {
 }
 
 .quiz-button-wrapper {
-    margin: 20px 0 0;
+    margin: 40px auto;
+}
+
+.card {
+    max-width: 650px;
+    margin: 20px auto;
+}
+
+.question-number {
+    display: inline-block;
+    background: #3799EC;
+    color: #FFF;
+    height: 40px;
+    width: 40px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    line-height: 38px;
 }
 
 /* Answers */
 .answer-option {
-    min-height: 50px;
-    max-height: 120px;
+    min-height: 120px;
+    max-height: 100%;
     border-radius: 5px;
     font-size: 1.5rem;
     transition: all 0.2s;
@@ -127,9 +149,13 @@ body {
     width: 100%;
     height: 100%;
     cursor: pointer;
-    padding: 15px 0;
+    padding: 15px 8px;
     border: 3px solid transparent;
     margin: 0;
+}
+
+.answer-option-label input {
+    display: none;
 }
 
 .answer-option:hover {
@@ -151,19 +177,23 @@ body {
 }
 
 .game-btn {
+    display: inline-block;
     padding: 1rem 3rem;
-    color: white;
-    font-size: 1.5rem;
-    background: #3799EC;
-    border: 0;
+    color: #3799EC;
+    font-size: 1.7rem;
+    font-weight: 600;
+    background: #fff;
+    border: 1px solid #3799EC;
     outline: none;
     cursor: pointer;
-    border-radius: 50px;
+    border-radius: 5px;
     text-align: center;
+    margin: 1rem;
 }
 
 .game-btn:hover {
-    background: #66b1f0;
+    background: #3799EC;
+    color: #FFF;
 }
 
 .btn-lang {
@@ -199,33 +229,25 @@ footer {
     color: #fff;
 }
 
-footer .wrapper {
-    width: 100%;
-    height: 25px;
-    border-top: 1px solid;
-    padding: 10px 0;
-}
-
-footer .wrapper .links {
+footer .links {
     text-align: right;
     list-style-type: none;
     direction: ltr !important;
 }
 
-footer .wrapper .links li {
+footer .links li {
     position: relative;
     display: inline-block;
     padding: 0 8px;
 }
 
-footer .wrapper .links li:after {
+footer .links li:after {
     content: '';
     position: absolute;
     width: 2px;
     height: 100%;
     top: 0;
     right: 0;
-
 }
 
 footer .logo {
