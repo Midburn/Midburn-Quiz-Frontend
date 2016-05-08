@@ -40,10 +40,10 @@
         <!-- Helper buttons -->
         <div class="row quiz-button-wrapper">
             <div class="input-group-btn">
-                <button class="game-btn center-block" ng-click="getHint()" ng-show="answerMode">
+                <button id="btnHint" class="game-btn center-block" ng-click="getHint()" ng-show="answerMode">
                     חתוך 2 תשובות
                 </button>
-                <button class="game-btn center-block" ng-click="nextQuestion()" ng-show="answerMode">
+                <button id="btnSkip" class="game-btn center-block" ng-click="nextQuestion()" ng-show="answerMode">
                     דלג
                 </button>
             </div>

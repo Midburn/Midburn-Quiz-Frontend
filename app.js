@@ -19,9 +19,6 @@ app.constant('CON', {
     // API Url
     API_URL: "//burner-games-staging.herokuapp.com/api/v1",
 
-    // Game Token
-    gameToken: "",
-
     // User Id
     userId: 0,
 
@@ -37,6 +34,12 @@ var gameQuestions = {
     options: null,
     answer: null,
     subject: null
+}
+
+var game = {
+    Token: null,
+    Categories: null,
+    HintBtn: $("button#btnHint")
 }
 
 //
@@ -60,12 +63,16 @@ app.controller('quizInit', function ($scope, $http, CON) {
 
             $http(new_gameRequest).then(function (data) {
 
-                // If Success, here is the received token.
-                CON.gameToken = data.data.token;
+                // Game token.
+                game.Token = data.data.token;
+
+                // Game categories
+                game.Categories = data.data.categories;
+                game.Categories = '{"category":"communal_effort"}';
 
             }, function () {
                 // New game init failure
-                console.log("Error: failed to init new game");
+                console.error("Failed to init new game");
             });
 
         }
@@ -75,7 +82,7 @@ app.controller('quizInit', function ($scope, $http, CON) {
         });
         alert("User id is missing!")
     }
-    ;
+
 });
 
 //
@@ -110,23 +117,23 @@ app.directive('quiz', function (quizFactory, $http, CON) {
 
                 // Get question request
                 var get_questionsRequest = {
-                    method: 'GET',
-                    url: CON.API_URL + "/games/" + CON.gameToken + '/questions/',
+                    method: 'POST',
+                    url: CON.API_URL + "/games/" + game.Token + '/new_question/',
                     contentType: 'application/json',
                     dataType: 'json',
-                    data: '{}'
+                    data: game.Categories
                 }
 
                 $http(get_questionsRequest).then(function (data) {
 
                     /* Data returned from API:
-                    *  Qustion id, text, answers, category
-                    * */
+                     *  Qustion id, text, answers, category
+                     * */
                     console.log(data.data);
                     gameQuestions.id = data.data.id;
                     gameQuestions.question = data.data.body;
                     gameQuestions.options = data.data.answers;
-                    gameQuestions.subject = data.data.category?data.data.category:"כללי";
+                    gameQuestions.subject = data.data.category ? data.data.category.name : "כללי";
                     gameQuestions.answer = 0;
 
                     if (gameQuestions) {
@@ -158,22 +165,29 @@ app.directive('quiz', function (quizFactory, $http, CON) {
             scope.getHint = function () {
                 var post_getHint = {
                     method: 'POST',
-                    url: CON.API_URL + "/games/" + CON.gameToken + '/hint',
+                    url: CON.API_URL + "/games/" + game.Token + '/hint',
                     contentType: 'application/json',
                     dataType: 'json',
                     data: '{"question_id": "' + gameQuestions.id + '"}'
                 }
 
                 $http(post_getHint).then(function (data) {
-                    console.log(data);
-                    var Answers_Id = [];
+
+                    var Hints = [];
+                    for (var i = 0; i < data.data.hints.length; i++) Hints.push(data.data.hints[i].id);
 
                     // Remove two answers
-                    /* $("input[type='radio']").each(function () {
-                        for (var i = 0; i < Answers_Id.length; i++)
-                            if ($(this).val() == Answers_Id[i])
-                                $(this).fadeOut();
-                    }); */
+                    $("ul#options > li input[type='radio']").each(function (a, Elm) {
+                        var Answer = Elm.value;
+                        for (var i = 0; i < Hints.length; i++) {
+                            if (Number($(this).val()) == Number(Hints[i])) {
+                                console.log(Answer);
+                                $("ul#options > li input[value="+Answer+"]").parent().parent().fadeOut();
+                                game.HintBtn.attr('disabled');
+                                game.HintBtn.css('opacity', '0.5');
+                            }
+                        }
+                    });
                 });
             };
 
@@ -199,7 +213,7 @@ app.directive('quiz', function (quizFactory, $http, CON) {
                 // POST user answer to API
                 var post_checkAnswer = {
                     method: 'POST',
-                    url: CON.API_URL + "/games/" + CON.gameToken + '/answer',
+                    url: CON.API_URL + "/games/" + game.Token + '/answer',
                     contentType: 'application/json',
                     dataType: 'json',
                     data: '{"question_id": "' + gameQuestions.id + '", "answer_ids":["' + UserAnswer + '"]}'
@@ -238,7 +252,7 @@ app.factory('quizFactory', function ($http, CON) {
             // Get question request
             var get_questionsRequest = {
                 method: 'POST',
-                url: CON.API_URL + "/games/" + CON.gameToken + '/new_question/',
+                url: CON.API_URL + "/games/" + game.Token + '/new_question/',
                 contentType: 'application/json',
                 dataType: 'json',
                 data: '{}'

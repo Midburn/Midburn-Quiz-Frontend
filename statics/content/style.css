@@ -129,6 +129,8 @@ body {
     color: #FFF;
     height: 40px;
     min-width: 40px;
+    max-width: 150px;
+    overflow: hidden;
     width: auto;
     padding: 0 10px;
     -webkit-border-radius: 5px;
