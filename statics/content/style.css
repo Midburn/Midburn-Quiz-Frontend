@@ -98,7 +98,7 @@ body {
 
 .game-intro {
     color: #fff;
-    background-color: transparent;
+    background-color: #192D3A;
 }
 
 .intro-wrapper {
@@ -108,10 +108,13 @@ body {
 /* Quizz */
 .quiz-area {
     direction: rtl !important;
-}
-
-.quiz-button-wrapper {
     margin: 40px auto;
+}
+.list-group-item {
+
+}
+.quiz-button-wrapper {
+/*     margin: 40px auto; */
 }
 
 .card {
@@ -119,12 +122,15 @@ body {
     margin: 20px auto;
 }
 
+.question-subject,
 .question-number {
     display: inline-block;
     background: #3799EC;
     color: #FFF;
     height: 40px;
-    width: 40px;
+    min-width: 40px;
+    width: auto;
+    padding: 0 10px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;

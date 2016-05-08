@@ -3,7 +3,7 @@
         <div class="quiz-area" ng-show="inProgress">
             <div ng-show="!quizOver">
 
-                <!-- Show question and question number -->
+                <!-- Show question data (Text, number, category) -->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-6">
@@ -40,7 +40,7 @@
         <!-- Helper buttons -->
         <div class="row quiz-button-wrapper">
             <div class="input-group-btn">
-                <button class="game-btn center-block" ng-click="cutTwoAnswers()" ng-show="answerMode">
+                <button class="game-btn center-block" ng-click="getHint()" ng-show="answerMode">
                     חתוך 2 תשובות
                 </button>
                 <button class="game-btn center-block" ng-click="nextQuestion()" ng-show="answerMode">

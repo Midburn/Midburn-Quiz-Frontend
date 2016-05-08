@@ -5,6 +5,9 @@
  *  Front-end: Nate
  *  Design: Nir
  *
+ *  MODULES IN USE: pascalprecht.translate
+ *                  ngResource
+ *
  * */
 
 var app = angular.module('quizApp', ['ngResource', 'pascalprecht.translate']);
@@ -14,7 +17,7 @@ var app = angular.module('quizApp', ['ngResource', 'pascalprecht.translate']);
 app.constant('CON', {
 
     // API Url
-    API_URL: "//burner-games.herokuapp.com/api/v1/",
+    API_URL: "//burner-games-staging.herokuapp.com/api/v1",
 
     // Game Token
     gameToken: "",
@@ -107,19 +110,23 @@ app.directive('quiz', function (quizFactory, $http, CON) {
 
                 // Get question request
                 var get_questionsRequest = {
-                    method: 'POST',
-                    url: CON.API_URL + "/games/" + CON.gameToken + '/new_question/',
+                    method: 'GET',
+                    url: CON.API_URL + "/games/" + CON.gameToken + '/questions/',
                     contentType: 'application/json',
                     dataType: 'json',
                     data: '{}'
                 }
 
                 $http(get_questionsRequest).then(function (data) {
+
+                    /* Data returned from API:
+                    *  Qustion id, text, answers, category
+                    * */
                     console.log(data.data);
                     gameQuestions.id = data.data.id;
                     gameQuestions.question = data.data.body;
                     gameQuestions.options = data.data.answers;
-                    gameQuestions.subject = data.data.category;
+                    gameQuestions.subject = data.data.category?data.data.category:"כללי";
                     gameQuestions.answer = 0;
 
                     if (gameQuestions) {
@@ -147,9 +154,27 @@ app.directive('quiz', function (quizFactory, $http, CON) {
                 scope.getQuestion();
             };
 
-            // Quiz cut two wrong answers
-            scope.cutTwoAnswers = function () {
-                console.log("Cutting edge");
+            // Get hint
+            scope.getHint = function () {
+                var post_getHint = {
+                    method: 'POST',
+                    url: CON.API_URL + "/games/" + CON.gameToken + '/hint',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: '{"question_id": "' + gameQuestions.id + '"}'
+                }
+
+                $http(post_getHint).then(function (data) {
+                    console.log(data);
+                    var Answers_Id = [];
+
+                    // Remove two answers
+                    /* $("input[type='radio']").each(function () {
+                        for (var i = 0; i < Answers_Id.length; i++)
+                            if ($(this).val() == Answers_Id[i])
+                                $(this).fadeOut();
+                    }); */
+                });
             };
 
             // Quiz reset
@@ -184,6 +209,7 @@ app.directive('quiz', function (quizFactory, $http, CON) {
                     correctAnswers = data.data.game.answered_correctly;
                     if (data.data.response == "correct" && correctAnswers < CON.correctAnswers - 1)
                         $("#quiz-correct-answer-alert").fadeIn();
+                    else console.log('תשובה שגויה');
                 });
 
                 // Call for the next question
@@ -330,3 +356,5 @@ app.controller('TemplateController', function ($scope) {
         {Text: "The Ten Principles", Href: "//midburn.org/en-ten-principles/", Class: ""}
     ];
 });
+
+// )'(
