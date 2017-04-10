@@ -70,6 +70,7 @@ body {
 
 .next-question {
     margin-right: 10px;
+
 }
 
 #score {
@@ -111,18 +112,42 @@ body {
     margin: 40px auto;
 }
 .list-group-item {
-
+    margin-bottom: 2px;
 }
 .quiz-button-wrapper {
 /*     margin: 40px auto; */
 }
 
-.card {
-    max-width: 650px;
-    margin: 20px auto;
+.category-pagination {
+    z-index: 0;
 }
 
-.question-subject,
+.card {
+    max-width: 100%;
+    max-height: 100%;
+    margin: 2% auto;
+}
+
+.correct {
+    background: greenyellow;
+    border-style: solid;
+    border-width: thin;
+    border-color: #A2A2A2;
+}
+
+.wrong {
+    background: lightcoral;
+    border-style: solid;
+    border-width: thin;
+    border-color: #A2A2A2;
+}
+
+.disabled-option {
+    pointer-events: none;
+    background-size: 16px 16px;
+    background-image: linear-gradient(-45deg, gray 25%, transparent 25%, transparent 50%, gray 50%, gray 75%, transparent 75%, transparent);
+}
+
 .question-number {
     display: inline-block;
     background: #3799EC;
@@ -160,6 +185,7 @@ body {
     padding: 15px 8px;
     border: 3px solid transparent;
     margin: 0;
+    pointer-events: none;
 }
 
 .answer-option-label input {
@@ -290,5 +316,38 @@ footer .logo {
     background: rgba(0, 0, 0, 0.75);
     padding-top: 16%;
 }
+.categories-side-bar li{
+    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);  /* IE6,IE7 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)"; /* IE8 */
+    -moz-transform: rotate(-90.0deg);  /* FF3.5+ */
+    -ms-transform: rotate(-90.0deg);  /* IE9+ */
+    -o-transform: rotate(-90.0deg);  /* Opera 10.5 */
+    -webkit-transform: rotate(-90.0deg);  /* Safari 3.1+, Chrome */
+    transform: rotate(-90.0deg);
+    border-color: #0f0f0f;
+
+    /*margin-bottom: 0em;*/
+    /*margin-top: 0px;*/
+    /*margin-right: 0em;*/
+    /*margin-left: 0em;*/
+
+    /*padding-right: 0em;*/
+    /*padding-bottom: 0em;*/
+    /*padding-left: 0em;*/
+    /*padding-top: 0em;*/
+
+
+
+    display: block;
+}
+.categories-side-bar ul li{
+    margin-top: 4em;
+    margin-bottom: 2em;
+    margin-left: 1em;
+    height: 4em;
+    width: 0em;
+}
+[class^="col-lg-2 col-md-2 col-sm-2 col-xs-2"] { background-color: rgba(255, 0, 0, 0.3); }
+
 
 /* END - Quiz is over page */

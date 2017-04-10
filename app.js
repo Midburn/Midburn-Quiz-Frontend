@@ -10,88 +10,81 @@
  *
  * */
 
+var configFile = getConfigFromConfigFile();
 var app = angular.module('quizApp', ['ngResource', 'pascalprecht.translate']);
 
 //
 // Constants
-app.constant('CON', {
-
-    // API Url
-    API_URL: "//burner-games-staging.herokuapp.com/api/v1",
-
-    // User Id
-    userId: 0,
-
-    // The correct answers client needs to reach to pass our quizzy
-    correctAnswers: 10
+app.constant('config', {
+    API_URL: configFile.api_url,
+    userId: configFile.user_id
 });
 
 //
 // Init question-answer vars
-var gameQuestions = {
+Window.currentQuestion = {
     id: null,
     question: null,
     options: null,
+    userSelectedElement: null,
     answer: null,
-    subject: null
+    category: null
 }
 
-var game = {
-    Token: null,
-    Categories: null,
-    HintBtn: $("button#btnHint")
+Window.game = {
+    token: null,
+    categories: [],
+    hintBtn: $("button#btnHint")
 }
 
 //
 // Set-up new game
-app.controller('quizInit', function ($scope, $http, CON) {
-
+app.controller('quizInit', function ($scope, $rootScope, $http, config) {
 
     // Get user id from url param
-    CON.userId = getUrlParams('userId');
+    userId = getUrlParams('userId');
 
-    // New game request
-    if (CON.userId !== undefined)
-        $scope.Init = function () {
-            var new_gameRequest = {
-                method: 'POST',
-                url: CON.API_URL + '/games/new/',
-                contentType: 'application/json',
-                dataType: 'json',
-                data: '{"user_id": ' + CON.userId + '}'
-            }
-
-            $http(new_gameRequest).then(function (data) {
-
-                // Game token.
-                game.Token = data.data.token;
-
-                // Game categories
-                game.Categories = data.data.categories;
-                game.Categories = '{"category":"communal_effort"}';
-
-            }, function () {
-                // New game init failure
-                console.error("Failed to init new game");
-            });
-
-        }
-    else {
+    if (userId === undefined) {
         $(function () {
             $("#game-start-wrapper").hide();
         });
         alert("User id is missing!")
+        return;
     }
+    var lang = "en";
+    $scope.Init = function (lang) {
 
+        var new_gameRequest = {
+            method: 'POST',
+            url: config.API_URL + '/games/new/',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: { language: lang, user_id: userId }
+        }
+
+        $http(new_gameRequest).then(function (response) {
+
+            // set the game model
+            Window.game = response.data;
+
+        }, function () {
+            // New game init failure
+            console.error("Failed to init new game");
+        });
+    }
 });
 
 //
 // Quiz mechanism
 //
-app.directive('quiz', function (quizFactory, $http, CON) {
+app.directive('quiz', function (quizFactory, $http, config) {
     var qnumber;
-    var qsubject;
-    var correctAnswers;
+    var game = Window.game;
+    var categories = Window.game.categories;
+    var canGetHint = true;
+    var canSkipQuestion = true;
+    var numOfcurrectAnswerInStreak = 2;
+    var correctStreak = 0;
 
     return {
         restrict: 'AE',
@@ -104,44 +97,45 @@ app.directive('quiz', function (quizFactory, $http, CON) {
 
                 // hide intro
                 $("#intro").fadeOut("fast");
-                correctAnswers = 0;
-                qnumber = 1;
+                qnumber = 0;
                 scope.id = 0;
                 scope.quizOver = false;
                 scope.inProgress = true;
-                scope.getQuestion();
+                scope.categories = Window.game.categories;
+                scope.nextQuestion();
+
             };
 
             // Quiz get question
-            scope.getQuestion = function () {
+            scope.getQuestion = function(category) {
 
                 // Get question request
-                var get_questionsRequest = {
+                var getQuestionRequest = {
                     method: 'POST',
-                    url: CON.API_URL + "/games/" + game.Token + '/new_question/',
+                    url: config.API_URL + "/games/" + Window.game.token + '/new_question/',
                     contentType: 'application/json',
                     dataType: 'json',
-                    data: game.Categories
+                    data: { category: category.name }
                 }
 
-                $http(get_questionsRequest).then(function (data) {
+                $http(getQuestionRequest).then(function (response) {
 
                     /* Data returned from API:
                      *  Qustion id, text, answers, category
                      * */
-                    console.log(data.data);
-                    gameQuestions.id = data.data.id;
-                    gameQuestions.question = data.data.body;
-                    gameQuestions.options = data.data.answers;
-                    gameQuestions.subject = data.data.category ? data.data.category.name : "כללי";
-                    gameQuestions.answer = 0;
+                    Window.currentQuestion.id = response.data.id;
+                    Window.currentQuestion.question = response.data.body;
+                    Window.currentQuestion.options = response.data.answers;
+                    Window.currentQuestion.category = response.data.category ? response.data.category.name : "כללי";
+                    Window.currentQuestion.answer = 0;
+                    scope.currentCategory = Window.currentQuestion.category;
 
-                    if (gameQuestions) {
+                    if (Window.currentQuestion) {
                         scope.qnumber = qnumber;
-                        scope.question = gameQuestions.question;
-                        scope.options = gameQuestions.options;
-                        scope.answer = gameQuestions.answer;
-                        scope.subject = gameQuestions.subject;
+                        scope.question = Window.currentQuestion.question;
+                        scope.options = Window.currentQuestion.options;
+                        scope.answer = Window.currentQuestion.answer;
+                        scope.category = Window.currentQuestion.category;
                         scope.answerMode = true;
                     } else {
                         scope.quizOver = true;
@@ -151,45 +145,104 @@ app.directive('quiz', function (quizFactory, $http, CON) {
                     // Get questions failure
                     console.log("Error: can't get questions from api");
                 });
-
             };
+            scope.checkCanGetHint = function () {
+                return canGetHint;
+            }
+            scope.isCategoryCompleted = function(category) {
+                if (correctStreak === numOfcurrectAnswerInStreak) {
+                    correctStreak = 0;
+                    return true;
+                }
+                else {
+                    return false;
+                }
+                //return category.category_completed;
+            }
+
+            scope.selectCategory = function() {
+                var categories = Window.game.categories;
+                for (var i = 0; i < categories.length; i++) {
+                    var category = categories[i];
+
+                        if (!scope.isCategoryCompleted(category)) {
+                            alert("not done " + category.name);
+                            return category;
+                        }
+                        else {
+                            if ( category.name == scope.currentCategory) {
+                                canGetHint = true;
+                                canSkipQuestion = true;
+                                alert("done " + category.name);
+                            }
+                        }
+                    }
+
+                console.log("GAME ENDED");
+            }
+
+            scope.updateProgressBar = function(category) {
+
+                var pages = $(".category-pagination");
+                for (var i = 0; i < pages.length; i++) {
+                    var pageElem = pages[i];
+                    var categoryId = pageElem.getAttribute("data-category-id");
+                    if (category.category_id == parseInt(categoryId)) {
+                        pageElem.classList.remove("disabled");
+                        pageElem.classList.add("active");
+                    } else {
+                        pageElem.classList.add("disabled");
+                    }
+
+                }
+            }
 
             // Quiz next question
             scope.nextQuestion = function () {
+
                 qnumber++;
                 scope.id++;
-                scope.getQuestion();
+
+                category = scope.selectCategory();
+                scope.getQuestion(category);
+                scope.updateProgressBar(category);
+
             };
 
             // Get hint
             scope.getHint = function () {
                 var post_getHint = {
                     method: 'POST',
-                    url: CON.API_URL + "/games/" + game.Token + '/hint',
+                    url: config.API_URL + "/games/" + Window.game.token + '/hint',
                     contentType: 'application/json',
                     dataType: 'json',
-                    data: '{"question_id": "' + gameQuestions.id + '"}'
+                    data: { question_id: Window.currentQuestion.id }
                 }
 
-                $http(post_getHint).then(function (data) {
+                $http(post_getHint).then(function (response) {
 
-                    var Hints = [];
-                    for (var i = 0; i < data.data.hints.length; i++) Hints.push(data.data.hints[i].id);
+                    var hints = [];
+                    for (var i = 0; i < response.data.hints.length; i++) {
+                        hints.push(response.data.hints[i].id);
+                    }
 
                     // Remove two answers
-                    $("ul#options > li input[type='radio']").each(function (a, Elm) {
-                        var Answer = Elm.value;
-                        for (var i = 0; i < Hints.length; i++) {
-                            if (Number($(this).val()) == Number(Hints[i])) {
-                                console.log(Answer);
-                                $("ul#options > li input[value="+Answer+"]").parent().parent().fadeOut();
-                                game.HintBtn.attr('disabled');
-                                game.HintBtn.css('opacity', '0.5');
-                            }
-                        }
-                    });
+                    // $("ul#options > li input[type='radio'][value='1385'], ul#options > li input[type='radio'][value='1388']")
+
+                    for (var i = 0; i < hints.length; i++) {
+                        var answerId = hints[i];
+                        var selector = "ul#options > li input[type='radio'][value='" + answerId + "']";
+                        var elem = $(selector)[0];
+                        elem.parentNode.parentNode.classList.add("disabled-option");
+                    }
                 });
+                canGetHint = false;
             };
+            scope.skipQuestion = function () {
+                canSkipQuestion = false;
+                scope.nextQuestion();
+
+            }
 
             // Quiz reset
             scope.reset = function () {
@@ -197,44 +250,80 @@ app.directive('quiz', function (quizFactory, $http, CON) {
                 scope.score = 0;
             }
 
+            scope.isGameover = function() {
+                var gameOverFlag = true;
+                for (var i = 0; i < Window.game.categories.length; i++) {
+                    var category = Window.game.categories[i];
+                    if (!category.category_completed) {
+                        gameOverFlag = false;
+                        break;
+                    }
+                }
+                return gameOverFlag;
+            }
+
+            scope.flashCorrect = function(elem, callback) {
+                elem.classList.add("correct");
+            }
+
             // Quiz check answer
-            scope.checkAnswer = function () {
+            scope.checkAnswer = function(event) {
 
-                var AnswerButton = $('input[name=answer]:checked');
+                var inputElement = event.target.lastElementChild.lastElementChild;
+                var userAnswerId = inputElement.value;
 
-                // Empty answer
-                if (!AnswerButton.length) {
-                    $('#quiz-no-answer-alert').toggle();
+                Window.currentQuestion.userSelectedElement = event.target;
+
+                if (userAnswerId === undefined) {
+                    console.log("empty answer?");
                     return;
                 }
 
-                var UserAnswer = AnswerButton.val();
-
                 // POST user answer to API
-                var post_checkAnswer = {
+                var postCheckAnswer = {
                     method: 'POST',
-                    url: CON.API_URL + "/games/" + game.Token + '/answer',
+                    url: config.API_URL + "/games/" + Window.game.token + '/answer',
                     contentType: 'application/json',
                     dataType: 'json',
-                    data: '{"question_id": "' + gameQuestions.id + '", "answer_ids":["' + UserAnswer + '"]}'
+                    data: { question_id: Window.currentQuestion.id, answer_ids: [userAnswerId] }
                 }
 
-                $http(post_checkAnswer).then(function (data) {
-                    correctAnswers = data.data.game.answered_correctly;
-                    if (data.data.response == "correct" && correctAnswers < CON.correctAnswers - 1)
-                        $("#quiz-correct-answer-alert").fadeIn();
-                    else console.log('תשובה שגויה');
+                $http(postCheckAnswer).then(function (response) {
+
+                    // update categories model
+                    var categoryString = Window.currentQuestion.category;
+                    for (var i = 0; i < Window.game.categories.length; i++) {
+                        var category = Window.game.categories[i];
+                        if (category.name == categoryString) {
+                            category.category_completed = response.data.category_completed;
+
+                        }
+                    }
+
+                    // check if game over
+                    var gameOverFlag = scope.isGameover();
+
+                    // do different things based on API's response on user's answer
+                    if (response.data.response == true) {
+                        Window.currentQuestion.userSelectedElement.classList.add("correct");
+                        correctStreak++;
+                    } else {
+                        Window.currentQuestion.userSelectedElement.classList.add("wrong");
+                        var answerId = response.data.correct_answers[0].id;
+                        var liElem = $('input[name=answer][value='+answerId+']').parent().parent();
+                        liElem[0].classList.add("correct");
+                        correctStreak =0;
+                    }
+
+                    // if game is not over
+                    if (!gameOverFlag) {
+                        setTimeout(function(argument) {
+                            scope.nextQuestion();
+                        }, 2000);
+                    } else {
+                        $("#quiz-is-over-alert").toggle();
+                    }
                 });
-
-                // Call for the next question
-                if (correctAnswers < CON.correctAnswers - 1)
-                // A Little more effort alert
-                // if(correctAnswers > 8)
-                    this.nextQuestion();
-                else {
-                    // Quiz is over - pass token to ticket system
-                    $("#quiz-is-over-alert").toggle();
-                }
 
                 scope.answerMode = false;
             };
@@ -244,18 +333,18 @@ app.directive('quiz', function (quizFactory, $http, CON) {
     }
 });
 
-app.factory('quizFactory', function ($http, CON) {
+app.factory('quizFactory', function ($http, config) {
 
     return {
-        getQuestion: function (id) {
+        getQuestion: function (category) {
 
             // Get question request
             var get_questionsRequest = {
                 method: 'POST',
-                url: CON.API_URL + "/games/" + game.Token + '/new_question/',
+                url: config.API_URL + "/games/" + Window.game.token + '/new_question/',
                 contentType: 'application/json',
                 dataType: 'json',
-                data: '{}'
+                data: {}
             }
 
             $http(get_questionsRequest).then(function (data) {
@@ -264,22 +353,16 @@ app.factory('quizFactory', function ($http, CON) {
                 var quesBody = data.data.body;
                 var quesAnswers = data.data.answers;
 
-                gameQuestions.question = quesBody;
-                gameQuestions.options = quesAnswers;
-                gameQuestions.answer = 0;
+                Window.currentQuestion.question = quesBody;
+                Window.currentQuestion.options = quesAnswers;
+                Window.currentQuestion.answer = 0;
 
             }, function () {
                 // Get questions failure
                 //console.log("Error: can't get questions from api");
             });
 
-            return gameQuestions;
-
-            if (id < gameQuestions.length) {
-                return gameQuestions[id];
-            } else {
-                return false;
-            }
+            return Window.currentQuestion;
         }
     };
 });
@@ -317,7 +400,7 @@ app.config(function ($translateProvider) {
         TITLE: 'ברוכים הבאות לשאלון מידברן',
         DESC: 'על מנת להיות זכאי\\ת לכרטיס למידברן 2016, ראשית את\\ה חייב\\ת להראות שאכפת לך מהתרבות שלנו, על ידי מענה של 10 שאלות בצורה נכונה.',
         INFO: 'רגע, מה זה מידברן?',
-        BTN_START_GAME: 'התחלה במשחק'
+        BTN_START_GAME: 'התחל במשחק'
     };
 
     // English conf
