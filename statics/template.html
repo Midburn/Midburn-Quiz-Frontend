@@ -1,131 +1,109 @@
-<div class="row" ng-controller="TemplateController">
-    <div id="game-start-wrapper" class="well card">
-        <div class="quiz-area" ng-show="inProgress">
-            <div ng-show="!quizOver">
+<!--Start Game Button-->
+<div class="" ng-show="!inProgress">
+    <button class="game-btn center-block" id="startQuiz" ng-click="start()">{{ 'BTN_START_GAME' | translate }}
+    </button>
+</div>
 
-                <!-- Show question data (Text, number, category) -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <h2>נושא: <span class="question-subject">{{ subject }}</span></h2>
-                        </div>
-                        <div class="col-md-6">
-                            <h2>שאלה מספר: <span class="question-number">{{ qnumber }}</span></h2>
-                        </div>
+<!--Quiz area-->
+<div id="quiz-page" ng-controller="TemplateController" xmlns="http://www.w3.org/1999/html">
+    <!--<div id="game-start-wrapper" class="well card">-->
+
+    <div class="quiz-area" ng-show="inProgress">
+
+
+        <div ng-show="!quizOver">
+            <div id="wrapper" class="container-fluid">
+                <div class="row no-gutter">
+
+                    <div id="sidebar-wrapper" class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+                        <h1 class="category" ng-repeat="category in categories | reverse" ng-class="{'category-done': category.category_completed}">{{ category.name }}</h1>
                     </div>
-                    <div class="col-md-12">
+                    <div id="zone" class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                         <h2 id="question"> {{ question }} </h2>
-                    </div>
-                </div>
-
-                <!-- Show answer options -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <ul class="list-group" id="options">
-                            <li class="list-group-item answer-option col-sm-12 col-md-6"
-                                ng-repeat="option in options|orderBy:random">
+                        <ul class="" id="options">
+                            <li class="list-group-item answer-option"
+                                ng-click="checkAnswer($event)" ng-repeat="option in options|orderBy:random">
                                 <label class="answer-option-label">
-                                    <input type="radio" name="answer" ng-click="checkAnswer()" ng-model="checked"
-                                           value="{{option.id}}">
+                                    <input type="radio" name="answer" ng-model="checked" value="{{option.id}}">
                                     {{ $index+1 }}. {{option.body}}
                                 </label>
                             </li>
                         </ul>
+                        <div id="HelperBtnsArea">
+
+                            <!-- Helper buttons -->
+
+                            <div class="input-group-btn">
+                                <button id="btnHint" ng-click="getHint()" ng-show="answerMode"
+                                        ng-disabled="!checkCanGetHint()">
+
+                                </button>
+                                <button id="btnSkip" ng-click="skipQuestion()" ng-show="answerMode"
+                                        ng-disabled="!checkCanSkipQuestion()">
+                                </button>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
+        <!--&lt;!&ndash; Show question data (Text, number, category) &ndash;&gt;-->
+        <!--<div id="questions" class="col-lg-9 push-lg-2 col-md-9 push-md-2 col-sm-9 push-sm-2 col-xs-9 push-xs-2">-->
+        <!--<h2>שאלה מספר: <span class="question-number">{{ qnumber }}</span></h2>-->
 
-        <!-- Helper buttons -->
-        <div class="row quiz-button-wrapper">
-            <div class="input-group-btn">
-                <button id="btnHint" class="game-btn center-block" ng-click="getHint()" ng-show="answerMode">
-                    חתוך 2 תשובות
-                </button>
-                <button id="btnSkip" class="game-btn center-block" ng-click="nextQuestion()" ng-show="answerMode">
-                    דלג
-                </button>
-            </div>
-        </div>
 
-        <div class="" ng-show="!inProgress">
-            <button class="game-btn center-block" id="startQuiz" ng-click="start()">{{ 'BTN_START_GAME' | translate }}
-            </button>
-        </div>
+        <!--</div>-->
 
+
+        <!--</div>-->
+        <!--</div>-->
+
+
+        <!--<footer>-->
+        <!--<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">-->
+        <!--<span class="logo col-xs-6"-->
+        <!--style="margin-top: 10%"> © 2014-{{ CurrentYear }} Midburn // {{ ThemeName }}</span>-->
+        <!--<ul class="links col-lg-5 col-md-5 col-sm-5 col-xs-5">-->
+        <!--<li ng-repeat="l in Links"><a class="{{l.Class}}" ng-href="{{l.Href}}" target="_blank">{{ l.Text }}</a>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--</footer>-->
     </div>
 
-
-    <footer>
-        <span class="logo col-xs-6"> © 2014-{{ CurrentYear }} Midburn // {{ ThemeName }}</span>
-        <ul class="links col-xs-6">
-            <li ng-repeat="l in Links"><a class="{{l.Class}}" ng-href="{{l.Href}}" target="_blank">{{ l.Text }}</a></li>
-        </ul>
-    </footer>
-
-</div>
-
-<!-- Alerts & notification widgets -->
-<div id="quiz-is-over-alert" class="fade-screen">
-    <div class="container">
-        <div class="clearfix">
-            <div class="jumbotron">
-
-                <h1><i class="fa fa-smile-o fa-spin"></i></h1>
-
-                <p>
-                <h2>עברתי את המבחן ועכשיו אני אוכל לקנות כרטיס</h2>
-                </p>
-
-                <p><a id="quiz-is-over-alert-btn" class="btn game-btn" href="#" role="button">לכרטיס!</a></p>
-
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-
-<div id="quiz-no-answer-alert" class="fade-screen">
-    <div class="container">
-        <div class="clearfix">
-            <div class="jumbotron">
-
-                <h1>מה עם לבחור תשובה..</h1>
-
-                <h2>אחרת, איך נראה אותך בפלאיה?</h2>
-
-                <div style="margin-top: 20px;">
+    <!-- Alerts & notification widgets -->
+    <div id="quiz-is-over-alert" class="fade-screen">
+        <div class="container">
+            <div class="clearfix">
+                <div class="jumbotron">
+                    <h1><i class="fa fa-smile-o fa-spin"></i></h1>
                     <p>
-                        <a class="btn game-btn" href="#" role="button" onclick="$('#quiz-no-answer-alert').toggle();">נו
-                            טוב..</a>
+                    <h2>עברתי את המבחן ועכשיו אני אוכל לקנות כרטיס</h2>
+                    </p>
+                    <p>
+                        <a id="quiz-is-over-alert-btn" class="btn game-btn" href="#" role="button">לכרטיס!</a>
                     </p>
                 </div>
-
             </div>
         </div>
     </div>
-</div>
-</div>
 
-<div id="quiz-correct-answer-alert" class="fade-screen" onclick="$('#quiz-correct-answer-alert').fadeOut();">
-    <div class="container">
-        <div class="clearfix">
-            <div class="jumbotron">
-
-                <h1>תשובה נכונה</h1>
-
-                <div style="margin-top: 20px;">
-                    <p>
-                        <a class="btn game-btn" href="#" role="button"
-                           onclick="$('#quiz-correct-answer-alert').fadeOut();">סגור</a>
-                    </p>
+    <div id="quiz-correct-answer-alert" class="fade-screen" onclick="$('#quiz-correct-answer-alert').fadeOut();">
+        <div class="container">
+            <div class="clearfix">
+                <div class="jumbotron">
+                    <h1>תשובה נכונה</h1>
+                    <div style="margin-top: 20px;">
+                        <p>
+                            <a class="btn game-btn" href="#" role="button"
+                               onclick="$('#quiz-correct-answer-alert').fadeOut();">סגור</a>
+                        </p>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <script>
@@ -138,12 +116,12 @@
     // Hide correct answer alert
     $('#quiz-correct-answer-alert').toggle();
 
-    // Mess with the Crowd
-    /* $("#quiz-is-over-alert-btn").hover(function () {
-     var X = Math.random() * (500 - 12) + 12;
-     var Y = Math.random() * (500 - 12) + 12;
-     $(this).css({'position': 'absolute', 'top': Y, 'left': X})
-     }, function () {
-     //$(this).css('position', 'static')
-     }); */
+
+
+
+
+
+
+
+
 </script>
