@@ -1,0 +1,9 @@
+
+Init new game - http://burner-games.herokuapp.com/api/v1/games/new
+
+curl -X POST http://burner-games.herokuapp.com/api/v1/games/new -d '{"user_id": 22}' -H "Content-Type:application/json"
+
+Get new questions
+
+curl -X GET http://burner-games.herokuapp.com/api/v1/games/cCaBxP/questions -d '{}' -H "Content-Type:application/json"
+curl -X POST http://burner-games.herokuapp.com/api/v1/games/cCaBxP/new_question -d '{}' -H "Content-Type:application/json"
