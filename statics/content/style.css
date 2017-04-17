@@ -2,38 +2,13 @@
 
 /* RESETS */
 .row {
-    margin-right: 5px;
-    margin-left: 5px;
+
 }
 
 /* FONTS */
 
 /* Google Lato - latin-ext */
-@font-face {
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Lato Regular'), local('Lato-Regular'), url(fonts/UyBMtLsHKBKXelqf4x7VRQ.woff2) format('woff2');
-    unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-}
 
-/* latin */
-@font-face {
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Lato Regular'), local('Lato-Regular'), url(fonts/1YwB1sO8YE1Lyjf12WNiUA.woff2) format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-}
-
-/* Alef */
-@font-face {
-    font-family: 'Alef-Bold';
-    src: url('fonts/Alef-Bold.eot');
-    src: url('fonts/Alef-Bold.eot?#iefix') format('embedded-opentype'), url('fonts/Alef-Bold.woff') format('woff'), url('fonts/Alef-Bold.ttf') format('truetype'), url('fonts/Alef-Bold.svg#alefbold') format('svg');
-    font-weight: bold;
-    font-style: normal;
-}
 
 @font-face {
     font-family: 'Alef';
@@ -43,9 +18,19 @@
     font-style: normal;
 }
 
-* {
-    font-family: 'Alef', 'Lato', sans-serif;
+
+@font-face {
+    font-family: "Assistant-light";
+    src: url("fonts/ASSISTANT-LIGHT.TTF") format('truetype'); /* EDIT correction on this line */
 }
+
+@font-face {
+    font-family: "Assistant-Regular";
+    src: url("fonts/ASSISTANT-REGULAR.TTF") format('truetype'); /* EDIT correction on this line */
+}
+
+
+
 
 /* END FONTS */
 
@@ -59,17 +44,21 @@
 }
 
 #wrapper {
-    max-width: 1054px;
-    margin-top: 56px;
+     max-width: 100%;
+     margin-top: 56px;
+     margin-left: 37px;
+     margin-right: 22px;
+
  }
 
 #zone {
    margin: 0;
    padding-right: 4em;
-   background: url(bg.png);
+   background: url(bg2.png);
    background-size: cover;
    border: 0;
    height: 710px;
+   opacity: 0.98;
 
 
 
@@ -77,7 +66,7 @@
 
 #sidebar-wrapper {
   background: url(side-falch-overlay.png);
-  height: 710px;
+  height: 100%;
   background-size: cover;
   color: white;
   text-align: center;
@@ -119,49 +108,77 @@
 
 #question {
 
-    margin: 1.5em;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    margin-top: 5%;
+    margin-bottom:3%;
     color: white;
     opacity: 1;
+    font-family: Assistant-Regular;
+    font-size: 29px;
+    color: #faffff;
+
+
 
 }
 #btnHint{
     background: url(remove-two-wrong-answers.png) no-repeat center ;
     cursor:pointer;
+    background-size: cover;
     border:none;
-    width:100px;
-    height:100px;
-    position: relatives;
-    margin-right: 40%;
+       width: 20%;
+       height: 44%;
+       position: absolute;
+       margin-left: 10%;
+       right: 20%;
+       bottom: 12%;
 
 
 }
 #btnSkip{
     background: url(skip-question.png) no-repeat center;
+    background-size: cover;
     cursor:pointer;
     border:none;
-    width:100px;
-    height:100px;
-    position: relatives;
+    width: 22%;
+    height: 27%;
+    right: 55%;
+    bottom: 23%;
+    position: absolute;
 }
 /* Answers */
 .answer-option {
-    min-height: 80px;
-    max-height: 100%;
-    border-radius: 5px;
-    font-size: 1.5rem;
+    min-height: 57px;
+    max-height: 96px;
+    border-radius: 10.7px;
+    font-size: 18.5px;
     transition: all 0.2s;
+    line-height: 22px;
     border: 0;
     cursor: pointer;
     text-align: right;
     padding: 0;
     margin-left: 4em;
-    margin-bottom: 1em;
-    opacity: 0.7;
+    margin-bottom: 1%;
+    opacity: 0.52;
     background-color: #000;
     color: white;
+    margin-top: 2%;
+    font-family: Assistant-light;
 
+    font-weight: 300;
+    color: #ffffff;
+
+    padding:0;
 }
 
+.list-group-item:first-child {
+    border-radius: 10.7px;
+}
+
+.list-group-item:last-child {
+    border-radius: 10.7px;
+}
 .answer-option-label {
     display: block;
     width: 100%;
@@ -182,7 +199,7 @@
 }
 
 .answer-option.selected {
-    background: #3799EC;
+
     color: white;
     }
 .no-gutter [class^="col"]{
@@ -192,17 +209,27 @@
 }
 
 .correct {
-    background: greenyellow;
-    border-style: solid;
-    border-width: thin;
-    border-color: #A2A2A2;
+    font-family: Assistant-Regular;
+    color: #32d4f0;
+    box-shadow: 0 0 10px #32d4f0;
+}
+.correct:hover {
+    font-family: Assistant-Regular;
+    color: #32d4f0;
+    box-shadow: 0 0 10px #32d4f0;
+     background: #000000;
 }
 
 .wrong {
-    background: lightcoral;
-    border-style: solid;
-    border-width: thin;
-    border-color: #A2A2A2;
+    font-family: Assistant-Regular;
+    opacity: 0.81;
+    color: #f05858;
+}
+.wrong:hover {
+    font-family: Assistant-Regular;
+    opacity: 0.81;
+    color: #f05858;
+    background: #000000;
 }
 
 .disabled-option {
@@ -210,5 +237,76 @@
     background-size: 16px 16px;
     background-image: linear-gradient(-45deg, gray 25%, transparent 25%, transparent 50%, gray 50%, gray 75%, transparent 75%, transparent);
 }
+.container-top {
+    position: relatives;
+    display:block;
+}
+.social-img {
+    position: relative;
+    margin-top: 5px;
+    margin-bottom: 16px;
+    margin-left: 10px;
+    margin-right:20px;
+    height: 52px;
+    width: 52px;
 
+
+}
+.guid-img {
+position: relative;
+    margin-top: 5px;
+    margin-bottom: 16px;
+    margin-left: 6px;
+    margin-right:20px;
+    margin-right:6px;
+    height: 31.38px;
+    width: 41.6px;
+
+}
+.current-category {
+    position: relative;
+    margin-top: 20px;
+    width: 124px;
+    height: 17px;
+    font-family: Assistant;
+    font-size: 26px;
+    font-weight: 200;
+    line-height: 2;
+    text-align: center;
+    color: #ffffff;
+    left: 43%;
+    top: -16px;
+    float: left;
+
+}
+
+#life-line {
+     background: url(bottom-floater.png) no-repeat center;
+     background-size: cover;
+    bottom: 0%;
+        height: 174px;
+        position: absolute;
+        width: 251px;
+        height: 113px;
+        right: 38%;
+}
+.answers-progress {
+
+}
+.answer-feedback {
+    background: url(top-state-inactive.png) ;
+    background-size: cover;
+    position: relative;
+    display: inline-block;
+    right: 45%;
+    margin-left: 10px;
+    margin-right:10px;
+    margin-top: -16px;
+    height: 24px;
+    width: 24px;
+    top: 8px;
+}
+.answer-feedback-on{
+ background: url(top-state-active.png) ;
+}
 /* END - Quiz is over page */

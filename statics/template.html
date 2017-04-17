@@ -16,9 +16,28 @@
                 <div class="row no-gutter">
 
                     <div id="sidebar-wrapper" class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
-                        <h1 class="category" ng-repeat="category in categories | reverse" ng-class="{'category-done': category.category_completed}">{{ category.name }}</h1>
+                        <h1 class="category" ng-repeat="category in categories | reverse"
+                            ng-class="{'category-done': category.category_completed}">{{ category.name }}</h1>
                     </div>
                     <div id="zone" class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+
+
+                        <a href="http://midburn.org/he-community/" target="_blank">
+                            <img class="social-img" src="statics/content/facebook.png">
+                        </a>
+                        <a href="http://midburn.org/he-community/" target="_blank">
+                            <img class="guid-img" src="statics/content/guid.png">
+                        </a>
+
+                        <span class="current-category" ng-bind="category">{{ category.name }}</span>
+
+                        <div class="answers-progress">
+                            <h1 class="answer-feedback" ng-repeat="i in answersToCompleateCategory track by $index"
+                                  ng-class="{'answer-correct': answer-feedback.answer-feedback-on}"></h1>
+
+                        </div>
+
+
                         <h2 id="question"> {{ question }} </h2>
                         <ul class="" id="options">
                             <li class="list-group-item answer-option"
@@ -32,16 +51,13 @@
                         <div id="HelperBtnsArea">
 
                             <!-- Helper buttons -->
-
-                            <div class="input-group-btn">
+                            <div class="input-group-btn" id="life-line">
                                 <button id="btnHint" ng-click="getHint()" ng-show="answerMode"
                                         ng-disabled="!checkCanGetHint()">
-
                                 </button>
                                 <button id="btnSkip" ng-click="skipQuestion()" ng-show="answerMode"
                                         ng-disabled="!checkCanSkipQuestion()">
                                 </button>
-
                             </div>
                         </div>
                     </div>
@@ -115,6 +131,12 @@
 
     // Hide correct answer alert
     $('#quiz-correct-answer-alert').toggle();
+
+
+
+
+
+
 
 
 

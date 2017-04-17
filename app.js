@@ -34,6 +34,7 @@ Window.currentQuestion = {
 Window.game = {
     token: null,
     categories: [],
+
     hintBtn: $("button#btnHint")
 }
 
@@ -83,8 +84,9 @@ app.directive('quiz', function (quizFactory, $http, config) {
     var categories = Window.game.categories;
     var canGetHint = true;
     var canSkipQuestion = true;
-    var numOfcurrectAnswerInStreak = 2;
     var correctStreak = 0;
+    var numOfcurrectAnswerInStreak = 2;
+
 
     return {
         restrict: 'AE',
@@ -103,6 +105,7 @@ app.directive('quiz', function (quizFactory, $http, config) {
                 scope.inProgress = true;
                 scope.categories = Window.game.categories;
                 scope.nextQuestion();
+                scope.answersToCompleateCategory = Array(numOfcurrectAnswerInStreak);
 
             };
 
@@ -178,6 +181,7 @@ app.directive('quiz', function (quizFactory, $http, config) {
                         if (!scope.isCategoryCompleted(category)) {
                             alert("not done!!! " + category.name);
                             alert(canSkipQuestion);
+
                             return category;
                         }
                         else {
