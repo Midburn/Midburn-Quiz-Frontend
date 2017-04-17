@@ -25,15 +25,15 @@
                         <a href="http://midburn.org/he-community/" target="_blank">
                             <img class="social-img" src="statics/content/facebook.png">
                         </a>
-                        <a href="http://midburn.org/he-community/" target="_blank">
+                        <a href="http://midburn.org/he-survival-guide/" target="_blank">
                             <img class="guid-img" src="statics/content/guid.png">
                         </a>
 
                         <span class="current-category" ng-bind="category">{{ category.name }}</span>
 
                         <div class="answers-progress">
-                            <h1 class="answer-feedback" ng-repeat="i in answersToCompleateCategory track by $index"
-                                  ng-class="{'answer-correct': answer-feedback.answer-feedback-on}"></h1>
+                            <h1 class="answer-feedback" ng-repeat="i in answersToCompleateCategory track by $index "
+                                  ng-class="{ 'answer-feedback-progress': i == 'in-progress', 'answer-feedback-on': i == 'achieved'}"></h1>
 
                         </div>
 
