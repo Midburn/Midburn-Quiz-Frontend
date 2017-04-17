@@ -29,7 +29,7 @@
                             <span class="current-category" ng-bind="category">{{ category.name }}</span>
 
                             <div class="answers-progress">
-                                <h1 class="answer-feedback" ng-repeat="i in answersToCompleateCategory track by $index "
+                                <span class="answer-feedback" ng-repeat="i in answersToCompleateCategory track by $index "
                                       ng-class="{ 'answer-feedback-progress': i == 'in-progress', 'answer-feedback-on': i == 'achieved'}"></h1>
                             </div>                       
                         </div>
