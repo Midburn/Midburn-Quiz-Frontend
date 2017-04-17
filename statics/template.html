@@ -5,50 +5,47 @@
 </div>
 
 <!--Quiz area-->
-<div id="quiz-page" ng-controller="TemplateController" xmlns="http://www.w3.org/1999/html">
+<div id="quiz-page" class="sixteen-nine" ng-controller="TemplateController" xmlns="http://www.w3.org/1999/html">
     <!--<div id="game-start-wrapper" class="well card">-->
 
-    <div class="quiz-area" ng-show="inProgress">
+    <div class="content" ng-show="inProgress">
+        <div ng-show="!quizOver" class="full-size">
+            <div id="wrapper" class="full-size">
+                <div class="full-size">
 
-
-        <div ng-show="!quizOver">
-            <div id="wrapper" class="container-fluid">
-                <div class="row no-gutter">
-
-                    <div id="sidebar-wrapper" class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+                    <div class="categories-wrapper">
                         <h1 class="category" ng-repeat="category in categories | reverse"
                             ng-class="{'category-done': category.category_completed}">{{ category.name }}</h1>
                     </div>
-                    <div id="zone" class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                    <div class="quiz-zone">
+                        <div class="header">
+                            <a href="http://midburn.org/he-community/" target="_blank">
+                                <img class="social-img" src="statics/content/facebook.png">
+                            </a>
+                            <a href="http://midburn.org/he-survival-guide/" target="_blank">
+                                <img class="guid-img" src="statics/content/guid.png">
+                            </a>
 
+                            <span class="current-category" ng-bind="category">{{ category.name }}</span>
 
-                        <a href="http://midburn.org/he-community/" target="_blank">
-                            <img class="social-img" src="statics/content/facebook.png">
-                        </a>
-                        <a href="http://midburn.org/he-survival-guide/" target="_blank">
-                            <img class="guid-img" src="statics/content/guid.png">
-                        </a>
-
-                        <span class="current-category" ng-bind="category">{{ category.name }}</span>
-
-                        <div class="answers-progress">
-                            <h1 class="answer-feedback" ng-repeat="i in answersToCompleateCategory track by $index "
-                                  ng-class="{ 'answer-feedback-progress': i == 'in-progress', 'answer-feedback-on': i == 'achieved'}"></h1>
-
+                            <div class="answers-progress">
+                                <h1 class="answer-feedback" ng-repeat="i in answersToCompleateCategory track by $index "
+                                      ng-class="{ 'answer-feedback-progress': i == 'in-progress', 'answer-feedback-on': i == 'achieved'}"></h1>
+                            </div>                       
                         </div>
-
-
-                        <h2 id="question"> {{ question }} </h2>
-                        <ul class="" id="options">
-                            <li class="list-group-item answer-option"
-                                ng-click="checkAnswer($event)" ng-repeat="option in options|orderBy:random">
-                                <label class="answer-option-label">
-                                    <input type="radio" name="answer" ng-model="checked" value="{{option.id}}">
-                                    {{ $index+1 }}. {{option.body}}
-                                </label>
-                            </li>
-                        </ul>
-                        <div id="HelperBtnsArea">
+                        <div class="question-area">
+                            <div class="question"> {{ question }} </div>
+                            <ul class="options" id="options">
+                                <li class="list-group-item answer-option"
+                                    ng-click="checkAnswer($event)" ng-repeat="option in options|orderBy:random">
+                                    <label class="answer-option-label">
+                                        <input type="radio" name="answer" ng-model="checked" value="{{option.id}}">
+                                        {{ $index+1 }}. {{option.body}}
+                                    </label>
+                                </li>
+                            </ul>
+                        <div>    
+                        <div class="helper-buttons-area">
 
                             <!-- Helper buttons -->
                             <div class="input-group-btn" id="life-line">
@@ -64,28 +61,7 @@
                 </div>
             </div>
         </div>
-        <!--&lt;!&ndash; Show question data (Text, number, category) &ndash;&gt;-->
-        <!--<div id="questions" class="col-lg-9 push-lg-2 col-md-9 push-md-2 col-sm-9 push-sm-2 col-xs-9 push-xs-2">-->
-        <!--<h2>שאלה מספר: <span class="question-number">{{ qnumber }}</span></h2>-->
 
-
-        <!--</div>-->
-
-
-        <!--</div>-->
-        <!--</div>-->
-
-
-        <!--<footer>-->
-        <!--<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">-->
-        <!--<span class="logo col-xs-6"-->
-        <!--style="margin-top: 10%"> © 2014-{{ CurrentYear }} Midburn // {{ ThemeName }}</span>-->
-        <!--<ul class="links col-lg-5 col-md-5 col-sm-5 col-xs-5">-->
-        <!--<li ng-repeat="l in Links"><a class="{{l.Class}}" ng-href="{{l.Href}}" target="_blank">{{ l.Text }}</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</footer>-->
     </div>
 
     <!-- Alerts & notification widgets -->

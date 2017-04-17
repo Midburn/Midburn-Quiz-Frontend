@@ -1,8 +1,8 @@
 /* Midburn 2016 Abracadabra Quiz app - )'( let it burn! */
 
 /* RESETS */
-.row {
-
+body {
+  background: black;
 }
 
 /* FONTS */
@@ -11,131 +11,134 @@
 
 
 @font-face {
-    font-family: 'Alef';
-    src: url('fonts/Alef-Regular.eot');
-    src: url('fonts/Alef-Regular.eot?#iefix') format('embedded-opentype'), url('fonts/Alef-Regular.woff') format('woff'), url('fonts/Alef-Regular.ttf') format('truetype'), url('fonts/Alef-Regular.svg#alefregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Alef';
+  src: url('fonts/Alef-Regular.eot');
+  src: url('fonts/Alef-Regular.eot?#iefix') format('embedded-opentype'), url('fonts/Alef-Regular.woff') format('woff'), url('fonts/Alef-Regular.ttf') format('truetype'), url('fonts/Alef-Regular.svg#alefregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
 
 @font-face {
-    font-family: "Assistant-light";
-    src: url("fonts/ASSISTANT-LIGHT.TTF") format('truetype'); /* EDIT correction on this line */
+  font-family: "Assistant-light";
+  src: url("fonts/ASSISTANT-LIGHT.TTF") format('truetype'); /* EDIT correction on this line */
 }
 
 @font-face {
-    font-family: "Assistant-Regular";
-    src: url("fonts/ASSISTANT-REGULAR.TTF") format('truetype'); /* EDIT correction on this line */
+  font-family: "Assistant-Regular";
+  src: url("fonts/ASSISTANT-REGULAR.TTF") format('truetype'); /* EDIT correction on this line */
 }
-
-
-
 
 /* END FONTS */
 
-
 .lanEN {
-    direction: ltr !important;
+  direction: ltr !important;
 }
 
 .lanHE {
-    direction: rtl !important;
+  direction: rtl !important;
 }
 
-#wrapper {
-     max-width: 100%;
-     margin-top: 56px;
-     margin-left: 37px;
-     margin-right: 22px;
-
- }
-
-#zone {
-   margin: 0;
-   padding-right: 4em;
-   background: url(bg2.png);
-   background-size: cover;
-   border: 0;
-   height: 710px;
-   opacity: 0.98;
-
-
-
-}
-
-#sidebar-wrapper {
+.categories-wrapper {
   background: url(side-falch-overlay.png);
   height: 100%;
+  width:20%;
   background-size: cover;
   color: white;
   text-align: center;
+  float:left;
 }
-
-
-.container-fluid {
-
-   padding-left: 0;
-}
-
 
 .sidebar-nav {
   list-style: none;
   padding:0;
+}
 
-
+.quiz-zone{
+  width: 80%;
+  margin: 0;
+  padding-right: 4em;
+  background: url(bg2.png);
+  background-size: cover;
+  border: 0;
+  height: 100%;
+  opacity: 0.98;
 }
 
 .category{
-   line-height:0;
-   text-indent: 0;
    color: #999999;
    display: block;
    text-decoration: none;
    border: 1px solid rgba(0, 0, 0, .1);
-   -webkit-background-clip: padding-box; /* for Safari */    background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
-   padding: 72px 0px 68px 0px;
-   position: relatives;
-   font-size: 2.5rem;
+   padding: 0;
+   padding-top: 25%;
+   width: 100%;
+   height: 20%;
+   font-size: 2vw;
    text-align: center;
    margin: 0;
 }
+
 .category-done {
    background: url(bg.png) no-repeat center;
    background-size: cover;
-
 }
 
-#question {
-
-    margin-left: 1.5em;
-    margin-right: 1.5em;
-    margin-top: 1%;
-    margin-bottom:3%;
-    color: white;
-    opacity: 1;
-    font-family: Assistant-Regular;
-    font-size: 29px;
-    color: #faffff;
-    width: 82%;
-
-
-
+.sixteen-nine {
+  position: relative;
 }
+.sixteen-nine:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-top: 56.25%;
+}
+.sixteen-nine > .content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.full-size {
+  width: 100%;
+  height: 100%;
+}
+.header {
+  height: 10%;
+}
+.question-area{
+  height: 60%;
+}
+
+.helper-buttons-area {
+  height: 20%;
+}
+
+.question {
+  font-size: 2.5vw;
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+  margin-top: 1%;
+  margin-bottom:3%;
+  font-family: Assistant-Regular;
+  color: #faffff;
+}
+
 #btnHint{
-    background: url(remove-two-wrong-answers.png) no-repeat center ;
-    cursor:pointer;
-    background-size: cover;
-    border:none;
-       width: 20%;
-       height: 44%;
-       position: absolute;
-       margin-left: 10%;
-       right: 20%;
-       bottom: 12%;
-
-
+  background: url(remove-two-wrong-answers.png) no-repeat center ;
+  cursor:pointer;
+  background-size: cover;
+  border:none;
+  width: 20%;
+  height: 44%;
+  position: absolute;
+  margin-left: 10%;
+  right: 20%;
+  bottom: 12%;
 }
+
 #btnSkip{
     background: url(skip-question.png) no-repeat center;
     background-size: cover;
@@ -149,46 +152,41 @@
 }
 /* Answers */
 .answer-option {
-    min-height: 57px;
-    max-height: 96px;
-    border-radius: 10.7px;
-    font-size: 18.5px;
-    transition: all 0.2s;
-    line-height: 22px;
-    border: 0;
-    cursor: pointer;
-    text-align: right;
-    padding: 0;
-    margin-left: 4em;
-    margin-bottom: 1%;
-    opacity: 0.52;
-    background-color: #000;
-    color: white;
-    margin-top: 2%;
-    font-family: Assistant-light;
-
-    font-weight: 300;
-    color: #ffffff;
-
-    padding:0;
+  border-radius: 10.7px;
+  font-size: 1.5vw;
+  transition: all 0.2s;
+  border: 0;
+  cursor: pointer;
+  text-align: right;
+  padding: 0;
+  margin-left: 4em;
+  margin-bottom: 1%;
+  opacity: 0.52;
+  background-color: #000;
+  color: white;
+  margin-top: 2%;
+  font-family: Assistant-light;
+  font-weight: 300;
+  color: #ffffff;
+  padding:0;
 }
 
 .list-group-item:first-child {
-    border-radius: 10.7px;
+  border-radius: 10.7px;
 }
 
 .list-group-item:last-child {
-    border-radius: 10.7px;
+  border-radius: 10.7px;
 }
 .answer-option-label {
-    display: block;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    padding: 15px 8px;
-    border: 3px solid transparent;
-    margin: 0;
-    pointer-events: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  padding: 1.5%;
+  border: 3px solid transparent;
+  margin: 0;
+  pointer-events: none;
 }
 
 .answer-option-label input {
@@ -226,6 +224,7 @@
     opacity: 0.81;
     color: #f05858;
 }
+
 .wrong:hover {
     font-family: Assistant-Regular;
     opacity: 0.81;
@@ -238,94 +237,96 @@
     background-size: 16px 16px;
     background-image: linear-gradient(-45deg, gray 25%, transparent 25%, transparent 50%, gray 50%, gray 75%, transparent 75%, transparent);
 }
+
 .container-top {
-    position: relatives;
-    display:block;
+  position: relatives;
+  display:block;
 }
+
 .social-img {
-    position: relative;
-    margin-top: 5px;
-    margin-bottom: 16px;
-    margin-left: 10px;
-    margin-right:20px;
-    height: 52px;
-    width: 52px;
-
-
+  position: relative;
+  margin-top: 5px;
+  margin-bottom: 16px;
+  margin-left: 10px;
+  margin-right:20px;
+  height: 52px;
+  width: 52px;
 }
+
 .guid-img {
-position: relative;
-    margin-top: 5px;
-    margin-bottom: 16px;
-    margin-left: 6px;
-    margin-right:20px;
-    margin-right:6px;
-    height: 31.38px;
-    width: 41.6px;
-
+  position: relative;
+  margin-top: 5px;
+  margin-bottom: 16px;
+  margin-left: 6px;
+  margin-right:20px;
+  margin-right:6px;
+  height: 31.38px;
+  width: 41.6px;
 }
-.current-category {
-    position: relative;
-    margin-top: 20px;
-    width: 124px;
-    height: 17px;
-    font-family: Assistant;
-    font-size: 19px;
-    font-weight: 200;
-    line-height: 2;
-    text-align: center;
-    color: #ffffff;
-    left: 43%;
-    top: -5px;
-    float: left;
 
+.current-category {
+  position: relative;
+  margin-top: 20px;
+  width: 10%;
+  height: 100%;
+  font-family: Assistant;
+  font-size: 1.5vw;
+  font-weight: 200;
+  line-height: 2;
+  text-align: center;
+  color: #ffffff;
+  left: 43%;
+  top: -5px;
+  float: left;
 }
 
 #life-line {
-     background: url(bottom-floater.png) no-repeat center;
-     background-size: cover;
-    bottom: 0%;
-        height: 174px;
-        position: absolute;
-        width: 251px;
-        height: 113px;
-        right: 38%;
+  background: url(bottom-floater.png) no-repeat center;
+  background-size: cover;
+  bottom: 0;
+  position: absolute;
+  width: 25%;
+  height: 20%;
+  right: 31%
 }
+
 .answers-progress {
-
+  height: 50;
 }
+
 .answer-feedback {
-    background: url(top-state-inactive.png) ;
-    background-size: cover;
-    position: relative;
-    display: inline-block;
-    right: 45%;
-    margin-left: 10px;
-    margin-right:10px;
-    margin-top: 2px;
-    padding: 2px;
-    height: 27px;
-    width: 27px;
-    top: -16px;
+  background: url(top-state-inactive.png) ;
+  background-size: cover;
+  position: relative;
+  display: inline-block;
+  right: 45%;
+  margin-left: 10px;
+  margin-right:10px;
+  margin-top: 2px;
+  padding: 2px;
+  height: 27px;
+  width: 27px;
+  top: -16px;
 }
-.answer-feedback-on{
-     background: url(top-state-active.png) ;
-     box-shadow: 0px 0px 13px #ffe3bb;
 
-    border: 0px;
-     border-radius:25px;
-    background-size: cover;
-    position: relative;
-    display: inline-block;
-    right: 45%;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 2px;
-    padding: 0;
-    height: 27px;
-    width: 27px;
-    top: -16px;
+.answer-feedback-on{
+  background: url(top-state-active.png) ;
+  box-shadow: 0px 0px 13px #ffe3bb;
+  border: 0px;
+  border-radius:25px;
+  background-size: cover;
+  position: relative;
+  display: inline-block;
+  right: 45%;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 2px;
+  padding: 0;
+  height: 27px;
+  width: 27px;
+  top: -16px;
 }
+
 @-webkit-keyframes current-question-glow {
   from { background-color: #3b5e7b; -webkit-box-shadow: 0 0 9px  #3b5e7b;}
   50% { background-color: #3b5e7b; -webkit-box-shadow: 0 0 30px  #ffe3bb; background: url(top-state-active.png) ; }
