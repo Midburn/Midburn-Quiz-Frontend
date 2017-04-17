@@ -34,6 +34,7 @@ Window.currentQuestion = {
 Window.game = {
     token: null,
     categories: [],
+
     hintBtn: $("button#btnHint")
 }
 
@@ -83,8 +84,10 @@ app.directive('quiz', function (quizFactory, $http, config) {
     var categories = Window.game.categories;
     var canGetHint = true;
     var canSkipQuestion = true;
-    var numOfcurrectAnswerInStreak = 2;
     var correctStreak = 0;
+    var numOfcurrectAnswerInStreak = 2;
+
+
 
     return {
         restrict: 'AE',
@@ -103,9 +106,27 @@ app.directive('quiz', function (quizFactory, $http, config) {
                 scope.inProgress = true;
                 scope.categories = Window.game.categories;
                 scope.nextQuestion();
+                scope.numOfcurrectAnswerInStreak = 2;
+                scope.answersToCompleateCategory = new Array(numOfcurrectAnswerInStreak);
+                scope.resetQuestionStreakIndicator();
 
             };
+             scope.resetQuestionStreakIndicator = function(numOfcurrectAnswerInStreak) {
 
+                            for(i = 0 ;i < scope.numOfcurrectAnswerInStreak; i++) {
+                                var state = 'not-achieved';
+                                if (i == 0) {
+                                 scope.answersToCompleateCategory[i] = "in-progress";
+                                }
+                                else {
+
+                                scope.answersToCompleateCategory[i] = state;
+                                }
+
+
+
+                                }
+                            };
             // Quiz get question
             scope.getQuestion = function(category) {
 
@@ -156,11 +177,13 @@ app.directive('quiz', function (quizFactory, $http, config) {
                         }
             scope.isCategoryCompleted = function(category) {
                 if (category.category_completed == true) {
+
                     return true;
                 }
                 if (correctStreak === numOfcurrectAnswerInStreak) {
                     correctStreak = 0;
                      category.category_completed = true;
+                     scope.resetQuestionStreakIndicator();
                     return true;
                 }
                 else {
@@ -171,13 +194,15 @@ app.directive('quiz', function (quizFactory, $http, config) {
             }
 
             scope.selectCategory = function() {
+
                 var categories = Window.game.categories;
                 for (var i = 0; i < categories.length; i++) {
                     var category = categories[i];
 
                         if (!scope.isCategoryCompleted(category)) {
                             alert("not done!!! " + category.name);
-                            alert(canSkipQuestion);
+
+
                             return category;
                         }
                         else {
@@ -317,13 +342,20 @@ app.directive('quiz', function (quizFactory, $http, config) {
                     // do different things based on API's response on user's answer
                     if (response.data.response == true) {
                         Window.currentQuestion.userSelectedElement.classList.add("correct");
+                        scope.answersToCompleateCategory[correctStreak] = "achieved";
                         correctStreak++;
+                        if(correctStreak < numOfcurrectAnswerInStreak){
+                            scope.answersToCompleateCategory[correctStreak] = "in-progress";
+                        }
                     } else {
                         Window.currentQuestion.userSelectedElement.classList.add("wrong");
                         var answerId = response.data.correct_answers[0].id;
                         var liElem = $('input[name=answer][value='+answerId+']').parent().parent();
                         liElem[0].classList.add("correct");
                         correctStreak =0;
+                        scope.resetQuestionStreakIndicator();
+
+
                     }
 
                     // if game is not over
