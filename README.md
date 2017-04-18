@@ -1,43 +1,19 @@
-# QuizBurn - Midburn 2016 Quiz Game
+# QuizBurn - Midburn Quiz Game
 
->Version: 1.0
+Angular(1.6) trivia web-app as a client that consumes RESTful API based on RoR
 
->Description
->Answer 10 correct question to pass the quiz then get the chance to buy a ticket for Midburn 2016!
+## Description
+Answer 10 correct question to pass the quiz then get the chance to buy a ticket for Midburn!
 
->How it works?
->Send user id via quiz URL, For example: [quiz-url]?userId=22
+## How it works?
+Refer to the Back-end repo [here](https://github.com/Midburn/burner-games) for more information.
 
-# Deployment script
+## Usage
 
->https://gist.github.com/mtr574/ef60d2417a9e3a42811a
+1. clone this repo
+2. `bower install`
+3. run http server (you might use this [http-server](https://www.npmjs.com/package/http-server))
+4. http://localhost:8080/?userId=666
 
-# Frontend deployment instructions:
-
-Install http-server:
->npm install http-server -g
-
-Install bower:
->npm install -g bower
-
-Angular/Bootstrap etc:
->bower install --save angular bootstrap jquery font-awesome angular-resource angular-translate
-
-Run server:
->http-server
-
-Go to page:
-
->http://localhost:8080/?userId=666
-
-
-
-
-# Contributors
-
-* Elad - Back-end
-* Nate - Front-end
-* Nir - Design & Front-end 
-
-)'(
-
+## Links
+- [S3 Deployment script](https://gist.github.com/mtr574/ef60d2417a9e3a42811)

@@ -1,0 +1,25 @@
+{
+  "name": "Midburn-Quiz-Frontend",
+  "homepage": "https://github.com/Midburn/Midburn-Quiz-Frontend",
+  "authors": [
+    "Nate.Ben <mtr574@gmail.com>"
+  ],
+  "description": "Burner games is a simple trivia game developed by the midburn.org organization volunteers as an educational step",
+  "main": "index.html",
+  "keywords": [
+    "Midburn.org"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-translate": "^2.15.1",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0"
+  }
+}
