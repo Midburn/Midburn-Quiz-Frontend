@@ -7,20 +7,22 @@
     font-style: normal;
 }
 
+
 @font-face {
     font-family: "Assistant-light";
-    src: url("fonts/ASSISTANT-LIGHT.TTF") format('truetype');
-    /* EDIT correction on this line */
+    src: url("fonts/ASSISTANT-LIGHT.TTF") format('truetype'); /* EDIT correction on this line */
 }
 
 @font-face {
     font-family: "Assistant-Regular";
-    src: url("fonts/ASSISTANT-REGULAR.TTF") format('truetype');
-    /* EDIT correction on this line */
+    src: url("fonts/ASSISTANT-REGULAR.TTF") format('truetype'); /* EDIT correction on this line */
 }
 
 
+
+
 /* END FONTS */
+
 
 .lanEN {
     direction: ltr !important;
@@ -31,20 +33,24 @@
 }
 
 #wrapper {
-    max-width: 100%;
-    margin-top: 56px;
-    margin-left: 37px;
-    margin-right: 22px;
-}
+     max-width: 100%;
+     margin-top: 56px;
+     margin-left: 37px;
+     margin-right: 22px;
+
+ }
 
 #zone {
-    margin: 0;
-    padding-right: 4em;
-    background: url(../assets/bg2.png);
-    background-size: cover;
-    border: 0;
-    height: 710px;
-    opacity: 0.98;
+   margin: 0;
+   padding-right: 4em;
+   background: url(bg2.png);
+   background-size: cover;
+   border: 0;
+   height: 710px;
+   opacity: 0.98;
+
+
+
 }
 
 #sidebar-wrapper {
@@ -55,79 +61,81 @@
     text-align: center;
 }
 
+
 .container-fluid {
-    padding-left: 0;
+
+   padding-left: 0;
 }
+
 
 .sidebar-nav {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding:0;
+
+
 }
 
-.category {
-    line-height: 0;
-    text-indent: 0;
-    color: #999999;
-    display: block;
-    text-decoration: none;
-    border: 1px solid rgba(0, 0, 0, .1);
-    -webkit-background-clip: padding-box;
-    /* for Safari */
-    background-clip: padding-box;
-    /* for IE9+, Firefox 4+, Opera, Chrome */
-    padding: 72px 0px 68px 0px;
-    position: relatives;
-    font-size: 2.5rem;
-    text-align: center;
-    margin: 0;
+.category{
+   line-height:0;
+   text-indent: 0;
+   color: #999999;
+   display: block;
+   text-decoration: none;
+   border: 1px solid rgba(0, 0, 0, .1);
+   -webkit-background-clip: padding-box; /* for Safari */    background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+   padding: 72px 0px 68px 0px;
+   position: relatives;
+   font-size: 2.5rem;
+   text-align: center;
+   margin: 0;
 }
-
 .category-done {
     background: url(../assets/bg.png) no-repeat center;
     background-size: cover;
 }
 
 #question {
+
     margin-left: 1.5em;
     margin-right: 1.5em;
     margin-top: 1%;
-    margin-bottom: 3%;
+    margin-bottom:3%;
     color: white;
     opacity: 1;
     font-family: Assistant-Regular;
     font-size: 29px;
     color: #faffff;
     width: 82%;
-}
 
-#btnHint {
-    background: url(../assets/remove-two-wrong-answers.png) no-repeat center;
-    cursor: pointer;
+
+
+}
+#btnHint{
+    background: url(../assets/remove-two-wrong-answers.png) no-repeat center ;
+    cursor:pointer;
     background-size: cover;
-    border: none;
-    width: 20%;
-    height: 44%;
-    position: absolute;
-    margin-left: 10%;
-    right: 20%;
-    bottom: 12%;
-}
+    border:none;
+       width: 20%;
+       height: 44%;
+       position: absolute;
+       margin-left: 10%;
+       right: 20%;
+       bottom: 12%;
 
-#btnSkip {
+
+}
+#btnSkip{
     background: url(../assets/skip-question.png) no-repeat center;
     background-size: cover;
-    cursor: pointer;
-    border: none;
+    cursor:pointer;
+    border:none;
     width: 22%;
     height: 27%;
     right: 55%;
     bottom: 23%;
     position: absolute;
 }
-
-
 /* Answers */
-
 .answer-option {
     min-height: 57px;
     max-height: 96px;
@@ -146,9 +154,11 @@
     color: white;
     margin-top: 2%;
     font-family: Assistant-light;
+
     font-weight: 300;
     color: #ffffff;
-    padding: 0;
+
+    padding:0;
 }
 
 .list-group-item:first-child {
@@ -158,7 +168,6 @@
 .list-group-item:last-child {
     border-radius: 10.7px;
 }
-
 .answer-option-label {
     display: block;
     width: 100%;
@@ -179,12 +188,13 @@
 }
 
 .answer-option.selected {
-    color: white;
-}
 
-.no-gutter [class^="col"] {
-    padding-right: 0;
-    padding-left: 0;
+    color: white;
+    }
+.no-gutter [class^="col"]{
+
+    padding-right:0;
+    padding-left:0;
 }
 
 .correct {
@@ -192,12 +202,11 @@
     color: #32d4f0;
     box-shadow: 0 0 10px #32d4f0;
 }
-
 .correct:hover {
     font-family: Assistant-Regular;
     color: #32d4f0;
     box-shadow: 0 0 10px #32d4f0;
-    background: #000000;
+     background: #000000;
 }
 
 .wrong {
@@ -205,7 +214,6 @@
     opacity: 0.81;
     color: #f05858;
 }
-
 .wrong:hover {
     font-family: Assistant-Regular;
     opacity: 0.81;
@@ -218,33 +226,32 @@
     background-size: 16px 16px;
     background-image: linear-gradient(-45deg, gray 25%, transparent 25%, transparent 50%, gray 50%, gray 75%, transparent 75%, transparent);
 }
-
 .container-top {
     position: relatives;
-    display: block;
+    display:block;
 }
-
 .social-img {
     position: relative;
     margin-top: 5px;
     margin-bottom: 16px;
     margin-left: 10px;
-    margin-right: 20px;
+    margin-right:20px;
     height: 52px;
     width: 52px;
-}
 
+
+}
 .guid-img {
-    position: relative;
+position: relative;
     margin-top: 5px;
     margin-bottom: 16px;
     margin-left: 6px;
-    margin-right: 20px;
-    margin-right: 6px;
+    margin-right:20px;
+    margin-right:6px;
     height: 31.38px;
     width: 41.6px;
-}
 
+}
 .current-category {
     position: relative;
     margin-top: 20px;
@@ -259,41 +266,42 @@
     left: 43%;
     top: -5px;
     float: left;
+
 }
 
 #life-line {
-    background: url(../assets/bottom-floater.png) no-repeat center;
-    background-size: cover;
+     background: url(../assets/bottom-floater.png) no-repeat center;
+     background-size: cover;
     bottom: 0%;
-    height: 174px;
-    position: absolute;
-    width: 251px;
-    height: 113px;
-    right: 38%;
+        height: 174px;
+        position: absolute;
+        width: 251px;
+        height: 113px;
+        right: 38%;
 }
+.answers-progress {
 
-.answers-progress {}
-
+}
 .answer-feedback {
-    background: url(../assets/top-state-inactive.png);
+    background: url(../assets/top-state-inactive.png) ;
     background-size: cover;
     position: relative;
     display: inline-block;
     right: 45%;
     margin-left: 10px;
-    margin-right: 10px;
+    margin-right:10px;
     margin-top: 2px;
     padding: 2px;
     height: 27px;
     width: 27px;
     top: -16px;
 }
+.answer-feedback-on{
+     background: url(../assets/top-state-active.png) ;
+     box-shadow: 0px 0px 13px #ffe3bb;
 
-.answer-feedback-on {
-    background: url(../assets/top-state-active.png);
-    box-shadow: 0px 0px 13px #ffe3bb;
     border: 0px;
-    border-radius: 25px;
+     border-radius:25px;
     background-size: cover;
     position: relative;
     display: inline-block;
@@ -306,41 +314,28 @@
     width: 27px;
     top: -16px;
 }
-
 @-webkit-keyframes current-question-glow {
-    from {
-        background-color: #3b5e7b;
-        -webkit-box-shadow: 0 0 9px #3b5e7b;
-    }
-    50% {
-        background-color: #3b5e7b;
-        -webkit-box-shadow: 0 0 30px #ffe3bb;
-        background: url(../assets/top-state-active.png);
-    }
-    to {
-        background-color: #3b5e7b;
-        -webkit-box-shadow: 0 0 9px #3b5e7b;
-    }
+  from { background-color: #3b5e7b; -webkit-box-shadow: 0 0 9px  #3b5e7b;}
+  50% { background-color: #3b5e7b; -webkit-box-shadow: 0 0 30px  #ffe3bb; background: url(top-state-active.png) ; }
+  to { background-color: #3b5e7b; -webkit-box-shadow: 0 0 9px #3b5e7b;}
 }
+.answer-feedback-progress{
+   background: url(../assets/top-state-inactive.png) ;
 
-.answer-feedback-progress {
-    background: url(../assets/top-state-inactive.png);
     background-size: cover;
     position: relative;
-    border-radius: 25px;
+    border-radius:25px;
     display: inline-block;
     right: 45%;
     margin-left: 10px;
     margin-right: 10px;
-    margin-top: 2px;
+   margin-top: 2px;
     height: 27px;
     width: 27px;
     padding: 2px;
     top: -16px;
     -webkit-animation-name: current-question-glow;
-    -webkit-animation-duration: 4s;
-    -webkit-animation-iteration-count: infinite;
+      -webkit-animation-duration: 4s;
+      -webkit-animation-iteration-count: infinite;
 }
-
-
 /* END - Quiz is over page */
