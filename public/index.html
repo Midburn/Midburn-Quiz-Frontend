@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="quizApp">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Midburn Quiz</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/6.0.0/normalize.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.min.js"></script>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body class="lanHE" ng-controller="quizInit" ng-init="Init()" ng-cloak>
+    <div id="main-page">
+        <div id="intro" ng-controller="LangController">
+            <div class="well game-intro">
+                <div class="intro-wrapper">
+                    <h1>{{ 'TITLE' | translate }}</h1>
+                    <p>{{ 'DESC' | translate }}</p>
+                </div>
+                <a href="http://midburn.org/" target="_blank"><span>{{ 'INFO' | translate }}</span></a>
+            </div>
+        </div>
+        <!-- Quiz View -->
+        <quiz></quiz>
+    </div>
+</body>
+
+</html>
