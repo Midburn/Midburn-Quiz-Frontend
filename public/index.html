@@ -8,18 +8,16 @@
     <title>Midburn Quiz</title>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/6.0.0/normalize.css">
+    <link rel="stylesheet" href="css/style.css" />
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/angular-translate/angular-translate.min.js"></script>
-    <script src="config.js"></script>
-    <script src="app.js"></script>
 </head>
 
-<body class="lanHE" ng-controller="quizInit" ng-init="Init()" ng-cloak>
+<body class="lanHE" ng-controller="Quiz" ng-init="Init()" ng-cloak>
     <div id="main-page">
         <div id="intro" ng-controller="LangController">
             <div class="well game-intro">
@@ -33,6 +31,9 @@
         <!-- Quiz View -->
         <quiz></quiz>
     </div>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+    <script src="app/controllers/Quiz.js"></script>
 </body>
 
 </html>
