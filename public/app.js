@@ -36,6 +36,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 qnumber = 0;
                 scope.id = 0;
                 scope.quizOver = false;
+                scope.passedQuiz = false;
                 scope.inProgress = true;
                 scope.categories = Window.game.categories;
                 scope.nextQuestion();
@@ -133,7 +134,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     }
                 }
                 console.log("GAME ENDED");
-                scope.quizOver= true;
+                scope.passedQuiz= true;
             }
 
             scope.updateProgressBar = function(category) {
