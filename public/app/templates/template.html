@@ -38,12 +38,14 @@
                                 <img class="guid-img" src="./assets/guid.png">
                             </a>
 
-                            <span class="current-category" ng-bind="category">{{ category.name }}</span>
 
+                        </div>
+                        <div class="progress-area">
+                            <span class="current-category" ng-bind="category">{{ category.name }}</span>
                             <div class="answers-progress">
                                 <span class="answer-feedback" ng-repeat="i in answersToCompleateCategory track by $index "
-                                      ng-class="{ 'answer-feedback-progress': i == 'in-progress', 'answer-feedback-on': i == 'achieved'}"></span>
-                            </div>                       
+                                      ng-class="{ 'blink': i == 'in-progress', 'done': i == 'achieved'}"></h1>
+                            </div>
                         </div>
                         <div class="question-area">
                             <div class="question"> {{ question }} </div>

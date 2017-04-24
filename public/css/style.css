@@ -3,7 +3,6 @@
 /* RESETS */
 body {
   background: black;
-
 }
 
 /* FONTS */
@@ -38,8 +37,6 @@ body {
 
 .lanHE {
   direction: rtl !important;
-  width:100%
-  height:100%;
 }
 
 .categories-wrapper {
@@ -60,12 +57,14 @@ body {
 .quiz-zone{
   width: 80%;
   margin: 0;
-  padding-right: 4em;
+  padding-right: 5%;
   background: url(../assets/bg2.png);
   background-size: cover;
   border: 0;
   height: 100%;
   opacity: 0.98;
+  line-height: 2.3vw;
+
 }
 
 .category{
@@ -74,7 +73,7 @@ body {
    text-decoration: none;
    border: 1px solid rgba(0, 0, 0, .1);
    padding: 0;
-   padding-top: 25%;
+   padding-top: 22%;
    width: 100%;
    height: 20%;
    font-size: 2vw;
@@ -115,16 +114,10 @@ body {
   height: 60%;
 }
 
-.helper-buttons-area {
-  height: 20%;
-}
-
 .question {
   font-size: 2.2vw;
-  margin-left: 1.5em;
-  margin-right: 1.5em;
-  margin-top: 1%;
-  margin-bottom:3%;
+  line-height: 4vw;
+  margin: 2% 0;
   font-family: Assistant-Regular;
   color: #faffff;
 }
@@ -172,6 +165,10 @@ body {
   font-weight: 300;
   color: #ffffff;
   padding:0;
+}
+
+.options {
+  padding-right: 0;
 }
 
 .list-group-item:first-child {
@@ -241,43 +238,12 @@ body {
     background-image: linear-gradient(-45deg, gray 25%, transparent 25%, transparent 50%, gray 50%, gray 75%, transparent 75%, transparent);
 }
 
-.container-top {
-  position: relatives;
-  display:block;
-}
-
 .social-img {
-  position: relative;
-  margin-top: 5px;
-  margin-bottom: 16px;
-  margin-left: 10px;
-  margin-right:20px;
-  height: 52px;
-  width: 52px;
+  height: 80%;
 }
 
 .guid-img {
-  position: relative;
-  margin-top: 5px;
-  margin-bottom: 16px;
-  margin-left: 6px;
-  margin-right:20px;
-  margin-right:6px;
-  height: 31.38px;
-  width: 41.6px;
-}
-
-.current-category {
-  position: relative;
-  margin-top: 2%;
-  width: 10%;
-  font-family: Assistant;
-  font-size: 1.5vw;
-  font-weight: 200;
-  text-align: center;
-  color: #ffffff;
-  left: 43%;
-  float: left;
+  height: 50%;
 }
 
 #life-line {
@@ -290,66 +256,62 @@ body {
   right: 31%
 }
 
+.progress-area{
+  top: 0;
+  position: absolute;
+  width: 25%;
+  height: 10%;
+  right: 31%;
+  text-align: center;
+}
+
+.current-category {
+  display: inline-block;
+  margin: 4% auto 0;
+  font-family: Assistant-Regular;
+  font-size: 1.5vw;
+  font-weight: 200;
+  color: #ffffff;
+  height: 40%;
+  width: 100%;
+}
+
 .answers-progress {
-  height: 50%;
+  width: 100%;
+  height: 40%;
 }
 
 .answer-feedback {
   background: url(../assets/top-state-inactive.png) ;
   background-size: cover;
-  position: relative;
+  border-radius:25px;
   display: inline-block;
-  right: 45%;
-  margin-left: 10px;
-  margin-right:10px;
-  margin-top: 2px;
-  padding: 2px;
-  height: 27px;
-  width: 27px;
-  top: -16px;
+  height: 100%;
+  width: 9%;
+  margin: 1%;
+
+}
+.answer-feedback.done{
+  background: url(../assets/top-state-active.png);
+  background-size: cover;
+  border-radius:25px;
 }
 
-.answer-feedback-on{
-  background: url(../assets/top-state-active.png) ;
-  box-shadow: 0px 0px 13px #ffe3bb;
-  border: 0px;
-  border-radius:25px;
-  background-size: cover;
-  position: relative;
-  display: inline-block;
-  right: 45%;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 2px;
-  padding: 0;
-  height: 27px;
-  width: 27px;
-  top: -16px;
-}
+
+
 
 @-webkit-keyframes current-question-glow {
   from { background-color: #3b5e7b; -webkit-box-shadow: 0 0 9px  #3b5e7b;}
-  50% { background-color: #3b5e7b; -webkit-box-shadow: 0 0 30px  #ffe3bb; background: url(../assets/top-state-active.png) ; }
+  50% { background-color: #3b5e7b; -webkit-box-shadow: 0 0 30px  #ffe3bb;
+    background: url(../assets/top-state-active.png) ;
+    background-size: cover;
+     }
   to { background-color: #3b5e7b; -webkit-box-shadow: 0 0 9px #3b5e7b;}
 }
-.answer-feedback-progress{
-   background: url(../assets/top-state-inactive.png) ;
-
-    background-size: cover;
-    position: relative;
-    border-radius:25px;
-    display: inline-block;
-    right: 45%;
-    margin-left: 10px;
-    margin-right: 10px;
-   margin-top: 2px;
-    height: 27px;
-    width: 27px;
-    padding: 2px;
-    top: -16px;
-    -webkit-animation-name: current-question-glow;
-      -webkit-animation-duration: 2s;
-      -webkit-animation-iteration-count: infinite;
+.answer-feedback.blink{
+  -webkit-animation-name: current-question-glow;
+  -webkit-animation-duration: 4s;
+  -webkit-animation-iteration-count: infinite;
 }
 /* Popup settings */
 
