@@ -288,7 +288,7 @@ body {
   display: inline-block;
   height: 100%;
   width: 9%;
-  margin: 1%;
+  margin: 2%;
 
 }
 .answer-feedback.done{
@@ -310,7 +310,7 @@ body {
 }
 .answer-feedback.blink{
   -webkit-animation-name: current-question-glow;
-  -webkit-animation-duration: 4s;
+  -webkit-animation-duration: 1.5s;
   -webkit-animation-iteration-count: infinite;
 }
 /* Popup settings */
@@ -414,8 +414,62 @@ button:focus {outline:0;}
 
 
 }
-#quiz-is-over-alert {
-    visible: hidden;
+#gameOverPopup {
+    position: relative;
+    top: 20%;
+    height: 40%;
+    width: 80%;
+    background-color:rgb(45, 95, 136);
+    background-color:rgba(45, 95, 136, 0.76);
+    color: #faffff;
+    font-family: Assistant-Regular;
+    font-size: 2.5vw;
+    border-radius: 9px;
+}
+#gameOverPopup h1{
+
+    font-size: 4vw;
+     top: 0%;
+}
+#gameOverPopup h2{
+
+    font-size: 3.5vw;
+    text-align: center;
+}
+.endGameButtonsProp {
+     position: relative;
+     width: 16%;
+     height: 16%;
+
+     right: 40%;
+     border:none;
+     margin-top: 3%;
+}
+#goToTicketBtn {
+     background:url(../assets/Group_4.png) no-repeat;
+     right: 27%;
+     background-size:100%;
+}
+#goToTicketBtn:active {
+    background:url(../assets/Group_1.png) no-repeat;
+    right: 27%;
+    background-size:100%;
+}
+#playAgainBtn {
+    background:url(../assets/Group_3.png) no-repeat;
+    right: 40%;
+    background-size:100%;
+}
+#playAgainBtn:active {
+    background:url(../assets/Group_2.png) no-repeat;
+    right: 40%;
+    background-size:100%;
+
+}
+
+#endGameButtons {
+    height: 100%;
+    width: 100%;
 }
 
 
