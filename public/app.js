@@ -60,9 +60,9 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     Window.currentQuestion.id = response.data.id;
                     Window.currentQuestion.question = response.data.body;
                     Window.currentQuestion.options = response.data.answers;
-                    Window.currentQuestion.category = response.data.category
-                        ? response.data.category.name
-                        : "כללי";
+                    Window.currentQuestion.category = response.data.category ?
+                        response.data.category.name :
+                        "כללי";
                     Window.currentQuestion.answer = 0;
                     scope.currentCategory = Window.currentQuestion.category;
 
@@ -264,6 +264,37 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 scope.answerMode = false;
             };
             scope.reset();
+
+            var passTheTest = function() {
+                /**
+                 * login as drupal user to get CSRF token then
+                 * send request to pass the test
+                 */
+                var LOGIN_URL = "https://profile-test.midburn.org/en/api/user/login"
+                var data = {
+                    "username": $scope.username || "sir_ruvzi@hotmail.com",
+                    "password": $scope.password || "WholeNew1"
+                }
+                var config = {
+                    contentType: 'application/json',
+                    dataType: 'json'
+                }
+                var errorCallback = function() {
+                    console.log('sad');
+                }
+                $http.post(LOGIN_URL, data, config).then(function(res) {
+                    var TOKEN = res.getElementsByTagName('result')[0].textContent
+                    var PASS_URL = "https://profile-test.midburn.org/en/api/games/" + Window.game.token + "/pass"
+                    var data = {
+                      'x-csrf-token': TOKEN
+                    }
+                    var successCallback = function() {
+                      // pass the test success
+                      console.log('happy');
+                    }
+                    $http.post(PASS_URL, data, config).then(successCallback, errorCallback);
+                }, errorCallback);
+            }
         }
     }
 });
@@ -346,25 +377,23 @@ app.controller('FooterController', function($scope) {
     // Theme Name
     $scope.ThemeName = "Abracadabra";
     // Footer links => {Text: "text", Href: "href", Class: "class"}
-    $scope.Links = [
-        {
-            Text: "Help us make it better",
-            Href: "//github.com/Midburn/Midburn-Quiz-Frontend",
-            Class: "link-special"
-        }, {
-            Text: "Midburn Website",
-            Href: "//midburn.org/en/",
-            Class: ""
-        }, {
-            Text: "About The Event",
-            Href: "//midburn.org/en-event/",
-            Class: ""
-        }, {
-            Text: "The Ten Principles",
-            Href: "//midburn.org/en-ten-principles/",
-            Class: ""
-        }
-    ];
+    $scope.Links = [{
+        Text: "Help us make it better",
+        Href: "//github.com/Midburn/Midburn-Quiz-Frontend",
+        Class: "link-special"
+    }, {
+        Text: "Midburn Website",
+        Href: "//midburn.org/en/",
+        Class: ""
+    }, {
+        Text: "About The Event",
+        Href: "//midburn.org/en-event/",
+        Class: ""
+    }, {
+        Text: "The Ten Principles",
+        Href: "//midburn.org/en-ten-principles/",
+        Class: ""
+    }];
 });
 // filter for reverse list
 app.filter('reverse', function() {

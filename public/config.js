@@ -8,7 +8,6 @@ var getConfigFromConfigFile = function() {
         async: false,
         dataType: 'json'
     });
-
     return _config;
 };
 
