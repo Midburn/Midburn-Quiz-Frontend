@@ -2,14 +2,15 @@
 <html ng-app="quizApp">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Midburn Quiz</title>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/6.0.0/normalize.css">
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css"/>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
@@ -18,22 +19,31 @@
 </head>
 
 <body class="lanHE" ng-controller="Quiz" ng-init="Init()" ng-cloak>
-    <div id="main-page">
-        <div id="intro" ng-controller="LangController">
-            <div class="well game-intro">
-                <div class="intro-wrapper">
-                    <h1>{{ 'TITLE' | translate }}</h1>
-                    <p>{{ 'DESC' | translate }}</p>
-                </div>
-                <a href="http://midburn.org/" target="_blank"><span>{{ 'INFO' | translate }}</span></a>
+<div class="modal fade-screen" id="Modal">
+    <div id="popupModal" class="modal-content" ng-controller="LangController">
+
+            <h1>{{ 'TITLE' | translate }}</h1>
+            <p class="desc">{{ 'DESC' | translate }}</p>
+
+
+            <div class="startBtnContainer">
+                <button id="startBtn" ng-click="start()" class="startBtnContainer" ng-show="!inProgress">
+
+                </button>
             </div>
-        </div>
-        <!-- Quiz View -->
-        <quiz></quiz>
+
+
     </div>
-    <script src="config.js"></script>
-    <script src="app.js"></script>
-    <script src="app/controllers/Quiz.js"></script>
+
+</div>
+<div id="main-page">
+
+    <!-- Quiz View -->
+    <quiz></quiz>
+</div>
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script src="app/controllers/Quiz.js"></script>
 </body>
 
 </html>
