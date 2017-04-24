@@ -1,6 +1,7 @@
 /**
  * Midburn Quiz app - )'( let it burn!
  */
+ var gameVariables =  {numOfcurrectAnswerInStreak:2};
 
 // Quiz question directive
 app.directive('quiz', function(quizFactory, $http, config) {
@@ -10,28 +11,41 @@ app.directive('quiz', function(quizFactory, $http, config) {
     var canGetHint = true;
     var canSkipQuestion = true;
     var correctStreak = 0;
-    var numOfcurrectAnswerInStreak = 2;
+
+    var popupmodal = document.getElementById('popupModal');
+    var modal = document.getElementById('Modal');
+    var btn = document.getElementById("startBtn");
+    var gameOverPopUp = document.getElementById("quiz-is-over-alert");
+
 
     return {
         restrict: 'E',
         scope: {},
         templateUrl: 'app/templates/template.html',
         link: function(scope, elem, attrs) {
+         btn.onclick = function() {
+                //popupmodal.style.display="none";
+                modal.style.display = "none";
+                scope.start();
+            }
             // Quiz start init
+
+
             scope.start = function() {
                 $("#intro").fadeOut("fast");
                 qnumber = 0;
                 scope.id = 0;
                 scope.quizOver = false;
+                scope.passedQuiz = false;
                 scope.inProgress = true;
                 scope.categories = Window.game.categories;
                 scope.nextQuestion();
-                scope.numOfcurrectAnswerInStreak = 2;
-                scope.answersToCompleateCategory = new Array(numOfcurrectAnswerInStreak);
+
+                scope.answersToCompleateCategory = new Array(gameVariables.numOfcurrectAnswerInStreak);
                 scope.resetQuestionStreakIndicator();
             };
-            scope.resetQuestionStreakIndicator = function(numOfcurrectAnswerInStreak) {
-                for (i = 0; i < scope.numOfcurrectAnswerInStreak; i++) {
+            scope.resetQuestionStreakIndicator = function() {
+                for (i = 0; i < gameVariables.numOfcurrectAnswerInStreak; i++) {
                     var state = 'not-achieved';
                     if (i == 0) {
                         scope.answersToCompleateCategory[i] = "in-progress";
@@ -91,7 +105,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 if (category.category_completed == true) {
                     return true;
                 }
-                if (correctStreak === numOfcurrectAnswerInStreak) {
+                if (correctStreak === gameVariables.numOfcurrectAnswerInStreak) {
                     correctStreak = 0;
                     category.category_completed = true;
                     scope.resetQuestionStreakIndicator();
@@ -120,6 +134,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     }
                 }
                 console.log("GAME ENDED");
+                scope.passedQuiz= true;
             }
 
             scope.updateProgressBar = function(category) {
@@ -240,7 +255,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                         Window.currentQuestion.userSelectedElement.classList.add("correct");
                         scope.answersToCompleateCategory[correctStreak] = "achieved";
                         correctStreak++;
-                        if (correctStreak < numOfcurrectAnswerInStreak) {
+                        if (correctStreak < gameVariables.numOfcurrectAnswerInStreak) {
                             scope.answersToCompleateCategory[correctStreak] = "in-progress";
                         }
                     } else {
@@ -259,11 +274,13 @@ app.directive('quiz', function(quizFactory, $http, config) {
                         }, 2000);
                     } else {
                         $("#quiz-is-over-alert").toggle();
+
                     }
                 });
                 scope.answerMode = false;
             };
             scope.reset();
+
         }
     }
 });
@@ -298,6 +315,7 @@ app.factory('quizFactory', function($http, config) {
 
 // Language translation configuration
 app.config(function($translateProvider) {
+
     var dic_EN = {
         TITLE: 'Welcome to the Midburn quiz',
         DESC: 'In order to be eligible for a ticket for Midburn 2016, you must first show that you care about our culture, by answering 10 questions correctly.',
@@ -305,10 +323,10 @@ app.config(function($translateProvider) {
         BTN_START_GAME: 'Start Game'
     };
     var dic_HE = {
-        TITLE: 'ברוכים הבאות לשאלון מידברן',
-        DESC: 'על מנת להיות זכאי\\ת לכרטיס למידברן 2016, ראשית את\\ה חייב\\ת להראות שאכפת לך מהתרבות שלנו, על ידי מענה של 10 שאלות בצורה נכונה.',
+        TITLE: 'משחקי הברן',
+        DESC: "ברוכים הבאים למשחק הטריוויה החדש שיתן מענה לשאלה שמעסיקה את כולם: האם אתם ברנרים אמיתיים? איך מנצחים? פשוט:עליכם לעבור 5 נושאים שקשורים למידברן, ובכל אחד לענות נכון על "+   + gameVariables.numOfcurrectAnswerInStreak.toString()+ " שאלות רצופות תוכלו להשתמש בשני גלגלי הצלה בכל נושא. בהצלחה!",
         INFO: 'רגע, מה זה מידברן?',
-        BTN_START_GAME: 'התחל במשחק'
+//        BTN_START_GAME: 'ז'
     };
     // English conf
     $translateProvider.translations('en', dic_EN);
