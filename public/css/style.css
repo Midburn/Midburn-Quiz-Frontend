@@ -3,6 +3,7 @@
 /* RESETS */
 body {
   background: black;
+  overflow: hidden;
 }
 
 /* FONTS */
