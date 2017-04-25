@@ -252,12 +252,14 @@ app.directive('quiz', function(quizFactory, $http, config) {
                         scope.resetQuestionStreakIndicator();
                     }
 
-                    // if game is not over
                     if (!gameOverFlag) {
                         setTimeout(function(argument) {
+                            // game is'nt over, new question
                             scope.nextQuestion();
                         }, 2000);
                     } else {
+                        // game is over, notify drupal
+                        passTheTest()
                         $("#quiz-is-over-alert").toggle();
                     }
                 });
@@ -267,33 +269,46 @@ app.directive('quiz', function(quizFactory, $http, config) {
 
             var passTheTest = function() {
                 /**
-                 * login as drupal user to get CSRF token then
-                 * send request to pass the test
+                 * Win the game! get drupal's CSRF token then notify winning
+                 * if CSRF unavailable, user's session could be ended, 
+                 * request to login and get new session! then try to notify.
                  */
-                var LOGIN_URL = "https://profile-test.midburn.org/en/api/user/login"
-                var data = {
-                    "username": $scope.username || "sir_ruvzi@hotmail.com",
-                    "password": $scope.password || "WholeNew1"
+                var TOKEN_URL = "https://profile-test.midburn.org/en/services/session/token"
+                $http.get(TOKEN_URL).then(function(res) {
+                    // get token
+                    notify(res)
+                }, function() {
+                    // token unavailable, login
+                    login(notify)
+                });
+
+                var notify = function(TOKEN) {
+                    // notify to drupal  about winning 
+                    var PASS_URL = "https://profile-test.midburn.org/en/api/games/" + Window.game.user_id + "/pass"
+                    var config = {
+                        headers: {
+                            'x-csrf-token': TOKEN
+                        }
+                    }
+                    $http.post(PASS_URL, null, config).then(function(res) {
+                        // notify succeed
+                        console.log(res);
+                    }, errorCallback);
                 }
-                var config = {
-                    contentType: 'application/json',
-                    dataType: 'json'
-                }
-                var errorCallback = function() {
-                    console.log('sad');
-                }
-                $http.post(LOGIN_URL, data, config).then(function(res) {
-                    var TOKEN = res.getElementsByTagName('result')[0].textContent
-                    var PASS_URL = "https://profile-test.midburn.org/en/api/games/" + Window.game.token + "/pass"
+
+                var login = function(callback) {
+                    var LOGIN_URL = "https://profile-test.midburn.org/en/api/user/login"
                     var data = {
-                      'x-csrf-token': TOKEN
+                        "username": "sir_ruvzi@hotmail.com",
+                        "password": "WholeNew1"
                     }
-                    var successCallback = function() {
-                      // pass the test success
-                      console.log('happy');
-                    }
-                    $http.post(PASS_URL, data, config).then(successCallback, errorCallback);
-                }, errorCallback);
+                    $http.post(LOGIN_URL, data, null).then(function(res) {
+                        var TOKEN = res.getElementsByTagName('result')[0].textContent
+                        callback(TOKEN)
+                    }, function() {
+                        // login failed!
+                    })
+                }
             }
         }
     }

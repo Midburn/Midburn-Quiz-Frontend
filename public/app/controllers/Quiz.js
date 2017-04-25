@@ -1,7 +1,7 @@
 // Set-up new game
 app.controller('Quiz', function($scope, $http, config) {
     var userId = config.userId || new URLSearchParams(window.location.search).get('uid');
-
+    
     if (userId === undefined) {
         $("#game-start-wrapper").hide();
         alert("User id is missing!")
