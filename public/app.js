@@ -60,9 +60,9 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     Window.currentQuestion.id = response.data.id;
                     Window.currentQuestion.question = response.data.body;
                     Window.currentQuestion.options = response.data.answers;
-                    Window.currentQuestion.category = response.data.category
-                        ? response.data.category.name
-                        : "כללי";
+                    Window.currentQuestion.category = response.data.category ?
+                        response.data.category.name :
+                        "כללי";
                     Window.currentQuestion.answer = 0;
                     scope.currentCategory = Window.currentQuestion.category;
 
@@ -252,18 +252,64 @@ app.directive('quiz', function(quizFactory, $http, config) {
                         scope.resetQuestionStreakIndicator();
                     }
 
-                    // if game is not over
                     if (!gameOverFlag) {
                         setTimeout(function(argument) {
+                            // game is'nt over, new question
                             scope.nextQuestion();
                         }, 2000);
                     } else {
+                        // game is over, notify drupal
+                        passTheTest()
                         $("#quiz-is-over-alert").toggle();
                     }
                 });
                 scope.answerMode = false;
             };
             scope.reset();
+
+            var passTheTest = function() {
+                /**
+                 * Win the game! get drupal's CSRF token then notify winning
+                 * if CSRF unavailable, user's session could be ended, 
+                 * request to login and get new session! then try to notify.
+                 */
+                var TOKEN_URL = "https://profile-test.midburn.org/en/services/session/token"
+                $http.get(TOKEN_URL).then(function(res) {
+                    // get token
+                    notify(res)
+                }, function() {
+                    // token unavailable, login
+                    login(notify)
+                });
+
+                var notify = function(TOKEN) {
+                    // notify to drupal  about winning 
+                    var PASS_URL = "https://profile-test.midburn.org/en/api/games/" + Window.game.user_id + "/pass"
+                    var config = {
+                        headers: {
+                            'x-csrf-token': TOKEN
+                        }
+                    }
+                    $http.post(PASS_URL, null, config).then(function(res) {
+                        // notify succeed
+                        console.log(res);
+                    }, errorCallback);
+                }
+
+                var login = function(callback) {
+                    var LOGIN_URL = "https://profile-test.midburn.org/en/api/user/login"
+                    var data = {
+                        "username": "sir_ruvzi@hotmail.com",
+                        "password": "WholeNew1"
+                    }
+                    $http.post(LOGIN_URL, data, null).then(function(res) {
+                        var TOKEN = res.getElementsByTagName('result')[0].textContent
+                        callback(TOKEN)
+                    }, function() {
+                        // login failed!
+                    })
+                }
+            }
         }
     }
 });
@@ -346,25 +392,23 @@ app.controller('FooterController', function($scope) {
     // Theme Name
     $scope.ThemeName = "Abracadabra";
     // Footer links => {Text: "text", Href: "href", Class: "class"}
-    $scope.Links = [
-        {
-            Text: "Help us make it better",
-            Href: "//github.com/Midburn/Midburn-Quiz-Frontend",
-            Class: "link-special"
-        }, {
-            Text: "Midburn Website",
-            Href: "//midburn.org/en/",
-            Class: ""
-        }, {
-            Text: "About The Event",
-            Href: "//midburn.org/en-event/",
-            Class: ""
-        }, {
-            Text: "The Ten Principles",
-            Href: "//midburn.org/en-ten-principles/",
-            Class: ""
-        }
-    ];
+    $scope.Links = [{
+        Text: "Help us make it better",
+        Href: "//github.com/Midburn/Midburn-Quiz-Frontend",
+        Class: "link-special"
+    }, {
+        Text: "Midburn Website",
+        Href: "//midburn.org/en/",
+        Class: ""
+    }, {
+        Text: "About The Event",
+        Href: "//midburn.org/en-event/",
+        Class: ""
+    }, {
+        Text: "The Ten Principles",
+        Href: "//midburn.org/en-ten-principles/",
+        Class: ""
+    }];
 });
 // filter for reverse list
 app.filter('reverse', function() {
