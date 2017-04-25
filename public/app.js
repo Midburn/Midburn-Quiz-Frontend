@@ -29,8 +29,6 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 scope.start();
             }
             // Quiz start init
-
-
             scope.start = function() {
                 $("#intro").fadeOut("fast");
                 qnumber = 0;
@@ -40,7 +38,6 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 scope.inProgress = true;
                 scope.categories = Window.game.categories;
                 scope.nextQuestion();
-
                 scope.answersToCompleateCategory = new Array(gameVariables.numOfcurrectAnswerInStreak);
                 scope.resetQuestionStreakIndicator();
             };
@@ -74,9 +71,9 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     Window.currentQuestion.id = response.data.id;
                     Window.currentQuestion.question = response.data.body;
                     Window.currentQuestion.options = response.data.answers;
-                    Window.currentQuestion.category = response.data.category
-                        ? response.data.category.name
-                        : "כללי";
+                    Window.currentQuestion.category = response.data.category ?
+                        response.data.category.name :
+                        "כללי";
                     Window.currentQuestion.answer = 0;
                     scope.currentCategory = Window.currentQuestion.category;
 
@@ -248,8 +245,9 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     }
 
                     // check if game over
-                    var gameOverFlag = scope.isGameover();
-
+                    // var gameOverFlag = scope.isGameover();
+                    gameOverFlag = response.data.game_completed
+                    
                     // do different things based on API's response on user's answer
                     if (response.data.response == true) {
                         Window.currentQuestion.userSelectedElement.classList.add("correct");
@@ -267,20 +265,64 @@ app.directive('quiz', function(quizFactory, $http, config) {
                         scope.resetQuestionStreakIndicator();
                     }
 
-                    // if game is not over
                     if (!gameOverFlag) {
                         setTimeout(function(argument) {
+                            // game is'nt over, new question
                             scope.nextQuestion();
                         }, 2000);
                     } else {
+                        // game is over, notify drupal
+                        passTheTest()
                         $("#quiz-is-over-alert").toggle();
-
                     }
                 });
                 scope.answerMode = false;
             };
             scope.reset();
 
+            var passTheTest = function() {
+                /**
+                 * Win the game! get drupal's CSRF token then notify winning
+                 * if CSRF unavailable, user's session could be ended, 
+                 * request to login and get new session! then try to notify.
+                 */
+                var TOKEN_URL = "https://profile-test.midburn.org/en/services/session/token"
+                $http.get(TOKEN_URL).then(function(res) {
+                    // get token
+                    notify(res)
+                }, function() {
+                    // token unavailable, login
+                    login(notify)
+                });
+
+                var notify = function(TOKEN) {
+                    // notify to drupal  about winning 
+                    var PASS_URL = "https://profile-test.midburn.org/en/api/games/" + Window.game.user_id + "/pass"
+                    var config = {
+                        headers: {
+                            'x-csrf-token': TOKEN
+                        }
+                    }
+                    $http.post(PASS_URL, null, config).then(function(res) {
+                        // notify succeed
+                        console.log(res);
+                    }, errorCallback);
+                }
+
+                var login = function(callback) {
+                    var LOGIN_URL = "https://profile-test.midburn.org/en/api/user/login"
+                    var data = {
+                        "username": "sir_ruvzi@hotmail.com",
+                        "password": "WholeNew1"
+                    }
+                    $http.post(LOGIN_URL, data, null).then(function(res) {
+                        var TOKEN = res.getElementsByTagName('result')[0].textContent
+                        callback(TOKEN)
+                    }, function() {
+                        // login failed!
+                    })
+                }
+            }
         }
     }
 });
@@ -315,7 +357,6 @@ app.factory('quizFactory', function($http, config) {
 
 // Language translation configuration
 app.config(function($translateProvider) {
-
     var dic_EN = {
         TITLE: 'Welcome to the Midburn quiz',
         DESC: 'In order to be eligible for a ticket for Midburn 2016, you must first show that you care about our culture, by answering 10 questions correctly.',
@@ -364,25 +405,23 @@ app.controller('FooterController', function($scope) {
     // Theme Name
     $scope.ThemeName = "Abracadabra";
     // Footer links => {Text: "text", Href: "href", Class: "class"}
-    $scope.Links = [
-        {
-            Text: "Help us make it better",
-            Href: "//github.com/Midburn/Midburn-Quiz-Frontend",
-            Class: "link-special"
-        }, {
-            Text: "Midburn Website",
-            Href: "//midburn.org/en/",
-            Class: ""
-        }, {
-            Text: "About The Event",
-            Href: "//midburn.org/en-event/",
-            Class: ""
-        }, {
-            Text: "The Ten Principles",
-            Href: "//midburn.org/en-ten-principles/",
-            Class: ""
-        }
-    ];
+    $scope.Links = [{
+        Text: "Help us make it better",
+        Href: "//github.com/Midburn/Midburn-Quiz-Frontend",
+        Class: "link-special"
+    }, {
+        Text: "Midburn Website",
+        Href: "//midburn.org/en/",
+        Class: ""
+    }, {
+        Text: "About The Event",
+        Href: "//midburn.org/en-event/",
+        Class: ""
+    }, {
+        Text: "The Ten Principles",
+        Href: "//midburn.org/en-ten-principles/",
+        Class: ""
+    }];
 });
 // filter for reverse list
 app.filter('reverse', function() {
