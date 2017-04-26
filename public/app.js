@@ -20,6 +20,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
     var modal = document.getElementById('Modal');
     var btn = document.getElementById("startBtn");
     var gameOverPopUp = document.getElementById("quiz-is-over-alert");
+    var disableAnswerLable = false;
 
     return {
         restrict: 'E',
@@ -64,6 +65,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 scope.nextQuestion();
                 scope.answersToCompleateCategory = new Array(gameVariables.numOfcurrectAnswerInStreak);
                 scope.resetQuestionStreakIndicator();
+                scope.IsClickEnable = true;
             };
             scope.resetQuestionStreakIndicator = function() {
                 for (i = 0; i < gameVariables.numOfcurrectAnswerInStreak; i++) {
@@ -237,6 +239,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
 
             // Quiz check answer
             scope.checkAnswer = function(event) {
+             scope.IsClickEnable = false;
                 var inputElement = event.target.lastElementChild.lastElementChild;
                 var userAnswerId = inputElement.value;
                 Window.currentQuestion.userSelectedElement = event.target;
@@ -293,6 +296,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                         setTimeout(function(argument) {
                             // game is'nt over, new question
                             scope.nextQuestion();
+                             scope.IsClickEnable = true;
                         }, 2000);
                     } else {
                         // game is over, notify drupal
@@ -301,8 +305,11 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     }
                 });
                 scope.answerMode = false;
+
             };
+            //I think its redundent function -- Liad
             scope.reset();
+
 
             var passTheTest = function() {
                 /**

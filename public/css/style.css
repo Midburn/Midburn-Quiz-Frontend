@@ -488,5 +488,11 @@ button:focus {outline:0;}
 }
 
 
+#blockAnswers{
+
+
+    z-index: 0; /* Sit on top */
+
+}
 
 /* END - Quiz is over page */

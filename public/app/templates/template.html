@@ -40,8 +40,6 @@
                             <a href="http://midburn.org/he-survival-guide/" target="_blank">
                                 <img class="guid-img" src="./assets/guid.png">
                             </a>
-
-
                         </div>
                         <div class="progress-area">
                             <span class="current-category" ng-bind="category">{{ category.name }}</span>
@@ -53,15 +51,15 @@
                         </div>
                         <div class="question-area">
                             <div class="question"> {{ question }}</div>
-                            <ul class="options" id="options">
-                                <li class="list-group-item answer-option"
-                                    ng-click="checkAnswer($event)" ng-repeat="option in options|orderBy:random">
-                                    <label class="answer-option-label">
-                                        <input type="radio" name="answer" ng-model="checked" value="{{option.id}}">
-                                        {{ $index+1 }}. {{option.body}}
-                                    </label>
-                                </li>
-                            </ul>
+                                <ul class="options" id="options">
+                                    <li class="list-group-item answer-option"
+                                        ng-click="!IsClickEnable || checkAnswer($event)" ng-repeat="option in options|orderBy:random">
+                                        <label class="answer-option-label" id="answer-option-label">
+                                            <input type="radio" name="answer" ng-model="checked" value="{{option.id}}">
+                                            {{ $index+1 }}. {{option.body}}
+                                        </label>
+                                    </li>
+                                </ul>
                             <div>
                                 <div class="helper-buttons-area">
 
@@ -117,7 +115,7 @@
         </div>
     </div>
 </div>
-    <script>
+<script>
     // Hide quiz is over
     $("#quiz-is-over-alert").toggle();
 
@@ -142,4 +140,5 @@
 
 
 
-    </script>
+
+</script>
