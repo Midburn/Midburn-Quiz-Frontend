@@ -1,11 +1,7 @@
 /**
  * Midburn Quiz app - )'( let it burn!
  */
- var gameVariables =  {numOfcurrectAnswerInStreak:2};
-
-
-
-
+Window.game.numOfcurrectAnswerInStreak = 2
 
 // Quiz question directive
 app.directive('quiz', function(quizFactory, $http, config) {
@@ -27,28 +23,32 @@ app.directive('quiz', function(quizFactory, $http, config) {
         templateUrl: 'app/templates/template.html',
         link: function(scope, elem, attrs) {
 
-            scope.setupPage = function(){
-                console.log("setupPage")
+            scope.setupPage = function() {
                 // make sure played in landscape mode
                 scope.changeView = window.innerHeight > window.innerWidth
                 console.log(scope.changeView)
                 var rotateModal = document.getElementById('change-viewport-alert');
-                rotateModal.style.display = (scope.changeView) ? "block" : "none"
+                rotateModal.style.display = (scope.changeView)
+                    ? "block"
+                    : "none"
 
                 // hide address bar
-                if(document.documentElement.scrollHeight<window.outerHeight/window.devicePixelRatio)
-                    document.documentElement.style.height=(window.outerHeight/window.devicePixelRatio)+'px';
-                    setTimeout(window.scrollTo(1,1),0);
-                }
+                if (document.documentElement.scrollHeight < window.outerHeight / window.devicePixelRatio)
+                    document.documentElement.style.height = (window.outerHeight / window.devicePixelRatio) + 'px';
+                setTimeout(window.scrollTo(1, 1), 0);
+            }
 
-            // window.addEventListener("load",function(){;});
-            window.addEventListener("orientationchange",function(){scope.setupPage();});
-            window.addEventListener("resize",function(){scope.setupPage();});
+            // listener for screen orientation change
+            window.addEventListener("orientationchange", function() {
+                scope.setupPage();
+            });
+            window.addEventListener("resize", function() {
+                scope.setupPage();
+            });
 
             scope.setupPage();
 
             btn.onclick = function() {
-                //popupmodal.style.display="none";
                 modal.style.display = "none";
                 scope.start();
             }
@@ -62,11 +62,11 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 scope.inProgress = true;
                 scope.categories = Window.game.categories;
                 scope.nextQuestion();
-                scope.answersToCompleateCategory = new Array(gameVariables.numOfcurrectAnswerInStreak);
+                scope.answersToCompleateCategory = new Array(Window.game.numOfcurrectAnswerInStreak);
                 scope.resetQuestionStreakIndicator();
             };
             scope.resetQuestionStreakIndicator = function() {
-                for (i = 0; i < gameVariables.numOfcurrectAnswerInStreak; i++) {
+                for (i = 0; i < Window.game.numOfcurrectAnswerInStreak; i++) {
                     var state = 'not-achieved';
                     if (i == 0) {
                         scope.answersToCompleateCategory[i] = "in-progress";
@@ -95,9 +95,9 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     Window.currentQuestion.id = response.data.id;
                     Window.currentQuestion.question = response.data.body;
                     Window.currentQuestion.options = response.data.answers;
-                    Window.currentQuestion.category = response.data.category ?
-                        response.data.category.name :
-                        "כללי";
+                    Window.currentQuestion.category = response.data.category
+                        ? response.data.category.name
+                        : "כללי";
                     Window.currentQuestion.answer = 0;
                     scope.currentCategory = Window.currentQuestion.category;
 
@@ -126,7 +126,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 if (category.category_completed == true) {
                     return true;
                 }
-                if (correctStreak === gameVariables.numOfcurrectAnswerInStreak) {
+                if (correctStreak === Window.game.numOfcurrectAnswerInStreak) {
                     correctStreak = 0;
                     category.category_completed = true;
                     scope.resetQuestionStreakIndicator();
@@ -155,7 +155,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     }
                 }
                 console.log("GAME ENDED");
-                scope.passedQuiz= true;
+                scope.passedQuiz = true;
             }
 
             scope.updateProgressBar = function(category) {
@@ -183,7 +183,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
 
             // Get hint
             scope.getHint = function() {
-                var post_getHint = {
+                var postHint = {
                     method: 'POST',
                     url: config.API_URL + "/games/" + Window.game.token + '/hint',
                     contentType: 'application/json',
@@ -193,7 +193,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     }
                 }
 
-                $http(post_getHint).then(function(response) {
+                $http(postHint).then(function(response) {
                     var hints = [];
                     for (var i = 0; i < response.data.hints.length; i++) {
                         hints.push(response.data.hints[i].id);
@@ -271,13 +271,13 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     // check if game over
                     // var gameOverFlag = scope.isGameover();
                     gameOverFlag = response.data.game_completed
-                    
+
                     // do different things based on API's response on user's answer
                     if (response.data.response == true) {
                         Window.currentQuestion.userSelectedElement.classList.add("correct");
                         scope.answersToCompleateCategory[correctStreak] = "achieved";
                         correctStreak++;
-                        if (correctStreak < gameVariables.numOfcurrectAnswerInStreak) {
+                        if (correctStreak < Window.game.numOfcurrectAnswerInStreak) {
                             scope.answersToCompleateCategory[correctStreak] = "in-progress";
                         }
                     } else {
@@ -307,7 +307,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
             var passTheTest = function() {
                 /**
                  * Win the game! get drupal's CSRF token then notify winning
-                 * if CSRF unavailable, user's session could be ended, 
+                 * if CSRF unavailable, user's session could be ended,
                  * request to login and get new session! then try to notify.
                  */
                 var TOKEN_URL = "https://profile-test.midburn.org/en/services/session/token"
@@ -320,7 +320,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 });
 
                 var notify = function(TOKEN) {
-                    // notify to drupal  about winning 
+                    // notify to drupal  about winning
                     var PASS_URL = "https://profile-test.midburn.org/en/api/games/" + Window.game.user_id + "/pass"
                     var config = {
                         headers: {
@@ -355,7 +355,7 @@ app.factory('quizFactory', function($http, config) {
     return {
         getQuestion: function(category) {
             // Get question request
-            var get_questionsRequest = {
+            var getQuestionsRequest = {
                 method: 'POST',
                 url: config.API_URL + "/games/" + Window.game.token + '/new_question/',
                 contentType: 'application/json',
@@ -363,7 +363,7 @@ app.factory('quizFactory', function($http, config) {
                 data: {}
             }
 
-            $http(get_questionsRequest).then(function(data) {
+            $http(getQuestionsRequest).then(function(data) {
                 var quesLevel = data.data.level;
                 var quesBody = data.data.body;
                 var quesAnswers = data.data.answers;
@@ -372,81 +372,12 @@ app.factory('quizFactory', function($http, config) {
                 Window.currentQuestion.answer = 0;
             }, function() {
                 // Get questions failure
-                //console.log("Error: can't get questions from api");
             });
             return Window.currentQuestion;
         }
     };
 });
 
-// Language translation configuration
-app.config(function($translateProvider) {
-    var dic_EN = {
-        TITLE: 'Welcome to the Midburn quiz',
-        DESC: 'In order to be eligible for a ticket for Midburn 2016, you must first show that you care about our culture, by answering 10 questions correctly.',
-        INFO: 'Wait, what’s Midburn?',
-        BTN_START_GAME: 'Start Game'
-    };
-    var dic_HE = {
-        TITLE: 'משחקי הברן',
-        DESC: "ברוכים הבאים למשחק הטריוויה החדש שיתן מענה לשאלה שמעסיקה את כולם: האם אתם ברנרים אמיתיים? איך מנצחים? פשוט:עליכם לעבור 5 נושאים שקשורים למידברן, ובכל אחד לענות נכון על "+   + gameVariables.numOfcurrectAnswerInStreak.toString()+ " שאלות רצופות תוכלו להשתמש בשני גלגלי הצלה בכל נושא. בהצלחה!",
-        INFO: 'רגע, מה זה מידברן?',
-//        BTN_START_GAME: 'ז'
-    };
-    // English conf
-    $translateProvider.translations('en', dic_EN);
-    // Hebrew conf
-    $translateProvider.translations('he', dic_HE);
-    // Default language
-    $translateProvider.preferredLanguage('he');
-});
-
-// Language Support Controller
-app.controller('LangController', function($scope, $translate) {
-    // Lang switch method
-    $scope.changeLanguage = function(key) {
-        $translate.use(key);
-        switch (key) {
-            case 'en':
-                {
-                    $("body").removeClass("lanHE");
-                    $("body").addClass("lanEN");
-                    break;
-                }
-            case 'he':
-                {
-                    $("body").removeClass("lanEN");
-                    $("body").addClass("lanHE");
-                    break;
-                }
-        }
-    };
-});
-
-app.controller('FooterController', function($scope) {
-    // Current Year
-    $scope.CurrentYear = new Date().getFullYear();
-    // Theme Name
-    $scope.ThemeName = "Abracadabra";
-    // Footer links => {Text: "text", Href: "href", Class: "class"}
-    $scope.Links = [{
-        Text: "Help us make it better",
-        Href: "//github.com/Midburn/Midburn-Quiz-Frontend",
-        Class: "link-special"
-    }, {
-        Text: "Midburn Website",
-        Href: "//midburn.org/en/",
-        Class: ""
-    }, {
-        Text: "About The Event",
-        Href: "//midburn.org/en-event/",
-        Class: ""
-    }, {
-        Text: "The Ten Principles",
-        Href: "//midburn.org/en-ten-principles/",
-        Class: ""
-    }];
-});
 // filter for reverse list
 app.filter('reverse', function() {
     return function(items) {
@@ -454,5 +385,6 @@ app.filter('reverse', function() {
             return items.slice().reverse();
         else
             return [];
-    };
+        }
+    ;
 });
