@@ -1,7 +1,7 @@
 /**
  * Midburn Quiz app - )'( let it burn!
  */
-Window.game.numOfcurrectAnswerInStreak = 2
+var gameVariables =  {numOfcurrectAnswerInStreak:2};
 
 // Quiz question directive
 app.directive('quiz', function(quizFactory, $http, config) {
@@ -26,7 +26,6 @@ app.directive('quiz', function(quizFactory, $http, config) {
             scope.setupPage = function() {
                 // make sure played in landscape mode
                 scope.changeView = window.innerHeight > window.innerWidth
-                console.log(scope.changeView)
                 var rotateModal = document.getElementById('change-viewport-alert');
                 rotateModal.style.display = (scope.changeView)
                     ? "block"
@@ -62,11 +61,11 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 scope.inProgress = true;
                 scope.categories = Window.game.categories;
                 scope.nextQuestion();
-                scope.answersToCompleateCategory = new Array(Window.game.numOfcurrectAnswerInStreak);
+                scope.answersToCompleateCategory = new Array(gameVariables.numOfcurrectAnswerInStreak);
                 scope.resetQuestionStreakIndicator();
             };
             scope.resetQuestionStreakIndicator = function() {
-                for (i = 0; i < Window.game.numOfcurrectAnswerInStreak; i++) {
+                for (i = 0; i < gameVariables.numOfcurrectAnswerInStreak; i++) {
                     var state = 'not-achieved';
                     if (i == 0) {
                         scope.answersToCompleateCategory[i] = "in-progress";
@@ -126,7 +125,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 if (category.category_completed == true) {
                     return true;
                 }
-                if (correctStreak === Window.game.numOfcurrectAnswerInStreak) {
+                if (correctStreak === gameVariables.numOfcurrectAnswerInStreak) {
                     correctStreak = 0;
                     category.category_completed = true;
                     scope.resetQuestionStreakIndicator();

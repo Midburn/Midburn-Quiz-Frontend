@@ -51,17 +51,12 @@
                   </label>
                 </li>
               </ul>
-              <div>
-                <div class="helper-buttons-area">
-
-                  <!-- Helper buttons -->
-                  <div id="life-line" class="flex-center">
-                    <button id="btnHint" ng-click="getHint()" ng-show="answerMode" ng-disabled="!checkCanGetHint()">
-                                        </button>
-                    <button id="btnSkip" ng-click="skipQuestion()" ng-show="answerMode" ng-disabled="!checkCanSkipQuestion()">
-                                        </button>
-                  </div>
-                </div>
+              <!-- Helper buttons -->
+              <div id="life-line" class="flex-space">
+                <button id="btnHint" class="btn-sm" ng-click="getHint()" ng-show="answerMode" ng-disabled="!checkCanGetHint()">
+                                    </button>
+                <button id="btnSkip" class="btn-sm" ng-click="skipQuestion()" ng-show="answerMode" ng-disabled="!checkCanSkipQuestion()">
+                                    </button>
               </div>
             </div>
           </div>

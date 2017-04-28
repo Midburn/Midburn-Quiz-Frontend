@@ -95,7 +95,7 @@ ul, ol {
     display: block;
     content: "";
     width: 100%;
-    padding-top: 56.25%;
+    padding-top: 100vh;
 }
 
 .sixteen-nine>.content {
@@ -121,20 +121,12 @@ ul, ol {
 
 #btnHint {
     background: url(../assets/remove-two-wrong-answers.png) no-repeat center;
-    cursor: pointer;
-    background-size: cover;
-    border: none;
-    width: 20%;
-    height: 44%;
+    background-size: contain;
 }
 
 #btnSkip {
     background: url(../assets/skip-question.png) no-repeat center;
-    background-size: cover;
-    cursor: pointer;
-    border: none;
-    width: 22%;
-    height: 27%;
+    background-size: contain;
 }
 
 
@@ -221,13 +213,18 @@ ul.options>li {
 }
 
 #life-line {
+    width: 40%;
+    height: 18%;
     background: url(../assets/bottom-floater.png) no-repeat center;
-    background-size: cover;
-    bottom: 0;
+    background-size: contain;
     position: absolute;
-    width: 25%;
-    height: 20%;
-    right: 31%;
+    right: 20%;
+    bottom: 0;
+    padding: 0 10%;
+}
+
+#life-line > button {
+    margin-bottom: 20px;
 }
 
 .current-category {
@@ -558,9 +555,34 @@ button:focus {
 
 .flex-space {
     display: flex;
-    justify-content: space-between;
+    align-items: flex-end;
+    justify-content: space-around;
 }
 
 .list-no-bullets {
     list-style: none;
+}
+
+.btn-sm {
+    cursor: pointer;
+    border: 0;
+    width: 60px;
+    height: 55px;
+}
+
+@media (min-width: 568px) and (max-width: 991px) {
+    .quiz-zone {
+        overflow-y: auto;
+    }
+    #life-line {
+        padding: 0 12%;
+        z-index: -1;
+    }
+    #life-line > button {
+        margin-bottom: 0;
+    }
+    .btn-sm {
+        width: 35px;
+        height: 45px;
+    }
 }

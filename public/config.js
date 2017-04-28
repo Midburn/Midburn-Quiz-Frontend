@@ -33,6 +33,5 @@ Window.currentQuestion = {
 Window.game = {
     token: null,
     categories: [],
-    numOfcurrectAnswerInStreak: null,
     hintBtn: $("button#btnHint")
 }
