@@ -48,6 +48,7 @@ body {
   color: white;
   text-align: center;
   float:left;
+position:relative;
 }
 
 .sidebar-nav {
@@ -70,23 +71,100 @@ body {
 
 .category{
    color: #999999;
-   display: block;
+   position: absolute;
+   display: inline;
    text-decoration: none;
-   border: 1px solid rgba(0, 0, 0, .1);
+   border: none;
    padding: 0;
-   padding-top: 22%;
+   margin: 0;
    width: 100%;
    height: 20%;
    font-size: 2vw;
    text-align: center;
+
+
+ object-fit: initial;
+}
+#startCover{
+    background: url(../assets/start-flach.png) no-repeat center;
+    background-size:cover;
+    z-index = 3000;
+    position: relative;
+    height: 100%;
+}
+.categories-wrapper .category-text {
+color: #999999;
+position:relative;
+   display: block;
+   text-decoration: none;
+   border: none;
+   padding: 0;
    margin: 0;
+   width: 100%;
+   height: 20%;
+   font-size: 2vw;
+   text-align: center;
+   padding: 0;
+   padding-top: 22%;
+   z-index:999;
+   background: url(../assets/Rectangle-1.png) no-repeat center;
+}
+.categories-wrapper .category-text .category-text-fade-out{
+color: #999999;
+position:relative;
+   display: block;
+   text-decoration: none;
+   border: none;
+   padding: 0;
+   margin: 0;
+   width: 100%;
+   height: 20%;
+   font-size: 2vw;
+   text-align: center;
+   padding: 0;
+   padding-top: 22%;
+   z-index:999;
+   background: url(../assets/Rectangle-1.png) no-repeat center;
+   opacity: 0.5;
+}
+.category-text.cat4{
+     background: url(../assets/side-bar-a.png) no-repeat center;
+       background-size: cover;
+}
+.category-text.cat3{
+     background: url(../assets/side-bar-b.png) no-repeat center;
+       background-size: cover;
+}
+.category-text.cat2{
+     background: url(../assets/side-bar-c.png) no-repeat center;
+       background-size: cover;
+}
+.category-text.cat1{
+     background: url(../assets/side-bar-d.png) no-repeat center;
+       background-size: cover;
+}
+.category-text.cat0{
+     background: url(../assets/side-bar-e.png) no-repeat center;
+       background-size: cover;
 }
 
 .category-done {
    background: url(../assets/bg.png) no-repeat center;
    background-size: cover;
 }
+.category-done {
+   background: url(../assets/bg.png) no-repeat center;
+   background-size: cover;
+}
+.categories-wrapper .categories-video {
+        float:left;
+        object-fit: contain;
+            width: 25%;
+            right: 78%;
 
+        position: fixed;
+        z-index: 0;
+}
 .sixteen-nine {
   position: relative;
 }
@@ -135,9 +213,32 @@ body {
   right: 20%;
   bottom: 12%;
 }
+#btnHint:disabled{
+  background: url(../assets/remove-two-wrong-answers-pushed.png) no-repeat center ;
+  cursor:pointer;
+  background-size: cover;
+  border:none;
+  width: 20%;
+  height: 44%;
+  position: absolute;
+  margin-left: 10%;
+  right: 20%;
+  bottom: 12%;
+}
 
-#btnSkip{
+.btnSkip{
     background: url(../assets/skip-question.png) no-repeat center;
+    background-size: cover;
+    cursor:pointer;
+    border:none;
+    width: 22%;
+    height: 27%;
+    right: 55%;
+    bottom: 23%;
+    position: absolute;
+}
+.btnSkip:disabled {
+background: url(../assets/next-question-pushed.png) no-repeat center;
     background-size: cover;
     cursor:pointer;
     border:none;

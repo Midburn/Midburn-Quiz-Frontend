@@ -23,6 +23,7 @@ app.controller('Quiz', function($scope, $http, config) {
         $http(request_new_game).then(function(response) {
             // set the game model
             Window.game = response.data;
+
         }, function() {
             // New game init failure
             console.error("Failed to init new game");

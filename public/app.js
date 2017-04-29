@@ -66,6 +66,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 scope.answersToCompleateCategory = new Array(gameVariables.numOfcurrectAnswerInStreak);
                 scope.resetQuestionStreakIndicator();
                 scope.IsClickEnable = true;
+                scope.gameStarted = true;
             };
             scope.resetQuestionStreakIndicator = function() {
                 for (i = 0; i < gameVariables.numOfcurrectAnswerInStreak; i++) {
@@ -274,7 +275,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     // check if game over
                     // var gameOverFlag = scope.isGameover();
                     gameOverFlag = response.data.game_completed
-                    
+
                     // do different things based on API's response on user's answer
                     if (response.data.response == true) {
                         Window.currentQuestion.userSelectedElement.classList.add("correct");
@@ -314,7 +315,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
             var passTheTest = function() {
                 /**
                  * Win the game! get drupal's CSRF token then notify winning
-                 * if CSRF unavailable, user's session could be ended, 
+                 * if CSRF unavailable, user's session could be ended,
                  * request to login and get new session! then try to notify.
                  */
                 var TOKEN_URL = "https://profile-test.midburn.org/en/services/session/token"
@@ -327,7 +328,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 });
 
                 var notify = function(TOKEN) {
-                    // notify to drupal  about winning 
+                    // notify to drupal  about winning
                     var PASS_URL = "https://profile-test.midburn.org/en/api/games/" + Window.game.user_id + "/pass"
                     var config = {
                         headers: {

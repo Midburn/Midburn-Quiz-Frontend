@@ -26,12 +26,23 @@
 
         <div ng-show="!quizOver" class="full-size">
             <div id="wrapper" class="full-size">
-                <div class="full-size">
+                <div   class="full-size">
 
                     <div class="categories-wrapper">
-                        <h1 class="category" ng-repeat="category in categories | reverse"
-                            ng-class="{'category-done': category.category_completed}">{{ category.name }}</h1>
+                        <p id="startCover" ng-if="!gameStarted"></p>
+                        <video autoplay loop class="categories-video" ng-if="gameStarted">
+                            <source src="./assets/side-menu-full.mov">
+                        </video>
+                        <h1 class="category-text" ng-show="!category.category_completed" ng-class=
+                                "{'cat4':category == categories[4],
+                                'cat3':category == categories[3],
+                                'cat2':category == categories[2],
+                                'cat1':category == categories[1],
+                                'cat0':category == categories[0]}"
+                            ng-repeat="category in categories | reverse">{{category.name}}</h1>
+
                     </div>
+
                     <div class="quiz-zone">
                         <div class="header">
                             <a href="https://www.facebook.com/midburns/" target="_blank">
@@ -50,7 +61,7 @@
                             </div>
                         </div>
                         <div class="question-area">
-                            <div class="question"> {{ question }}</div>
+                            <div class="question"> {{ question}}</div>
                                 <ul class="options" id="options">
                                     <li class="list-group-item answer-option"
                                         ng-click="!IsClickEnable || checkAnswer($event)" ng-repeat="option in options|orderBy:random">
@@ -68,7 +79,7 @@
                                         <button id="btnHint" ng-click="getHint()" ng-show="answerMode"
                                                 ng-disabled="!checkCanGetHint()">
                                         </button>
-                                        <button id="btnSkip" ng-click="skipQuestion()" ng-show="answerMode"
+                                        <button class="btnSkip" ng-click="skipQuestion()" ng-show="answerMode"
                                                 ng-disabled="!checkCanSkipQuestion()">
                                         </button>
                                     </div>
