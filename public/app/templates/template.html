@@ -31,14 +31,15 @@
                     <div class="categories-wrapper">
                         <p id="startCover" ng-if="!gameStarted"></p>
                         <video autoplay loop class="categories-video" ng-if="gameStarted">
-                            <source src="./assets/side-menu-full.mov">
+                            <source src="./assets/side-menu-video.mp4">
                         </video>
-                        <h1 class="category-text" ng-show="!category.category_completed" ng-class=
-                                "{'cat4':category == categories[4],
-                                'cat3':category == categories[3],
+                        <h1 class="category-text"  ng-class=
+                                "{'cat0':category == categories[4],
+                                'cat1':category == categories[3],
                                 'cat2':category == categories[2],
-                                'cat1':category == categories[1],
-                                'cat0':category == categories[0]}"
+                                'cat3':category == categories[1],
+                                'cat4':category == categories[0],
+                                'catFade':category.category_completed}"
                             ng-repeat="category in categories | reverse">{{category.name}}</h1>
 
                     </div>
