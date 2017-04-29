@@ -576,7 +576,6 @@ button:focus {
     }
     #life-line {
         padding: 0 12%;
-        z-index: -1;
     }
     #life-line > button {
         margin-bottom: 0;
