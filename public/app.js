@@ -1,10 +1,12 @@
 /**
  * Midburn Quiz app - )'( let it burn!
  */
-var gameVariables =  {numOfcurrectAnswerInStreak:2};
+var gameVariables = {
+    numOfcurrectAnswerInStreak: 2
+};
 
 // Quiz question directive
-app.directive('quiz', function(quizFactory, $http, config) {
+app.directive('quiz', function (quizFactory, $http, config) {
     var qnumber;
     var game = Window.game;
     var categories = Window.game.categories;
@@ -21,38 +23,19 @@ app.directive('quiz', function(quizFactory, $http, config) {
         restrict: 'E',
         scope: {},
         templateUrl: 'app/templates/template.html',
-        link: function(scope, elem, attrs) {
+        link: function (scope, elem, attrs) {
+            // hide address bar
+            if (document.documentElement.scrollHeight < window.outerHeight / window.devicePixelRatio)
+                document.documentElement.style.height = (window.outerHeight / window.devicePixelRatio) +
+                'px';
+            setTimeout(window.scrollTo(1, 1), 0);
 
-            scope.setupPage = function() {
-                // make sure played in landscape mode
-                scope.changeView = window.innerHeight > window.innerWidth
-                var rotateModal = document.getElementById('change-viewport-alert');
-                rotateModal.style.display = (scope.changeView)
-                    ? "block"
-                    : "none"
-
-                // hide address bar
-                if (document.documentElement.scrollHeight < window.outerHeight / window.devicePixelRatio)
-                    document.documentElement.style.height = (window.outerHeight / window.devicePixelRatio) + 'px';
-                setTimeout(window.scrollTo(1, 1), 0);
-            }
-
-            // listener for screen orientation change
-            window.addEventListener("orientationchange", function() {
-                scope.setupPage();
-            });
-            window.addEventListener("resize", function() {
-                scope.setupPage();
-            });
-
-            scope.setupPage();
-
-            btn.onclick = function() {
+            btn.onclick = function () {
                 modal.style.display = "none";
                 scope.start();
             }
             // Quiz start init
-            scope.start = function() {
+            scope.start = function () {
                 $("#intro").fadeOut("fast");
                 qnumber = 0;
                 scope.id = 0;
@@ -64,7 +47,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 scope.answersToCompleateCategory = new Array(gameVariables.numOfcurrectAnswerInStreak);
                 scope.resetQuestionStreakIndicator();
             };
-            scope.resetQuestionStreakIndicator = function() {
+            scope.resetQuestionStreakIndicator = function () {
                 for (i = 0; i < gameVariables.numOfcurrectAnswerInStreak; i++) {
                     var state = 'not-achieved';
                     if (i == 0) {
@@ -75,7 +58,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 }
             };
             // Quiz get question
-            scope.getQuestion = function(category) {
+            scope.getQuestion = function (category) {
                 // Get question request
                 var getQuestionRequest = {
                     method: 'POST',
@@ -87,16 +70,16 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     }
                 }
 
-                $http(getQuestionRequest).then(function(response) {
+                $http(getQuestionRequest).then(function (response) {
                     /* Data returned from API:
                      *  Qustion id, text, answers, category
                      * */
                     Window.currentQuestion.id = response.data.id;
                     Window.currentQuestion.question = response.data.body;
                     Window.currentQuestion.options = response.data.answers;
-                    Window.currentQuestion.category = response.data.category
-                        ? response.data.category.name
-                        : "כללי";
+                    Window.currentQuestion.category = response.data.category ?
+                        response.data.category.name :
+                        "כללי";
                     Window.currentQuestion.answer = 0;
                     scope.currentCategory = Window.currentQuestion.category;
 
@@ -110,18 +93,18 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     } else {
                         scope.quizOver = true;
                     }
-                }, function() {
+                }, function () {
                     // Get questions failure
                     console.log("Error: can't get questions from api");
                 });
             };
-            scope.checkCanGetHint = function() {
+            scope.checkCanGetHint = function () {
                 return canGetHint;
             }
-            scope.checkCanSkipQuestion = function() {
+            scope.checkCanSkipQuestion = function () {
                 return canSkipQuestion;
             }
-            scope.isCategoryCompleted = function(category) {
+            scope.isCategoryCompleted = function (category) {
                 if (category.category_completed == true) {
                     return true;
                 }
@@ -137,7 +120,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 //return category.category_completed;
             }
 
-            scope.selectCategory = function() {
+            scope.selectCategory = function () {
                 var categories = Window.game.categories;
                 for (var i = 0; i < categories.length; i++) {
                     var category = categories[i];
@@ -157,7 +140,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 scope.passedQuiz = true;
             }
 
-            scope.updateProgressBar = function(category) {
+            scope.updateProgressBar = function (category) {
                 var pages = $(".category-pagination");
                 for (var i = 0; i < pages.length; i++) {
                     var pageElem = pages[i];
@@ -172,7 +155,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
             }
 
             // Quiz next question
-            scope.nextQuestion = function() {
+            scope.nextQuestion = function () {
                 qnumber++;
                 scope.id++;
                 category = scope.selectCategory();
@@ -181,7 +164,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
             };
 
             // Get hint
-            scope.getHint = function() {
+            scope.getHint = function () {
                 var postHint = {
                     method: 'POST',
                     url: config.API_URL + "/games/" + Window.game.token + '/hint',
@@ -192,7 +175,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     }
                 }
 
-                $http(postHint).then(function(response) {
+                $http(postHint).then(function (response) {
                     var hints = [];
                     for (var i = 0; i < response.data.hints.length; i++) {
                         hints.push(response.data.hints[i].id);
@@ -200,25 +183,26 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     // Disable two answer options
                     for (var i = 0; i < hints.length; i++) {
                         var answerId = hints[i];
-                        var selector = "ul#options > li input[type='radio'][value='" + answerId + "']";
+                        var selector = "ul#options > li input[type='radio'][value='" + answerId +
+                            "']";
                         var elem = $(selector)[0];
                         elem.parentNode.parentNode.classList.add("disabled-option");
                     }
                 });
                 canGetHint = false;
             };
-            scope.skipQuestion = function() {
+            scope.skipQuestion = function () {
                 scope.nextQuestion();
                 canSkipQuestion = false;
             }
 
             // Quiz reset
-            scope.reset = function() {
+            scope.reset = function () {
                 scope.inProgress = false;
                 scope.score = 0;
             }
 
-            scope.isGameover = function() {
+            scope.isGameover = function () {
                 var gameOverFlag = true;
                 for (var i = 0; i < Window.game.categories.length; i++) {
                     var category = Window.game.categories[i];
@@ -230,12 +214,12 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 return gameOverFlag;
             }
 
-            scope.flashCorrect = function(elem, callback) {
+            scope.flashCorrect = function (elem, callback) {
                 elem.classList.add("correct");
             }
 
             // Quiz check answer
-            scope.checkAnswer = function(event) {
+            scope.checkAnswer = function (event) {
                 var inputElement = event.target.lastElementChild.lastElementChild;
                 var userAnswerId = inputElement.value;
                 Window.currentQuestion.userSelectedElement = event.target;
@@ -257,7 +241,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     }
                 }
 
-                $http(postCheckAnswer).then(function(response) {
+                $http(postCheckAnswer).then(function (response) {
                     // update categories model
                     var categoryString = Window.currentQuestion.category;
                     for (var i = 0; i < Window.game.categories.length; i++) {
@@ -289,7 +273,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     }
 
                     if (!gameOverFlag) {
-                        setTimeout(function(argument) {
+                        setTimeout(function (argument) {
                             // game is'nt over, new question
                             scope.nextQuestion();
                         }, 2000);
@@ -303,45 +287,46 @@ app.directive('quiz', function(quizFactory, $http, config) {
             };
             scope.reset();
 
-            var passTheTest = function() {
+            var passTheTest = function () {
                 /**
                  * Win the game! get drupal's CSRF token then notify winning
                  * if CSRF unavailable, user's session could be ended,
                  * request to login and get new session! then try to notify.
                  */
                 var TOKEN_URL = "https://profile-test.midburn.org/en/services/session/token"
-                $http.get(TOKEN_URL).then(function(res) {
+                $http.get(TOKEN_URL).then(function (res) {
                     // get token
                     notify(res)
-                }, function() {
+                }, function () {
                     // token unavailable, login
                     login(notify)
                 });
 
-                var notify = function(TOKEN) {
+                var notify = function (TOKEN) {
                     // notify to drupal  about winning
-                    var PASS_URL = "https://profile-test.midburn.org/en/api/games/" + Window.game.user_id + "/pass"
+                    var PASS_URL = "https://profile-test.midburn.org/en/api/games/" + Window.game.user_id +
+                        "/pass"
                     var config = {
                         headers: {
                             'x-csrf-token': TOKEN
                         }
                     }
-                    $http.post(PASS_URL, null, config).then(function(res) {
+                    $http.post(PASS_URL, null, config).then(function (res) {
                         // notify succeed
                         console.log(res);
                     }, errorCallback);
                 }
 
-                var login = function(callback) {
+                var login = function (callback) {
                     var LOGIN_URL = "https://profile-test.midburn.org/en/api/user/login"
                     var data = {
                         "username": "sir_ruvzi@hotmail.com",
                         "password": "WholeNew1"
                     }
-                    $http.post(LOGIN_URL, data, null).then(function(res) {
+                    $http.post(LOGIN_URL, data, null).then(function (res) {
                         var TOKEN = res.getElementsByTagName('result')[0].textContent
                         callback(TOKEN)
-                    }, function() {
+                    }, function () {
                         // login failed!
                     })
                 }
@@ -350,9 +335,9 @@ app.directive('quiz', function(quizFactory, $http, config) {
     }
 });
 
-app.factory('quizFactory', function($http, config) {
+app.factory('quizFactory', function ($http, config) {
     return {
-        getQuestion: function(category) {
+        getQuestion: function (category) {
             // Get question request
             var getQuestionsRequest = {
                 method: 'POST',
@@ -362,14 +347,14 @@ app.factory('quizFactory', function($http, config) {
                 data: {}
             }
 
-            $http(getQuestionsRequest).then(function(data) {
+            $http(getQuestionsRequest).then(function (data) {
                 var quesLevel = data.data.level;
                 var quesBody = data.data.body;
                 var quesAnswers = data.data.answers;
                 Window.currentQuestion.question = quesBody;
                 Window.currentQuestion.options = quesAnswers;
                 Window.currentQuestion.answer = 0;
-            }, function() {
+            }, function () {
                 // Get questions failure
             });
             return Window.currentQuestion;
@@ -378,12 +363,11 @@ app.factory('quizFactory', function($http, config) {
 });
 
 // filter for reverse list
-app.filter('reverse', function() {
-    return function(items) {
+app.filter('reverse', function () {
+    return function (items) {
         if (items)
             return items.slice().reverse();
         else
             return [];
-        }
-    ;
+    };
 });
