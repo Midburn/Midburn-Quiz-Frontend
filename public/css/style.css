@@ -607,3 +607,24 @@ button:focus {
         height: 45px;
     }
 }
+
+button#goFS {
+    position: absolute;
+    top: -30px;
+}
+
+#goFS:-webkit-full-screen #goFS {
+    display: none;
+}
+
+#goFS:-moz-full-screen #goFS {
+    display: none;
+}
+
+#goFS:-ms-fullscreen #goFS {
+    display: none;
+}
+
+#goFS:fullscreen #goFS {
+    display: none;
+}
