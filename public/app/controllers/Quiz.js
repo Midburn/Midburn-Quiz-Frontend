@@ -1,14 +1,14 @@
 // Set-up new game
-app.controller('Quiz', function ($scope, $http, config) {
-    var userId = config.userId || window.location.search !== '' ? window.location.search.match(/\d+/)[0] : ''
-
-    if (userId === '' || userId === undefined) {
-        $("body").hide();
+app.controller('Quiz', function($scope, $http, config) {
+    var userId = config.userId || new URLSearchParams(window.location.search).get('uid');
+    
+    if (userId === undefined) {
+        $("#game-start-wrapper").hide();
         alert("User id is missing!")
         return;
     }
 
-    $scope.Init = function (lang = "en") {
+    $scope.Init = function(lang = "en") {
         var request_new_game = {
             method: 'POST',
             url: config.API_URL + '/games/new/',
@@ -20,10 +20,11 @@ app.controller('Quiz', function ($scope, $http, config) {
             }
         }
 
-        $http(request_new_game).then(function (response) {
+        $http(request_new_game).then(function(response) {
             // set the game model
             Window.game = response.data;
-        }, function () {
+
+        }, function() {
             // New game init failure
             console.error("Failed to init new game");
         });

@@ -1,4 +1,10 @@
+<!--Start Game Button-->
+
+
+<!--Quiz area-->
 <div id="quiz-page" class="sixteen-nine">
+    <!--<div id="game-start-wrapper" class="well card">-->
+
     <div class="content">
         <div id="quiz-is-over-alert" class="modal" ng-show="passedQuiz">
             <div id="gameOverPopup" class="container">
@@ -10,47 +16,104 @@
                 </div>
             </div>
         </div>
+
+
+
         <div ng-show="!quizOver" class="full-size">
             <div id="wrapper" class="full-size">
-                <div class="full-size">
+                <div   class="full-size">
+
                     <div class="categories-wrapper">
-                        <div class="category flex-center" ng-repeat="category in categories | reverse" ng-class="{'category-done': category.category_completed}">
-                            <span>{{ category.name }}</span>
-                        </div>
+                        <p id="startCover" ng-if="!gameStarted"></p>
+                        <video autoplay loop class="categories-video" ng-if="gameStarted">
+                            <source src="./assets/side-menu-video.mp4">
+                        </video>
+                        <h1 class="category-text"  ng-class=
+                                "{'cat0':category == categories[4],
+                                'cat1':category == categories[3],
+                                'cat2':category == categories[2],
+                                'cat3':category == categories[1],
+                                'cat4':category == categories[0],
+                                'catFade':category.category_completed}"
+                            ng-repeat="category in categories | reverse">{{category.name}}</h1>
+
                     </div>
+
                     <div class="quiz-zone">
-                        <div quiz-header class="header flex-space"></div>
-                        <div class="question-area">
-                            <h3 class="question"> {{ question }}</h3>
-                            <ul id="options" class="options list-no-bullets">
-                                <li ng-click="checkAnswer($event)" ng-repeat="option in options|orderBy:random">
-                                    <label class="answer-option-label">
-                    <input type="radio" name="answer" ng-model="checked" value="{{option.id}}">
-                    {{ $index+1 }}. {{option.body}}
-                  </label>
-                                </li>
-                            </ul>
+                        <div class="header">
+                            <a href="https://www.facebook.com/midburns/" target="_blank">
+                                <img class="social-img" src="./assets/facebook.png">
+                            </a>
+                            <a href="http://midburn.org/he-survival-guide/" target="_blank">
+                                <img class="guid-img" src="./assets/guid.png">
+                            </a>
                         </div>
-                    </div>
-                    <!-- Helper buttons -->
-                    <div id="life-line" class="flex-space">
-                        <button id="btnHint" class="btn-sm" ng-click="getHint()" ng-show="answerMode" ng-disabled="!checkCanGetHint()">
-                                </button>
-                        <button id="btnSkip" class="btn-sm" ng-click="skipQuestion()" ng-show="answerMode" ng-disabled="!checkCanSkipQuestion()">
-                                </button>
+                        <div class="progress-area">
+                            <span class="current-category" ng-bind=" category"></span>
+                            <div class="answers-progress">
+                                <span class="answer-feedback"
+                                      ng-repeat="i in answersToCompleateCategory track by $index "
+                                      ng-class="{ 'blink': i == 'in-progress', 'done': i == 'achieved'}"></span>
+                            </div>
+                        </div>
+                        <div class="question-area">
+                            <div class="question"> {{ question}}</div>
+                                <ul class="options" id="options">
+                                    <li class="list-group-item answer-option"
+                                        ng-click="!IsClickEnable || checkAnswer($event)" ng-repeat="option in options|orderBy:random">
+                                        <label class="answer-option-label" id="answer-option-label">
+                                            <input type="radio" name="answer" ng-model="checked" value="{{option.id}}">
+                                            {{ $index+1 }}. {{option.body}}
+                                        </label>
+                                    </li>
+                                </ul>
+                            <div>
+                                <div class="helper-buttons-area">
+
+                                    <!-- Helper buttons -->
+                                    <div class="input-group-btn" id="life-line">
+                                        <button id="btnHint" ng-click="getHint()" ng-show="answerMode"
+                                                ng-disabled="!checkCanGetHint()">
+                                        </button>
+                                        <button class="btnSkip" ng-click="skipQuestion()" ng-show="answerMode"
+                                                ng-disabled="!checkCanSkipQuestion()">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
-        <div id="quiz-correct-answer-alert" onclick="$('#quiz-correct-answer-alert').fadeOut();">
+        <!-- Alerts & notification widgets -->
+        <!--<div id="quiz-is-over-alert" class="modal">-->
+        <!--<div class="container">-->
+        <!--<div class="clearfix">-->
+        <!--<div class="jumbotron">-->
+        <!--<h1><i class="fa fa-smile-o fa-spin"></i></h1>-->
+        <!--<p>-->
+        <!--<h2>עברתי את המבחן ועכשיו אני אוכל לקנות כרטיס</h2>-->
+        <!--</p>-->
+        <!--<p>-->
+        <!--<a id="quiz-is-over-alert-btn" class="btn game-btn" href="#" role="button">לכרטיס!</a>-->
+        <!--</p>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <div id="quiz-correct-answer-alert" class="fade-screen" onclick="$('#quiz-correct-answer-alert').fadeOut();">
             <div class="container">
                 <div class="clearfix">
                     <div class="jumbotron">
                         <h1>תשובה נכונה</h1>
                         <div style="margin-top: 20px;">
                             <p>
-                                <a class="btn game-btn" href="#" role="button" onclick="$('#quiz-correct-answer-alert').fadeOut();">סגור</a>
+                                <a class="btn game-btn" href="#" role="button"
+                                   onclick="$('#quiz-correct-answer-alert').fadeOut();">סגור</a>
                             </p>
                         </div>
                     </div>
@@ -68,5 +131,21 @@
 
     // Hide correct answer alert
     $('#quiz-correct-answer-alert').toggle();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
