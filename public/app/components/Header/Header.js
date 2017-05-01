@@ -17,7 +17,7 @@ app.directive('quizHeader', function () {
                 !doc
                 .msFullscreenElement) {
                 // show fullscreen button
-                $('#goFS').css('top', 0).fadeIn()
+                $('#goFS').fadeIn()
 
                 $('#goFS').click(function () {
                     requestFullScreen.call(docEl);
@@ -27,6 +27,10 @@ app.directive('quizHeader', function () {
             } else {
                 cancelFullScreen.call(doc);
             }
+
+            setTimeout(function () {
+                $('#goFS').fadeOut()
+            }, 5000)
         }
     };
 });

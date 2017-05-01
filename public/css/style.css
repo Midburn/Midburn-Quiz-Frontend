@@ -525,7 +525,7 @@ button:focus {
 }
 
 .header {
-    height: 45px;
+    height: 55px;
 }
 
 .header>div {
@@ -582,6 +582,13 @@ button:focus {
     list-style: none;
 }
 
+.btn {
+    cursor: pointer;
+    border: 0;
+    width: auto;
+    height: 55px;
+}
+
 .btn-sm {
     cursor: pointer;
     border: 0;
@@ -608,9 +615,15 @@ button:focus {
     }
 }
 
-button#goFS {
+.fullscreen-wrapper {
+    width: 100%;
     position: absolute;
-    top: -30px;
+    top: 0;
+}
+
+.fullscreen-wrapper>button {
+    display: block;
+    margin: 0 auto;
 }
 
 #goFS:-webkit-full-screen #goFS {
