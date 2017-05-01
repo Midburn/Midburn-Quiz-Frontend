@@ -1,0 +1,11 @@
+<button id="goFS">Full-screen!</button >
+<div class="links">
+    <a class="icn-facebook" href="https://www.facebook.com/midburns/" target="_blank"></a>
+    <a class="icn-guide" href="http://midburn.org/he-survival-guide/" target="_blank"></a>
+</div>
+<div class="progress-area text-center">
+    <span class="current-category" ng-bind="category">{{ category.name }}</span>
+    <div class="answers-progress">
+        <span class="answer-feedback" ng-repeat="i in answersToCompleateCategory track by $index " ng-class="{ 'blink': i == 'in-progress', 'done': i == 'achieved'}"></span>
+    </div>
+</div>

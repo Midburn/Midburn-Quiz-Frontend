@@ -1,0 +1,12 @@
+{
+    "short_name": "Midburn Quiz",
+    "name": "Midburn 10 principles quiz",
+    "icons": [{
+        "src": "launcher-icon-4x.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }],
+    "start_url": "/index.html",
+    "display": "standalone",
+    "orientation": "landscape"
+}
