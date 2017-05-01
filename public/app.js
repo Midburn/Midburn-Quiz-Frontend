@@ -182,6 +182,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 category = scope.selectCategory();
                 scope.getQuestion(category);
                 scope.updateProgressBar(category);
+                scope.IsClickEnable = true;
             };
 
             // Get hint
@@ -296,8 +297,8 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     if (!gameOverFlag) {
                         setTimeout(function(argument) {
                             // game is'nt over, new question
+
                             scope.nextQuestion();
-                             scope.IsClickEnable = true;
                         }, 2000);
                     } else {
                         // game is over, notify drupal
