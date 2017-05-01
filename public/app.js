@@ -254,7 +254,7 @@ app.directive('quiz', function (quizFactory, $http, config) {
                         Window.currentQuestion.userSelectedElement.classList.add("correct");
                         scope.answersToCompleateCategory[correctStreak] = "achieved";
                         correctStreak++;
-                        if (correctStreak < Window.game.numOfcurrectAnswerInStreak) {
+                        if (correctStreak < gameVariables.numOfcurrectAnswerInStreak) {
                             scope.answersToCompleateCategory[correctStreak] = "in-progress";
                         }
                     } else {
