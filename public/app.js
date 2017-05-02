@@ -1,7 +1,7 @@
 /**
  * Midburn Quiz app - )'( let it burn!
  */
- var gameVariables =  {numOfcurrectAnswerInStreak:2};
+ var gameVariables =  {numOfcurrectAnswerInStreak:1};
 
 
 
@@ -9,7 +9,7 @@
 
 // Quiz question directive
 app.directive('quiz', function(quizFactory, $http, config) {
-    var qnumber;
+
     var game = Window.game;
     var categories = Window.game.categories;
     var canGetHint = true;
@@ -17,9 +17,10 @@ app.directive('quiz', function(quizFactory, $http, config) {
     var correctStreak = 0;
 
     var popupmodal = document.getElementById('popupModal');
+    var endPopupmodal = document.getElementById('quiz-is-over-alert');
     var modal = document.getElementById('Modal');
     var btn = document.getElementById("startBtn");
-    var gameOverPopUp = document.getElementById("quiz-is-over-alert");
+     var gameOverPopUp = document.getElementById("quiz-is-over-alert");
     var disableAnswerLable = false;
 
     return {
@@ -49,14 +50,13 @@ app.directive('quiz', function(quizFactory, $http, config) {
             scope.setupPage();
 
             btn.onclick = function() {
-                //popupmodal.style.display="none";
                 modal.style.display = "none";
                 scope.start();
             }
             // Quiz start init
             scope.start = function() {
                 $("#intro").fadeOut("fast");
-                qnumber = 0;
+
                 scope.id = 0;
                 scope.quizOver = false;
                 scope.passedQuiz = false;
@@ -99,13 +99,12 @@ app.directive('quiz', function(quizFactory, $http, config) {
                     Window.currentQuestion.question = response.data.body;
                     Window.currentQuestion.options = response.data.answers;
                     Window.currentQuestion.category = response.data.category ?
-                        response.data.category.name :
+                    response.data.category.name :
                         "כללי";
                     Window.currentQuestion.answer = 0;
                     scope.currentCategory = Window.currentQuestion.category;
 
                     if (Window.currentQuestion) {
-                        scope.qnumber = qnumber;
                         scope.question = Window.currentQuestion.question;
                         scope.options = Window.currentQuestion.options;
                         scope.answer = Window.currentQuestion.answer;
@@ -127,11 +126,13 @@ app.directive('quiz', function(quizFactory, $http, config) {
             }
             scope.isCategoryCompleted = function(category) {
                 if (category.category_completed == true) {
+
                     return true;
                 }
                 if (correctStreak === gameVariables.numOfcurrectAnswerInStreak) {
                     correctStreak = 0;
                     category.category_completed = true;
+
                     scope.resetQuestionStreakIndicator();
                     return true;
                 } else {
@@ -159,29 +160,24 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 }
                 console.log("GAME ENDED");
                 scope.passedQuiz= true;
-            }
 
-            scope.updateProgressBar = function(category) {
-                var pages = $(".category-pagination");
-                for (var i = 0; i < pages.length; i++) {
-                    var pageElem = pages[i];
-                    var categoryId = pageElem.getAttribute("data-category-id");
-                    if (category.category_id == parseInt(categoryId)) {
-                        pageElem.classList.remove("disabled");
-                        pageElem.classList.add("active");
-                    } else {
-                        pageElem.classList.add("disabled");
-                    }
-                }
+                 setTimeout(function(argument) {
+                                     $("#quiz-is-over-alert").toggle();
+                                    gameOverPopUp = document.getElementById("quiz-is-over-alert");
+                                    gameOverPopUp.style.display = "block";  }, 1000);
+
             }
 
             // Quiz next question
             scope.nextQuestion = function() {
-                qnumber++;
                 scope.id++;
                 category = scope.selectCategory();
+                if( scope.passedQuiz == true) {
+                 scope.getQuestion( Window.game.categories[Window.game.categories.length -1]);
+
+                    return;
+                }
                 scope.getQuestion(category);
-                scope.updateProgressBar(category);
                 scope.IsClickEnable = true;
             };
 
@@ -223,17 +219,17 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 scope.score = 0;
             }
 
-            scope.isGameover = function() {
-                var gameOverFlag = true;
-                for (var i = 0; i < Window.game.categories.length; i++) {
-                    var category = Window.game.categories[i];
-                    if (!category.category_completed) {
-                        gameOverFlag = false;
-                        break;
-                    }
-                }
-                return gameOverFlag;
-            }
+//            scope.isGameover = function() {
+//                var gameOverFlag = true;
+//                for (var i = 0; i < Window.game.categories.length; i++) {
+//                    var category = Window.game.categories[i];
+//                    if (!category.category_completed) {
+//                        gameOverFlag = false;
+//                        break;
+//                    }
+//                }
+//                return gameOverFlag;
+//            }
 
             scope.flashCorrect = function(elem, callback) {
                 elem.classList.add("correct");
@@ -272,10 +268,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
                             //category.category_completed = response.data.category_completed;
                         }
                     }
-
-                    // check if game over
-                    // var gameOverFlag = scope.isGameover();
-                    gameOverFlag = response.data.game_completed
+                   // gameOverFlag = response.data.game_completed
 
                     // do different things based on API's response on user's answer
                     if (response.data.response == true) {
@@ -294,17 +287,13 @@ app.directive('quiz', function(quizFactory, $http, config) {
                         scope.resetQuestionStreakIndicator();
                     }
 
-                    if (!gameOverFlag) {
+
                         setTimeout(function(argument) {
                             // game is'nt over, new question
 
                             scope.nextQuestion();
                         }, 2000);
-                    } else {
-                        // game is over, notify drupal
-                        passTheTest()
-                        $("#quiz-is-over-alert").toggle();
-                    }
+
                 });
                 scope.answerMode = false;
 
@@ -313,7 +302,7 @@ app.directive('quiz', function(quizFactory, $http, config) {
             scope.reset();
 
 
-            var passTheTest = function() {
+           scope.passTheTest = function() {
                 /**
                  * Win the game! get drupal's CSRF token then notify winning
                  * if CSRF unavailable, user's session could be ended,
@@ -355,6 +344,15 @@ app.directive('quiz', function(quizFactory, $http, config) {
                         // login failed!
                     })
                 }
+            }
+            scope.resetGame = function() {
+                alert("reseting game");
+                passedQuiz = false;
+                 gameOverPopUp.style.display = "none";
+                for (var i = 0; i < Window.game.categories.length; i++) {
+                    Window.game.categories[i].category_completed = false;
+                }
+                scope.start();
             }
         }
     }
