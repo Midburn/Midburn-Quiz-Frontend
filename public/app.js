@@ -1,7 +1,7 @@
 /**
  * Midburn Quiz app - )'( let it burn!
  */
- var gameVariables =  {numOfcurrectAnswerInStreak:1};
+ var gameVariables =  {numOfcurrectAnswerInStreak:2};
 
 
 
