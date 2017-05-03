@@ -8,7 +8,7 @@
 
 
 // Quiz question directive
-app.directive('quiz', function(quizFactory, $http, config) {
+app.directive('quiz', function(quizFactory, $http, config, $location) {
 
     var game = Window.game;
     var categories = Window.game.categories;
@@ -164,7 +164,8 @@ app.directive('quiz', function(quizFactory, $http, config) {
                  setTimeout(function(argument) {
                                      $("#quiz-is-over-alert").toggle();
                                     gameOverPopUp = document.getElementById("quiz-is-over-alert");
-                                    gameOverPopUp.style.display = "block";  }, 1000);
+                                    gameOverPopUp.style.display = "block";
+                                     scope.passTheTest();}, 1000);
 
             }
 
@@ -346,13 +347,18 @@ app.directive('quiz', function(quizFactory, $http, config) {
                 }
             }
             scope.resetGame = function() {
-                alert("reseting game");
+
                 passedQuiz = false;
                  gameOverPopUp.style.display = "none";
                 for (var i = 0; i < Window.game.categories.length; i++) {
                     Window.game.categories[i].category_completed = false;
                 }
                 scope.start();
+            }
+            scope.goToTickets = function() {
+                alert("going to tickets");
+               window.location.href = 'http://ynet.co.il';
+
             }
         }
     }
