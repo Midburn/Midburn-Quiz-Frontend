@@ -25,8 +25,10 @@
 
                     <div class="categories-wrapper">
                         <p id="startCover" ng-if="!gameStarted"></p>
-                        <video autoplay loop class="categories-video" ng-if="gameStarted">
-                            <source src="./assets/side-menu-video.mp4">
+                        <video class="categories-video" ng-if="gameStarted" autoplay loop autobuffer>
+                            <source src="./assets/side-menu-video.mp4" type="video/mp4">
+                            <source src="./assets/side-menu-video.webm" type="video/webm">
+                              <source src="./assets/side-menu-video.ogv" type="video/ogg">
                         </video>
                         <h1 class="category-text" ng-class="{'cat0':category == categories[4],
                                 'cat1':category == categories[3],
@@ -96,10 +98,12 @@
 <script>
     // Hide quiz is over
     $("#quiz-is-over-alert").toggle();
-
     // Hide quiz alert
     $('#quiz-no-answer-alert').toggle();
-
     // Hide correct answer alert
     $('#quiz-correct-answer-alert').toggle();
+    // Play burning man video
+    $('#startBtn').click(function() {
+      document.querySelector('.categories-video').play()
+    })    
 </script>
