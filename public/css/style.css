@@ -228,10 +228,7 @@ body {
     border: none;
     width: 20%;
     height: 44%;
-    position: absolute;
     margin-left: 10%;
-    right: 20%;
-    bottom: 12%;
 }
 
 .btnSkip {
@@ -246,9 +243,6 @@ body {
     border: none;
     width: 22%;
     height: 27%;
-    right: 55%;
-    bottom: 23%;
-    position: absolute;
 }
 
 
