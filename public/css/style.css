@@ -632,7 +632,7 @@ button:focus {
 #rotateScreenPopup {
     position: relative;
     top: 20%;
-    height: 40%;
+    height: auto;
     width: 80%;
     background-color: rgb(45, 95, 136);
     background-color: rgba(45, 95, 136, 0.76);
@@ -710,3 +710,14 @@ button:focus {
 
 
 /* END - Quiz is over page */
+
+/*Orientation alert*/
+div#change-viewport-alert {display: none;}
+@media (orientation: portrait) {
+    div#change-viewport-alert {
+      display: block;
+    }
+    div#main-page {
+      display: none;
+    }
+}

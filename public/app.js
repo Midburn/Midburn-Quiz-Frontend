@@ -18,9 +18,9 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
 
     var popupmodal = document.getElementById('popupModal');
     var endPopupmodal = document.getElementById('quiz-is-over-alert');
-    var modal = document.getElementById('Modal');
+    var modal = document.getElementById('Modal'); // welcome modal
     var btn = document.getElementById("startBtn");
-     var gameOverPopUp = document.getElementById("quiz-is-over-alert");
+    var gameOverPopUp = document.getElementById("quiz-is-over-alert");
     var disableAnswerLable = false;
 
     return {
@@ -28,27 +28,6 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
         scope: {},
         templateUrl: 'app/templates/template.html',
         link: function(scope, elem, attrs) {
-
-            scope.setupPage = function(){
-                console.log("setupPage")
-                // make sure played in landscape mode
-                scope.changeView = window.innerHeight > window.innerWidth
-                console.log(scope.changeView)
-                var rotateModal = document.getElementById('change-viewport-alert');
-                rotateModal.style.display = (scope.changeView) ? "block" : "none"
-
-                // hide address bar
-                if(document.documentElement.scrollHeight<window.outerHeight/window.devicePixelRatio)
-                    document.documentElement.style.height=(window.outerHeight/window.devicePixelRatio)+'px';
-                    setTimeout(window.scrollTo(1,1),0);
-                }
-
-            // window.addEventListener("load",function(){;});
-            window.addEventListener("orientationchange",function(){scope.setupPage();});
-            window.addEventListener("resize",function(){scope.setupPage();});
-
-            scope.setupPage();
-
             btn.onclick = function() {
                 modal.style.display = "none";
                 scope.start();
