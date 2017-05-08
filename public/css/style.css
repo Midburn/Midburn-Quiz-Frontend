@@ -93,7 +93,7 @@ body {
 #startCover {
     background: url(../assets/start-flach.png) no-repeat center;
     background-size: cover;
-    z-index=3000;
+    z-index: 3000;
     position: relative;
     height: 100%;
 }
