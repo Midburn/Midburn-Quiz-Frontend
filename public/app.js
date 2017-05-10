@@ -297,32 +297,14 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
 
            scope.passTheTest = function() {
                 /**
-                 * Win the game! get drupal's CSRF token then notify winning
-                 * if CSRF unavailable, user's session could be ended,
-                 * request to login and get new session! then try to notify.
+                 * Win the game! notify the server of passing the quiz
                  */
-                var TOKEN_URL = "https://profile-test.midburn.org/en/services/session/token"
-                $http.get(TOKEN_URL).then(function(res) {
-                    // get token
-                    notify(res)
-                }, function() {
-                    $("#main-page").hide();
-                    alert("סשיין המשחק פג, אנא התחבר למערכת הפרופילים ונסה שוב");
-                });
+                var PASS_ENDPOINT = config.API_URL + "/games/" + Window.game.token + '/new_question/'
+                $http.post(PASS_ENDPOINT).then(function(res) {
 
-                var notify = function(TOKEN) {
-                    // notify to drupal  about winning
-                    var PASS_URL = "https://profile-test.midburn.org/en/api/games/" + Window.game.user_id + "/pass"
-                    var config = {
-                        headers: {
-                            'x-csrf-token': TOKEN
-                        }
-                    }
-                    $http.post(PASS_URL, null, config).then(function(res) {
-                        // notify succeed
-                        console.log(res);
-                    }, errorCallback);
-                }
+                }, function() {
+                    alert("error with request");
+                });
             }
             scope.resetGame = function() {
                 passedQuiz = false;
@@ -369,28 +351,6 @@ app.factory('quizFactory', function($http, config) {
             return Window.currentQuestion;
         }
     };
-});
-
-// Language translation configuration
-app.config(function($translateProvider) {
-    var dic_EN = {
-        TITLE: 'Welcome to the Midburn quiz',
-        DESC: 'In order to be eligible for a ticket for Midburn 2016, you must first show that you care about our culture, by answering 10 questions correctly.',
-        INFO: 'Wait, what’s Midburn?',
-        BTN_START_GAME: 'Start Game'
-    };
-    var dic_HE = {
-        TITLE: 'משחקי הברן',
-        DESC: "ברוכים הבאים למשחק הטריוויה החדש שיתן מענה לשאלה שמעסיקה את כולם: האם אתם ברנרים אמיתיים? איך מנצחים? פשוט:עליכם לעבור 5 נושאים שקשורים למידברן, ובכל אחד לענות נכון על "+   + gameVariables.numOfcurrectAnswerInStreak.toString()+ " שאלות רצופות תוכלו להשתמש בשני גלגלי הצלה בכל נושא. בהצלחה!",
-        INFO: 'רגע, מה זה מידברן?',
-//        BTN_START_GAME: 'ז'
-    };
-    // English conf
-    $translateProvider.translations('en', dic_EN);
-    // Hebrew conf
-    $translateProvider.translations('he', dic_HE);
-    // Default language
-    $translateProvider.preferredLanguage('he');
 });
 
 // Language Support Controller
