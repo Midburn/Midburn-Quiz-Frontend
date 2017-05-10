@@ -594,6 +594,7 @@ body {
 
 #startBtn:active {
     background: url(../assets/Group_5.png) no-repeat;
+    background-size: 100%;
 }
 
 button:focus {
