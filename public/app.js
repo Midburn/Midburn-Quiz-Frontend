@@ -1,7 +1,7 @@
 /**
  * Midburn Quiz app - )'( let it burn!
  */
- var gameVariables =  {numOfcurrectAnswerInStreak:3};
+var gameVariables =  {numOfcurrectAnswerInStreak:3};
 
 // Quiz question directive
 app.directive('quiz', function(quizFactory, $http, config, $location) {
@@ -306,9 +306,15 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
                  * Win the game! notify the server of passing the quiz
                  */
                 if (Window.game.user_id != 0) {
-                  var PASS_ENDPOINT = config.API_URL + "/games/" + Window.game.token + '/new_question/'
-                  $http.post(PASS_ENDPOINT).then(function(res) {
-
+                  var passTheTest = {
+                      method: 'POST',
+                      url: config.API_URL + "/games/" + Window.game.token + '/completed',
+                      contentType: 'application/json',
+                      dataType: 'json',
+                      data: {}
+                  }
+                  $http(passTheTest).then(function(res) {
+                    console.log(res);
                   }, function() {
                       alert("error with request");
                   });
