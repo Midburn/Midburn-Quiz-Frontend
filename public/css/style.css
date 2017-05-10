@@ -289,10 +289,6 @@ body {
     display: none;
 }
 
-.answer-option:hover {
-    background: #66b1f0;
-}
-
 .answer-option.selected {
     color: white;
 }
@@ -712,4 +708,10 @@ div#change-viewport-alert {
         height: 30px;
         width: 120px;
     }
+}
+
+@media (min-width: 768px) {
+  .answer-option:hover {
+      background: #66b1f0;
+  }
 }

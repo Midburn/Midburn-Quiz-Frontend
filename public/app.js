@@ -24,6 +24,12 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
         scope: {},
         templateUrl: 'app/templates/template.html',
         link: function(scope, elem, attrs) {
+            // click on the guide link
+            var guide_link = document.querySelector('#linkto_guide')
+            guide_link.addEventListener('click', function() {
+              ga_notify('links', 'guide', 'player clicked on guide link')
+            })
+
             btn.onclick = function() {
                 modal.style.display = "none";
                 scope.start();
@@ -355,52 +361,6 @@ app.factory('quizFactory', function($http, config) {
     };
 });
 
-// Language Support Controller
-app.controller('LangController', function($scope, $translate) {
-    // Lang switch method
-    $scope.changeLanguage = function(key) {
-        $translate.use(key);
-        switch (key) {
-            case 'en':
-                {
-                    $("body").removeClass("lanHE");
-                    $("body").addClass("lanEN");
-                    break;
-                }
-            case 'he':
-                {
-                    $("body").removeClass("lanEN");
-                    $("body").addClass("lanHE");
-                    break;
-                }
-        }
-    };
-});
-
-app.controller('FooterController', function($scope) {
-    // Current Year
-    $scope.CurrentYear = new Date().getFullYear();
-    // Theme Name
-    $scope.ThemeName = "Abracadabra";
-    // Footer links => {Text: "text", Href: "href", Class: "class"}
-    $scope.Links = [{
-        Text: "Help us make it better",
-        Href: "//github.com/Midburn/Midburn-Quiz-Frontend",
-        Class: "link-special"
-    }, {
-        Text: "Midburn Website",
-        Href: "//midburn.org/en/",
-        Class: ""
-    }, {
-        Text: "About The Event",
-        Href: "//midburn.org/en-event/",
-        Class: ""
-    }, {
-        Text: "The Ten Principles",
-        Href: "//midburn.org/en-ten-principles/",
-        Class: ""
-    }];
-});
 // filter for reverse list
 app.filter('reverse', function() {
     return function(items) {
