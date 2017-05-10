@@ -3,10 +3,6 @@
  */
  var gameVariables =  {numOfcurrectAnswerInStreak:2};
 
-
-
-
-
 // Quiz question directive
 app.directive('quiz', function(quizFactory, $http, config, $location) {
 
@@ -57,6 +53,24 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
                     }
                 }
             };
+
+            scope.categoryToHebrewName = function(category) {
+                var categories = {
+                    "survival_guide": "מדריך ההישרדות",
+                    "principles": "עשרת העקרונות",
+                    "orientation": "גופים והתמצאות באירוע",
+                    "leave_no_trace": "חשל\"ש",
+                    "safe_zone": "גבולות אישיים",
+                };
+
+                if (categories && categories[category]) {
+                    return categories[category];
+                } else {
+                    console.log("couldn't find category: " + category);
+                    return "כללי";
+                }
+            };
+
             // Quiz get question
             scope.getQuestion = function(category) {
                 // Get question request
@@ -77,9 +91,7 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
                     Window.currentQuestion.id = response.data.id;
                     Window.currentQuestion.question = response.data.body;
                     Window.currentQuestion.options = response.data.answers;
-                    Window.currentQuestion.category = response.data.category ?
-                    response.data.category.name :
-                        "כללי";
+                    Window.currentQuestion.category = response.data.category ? scope.categoryToHebrewName(response.data.category.name) : "כללי";
                     Window.currentQuestion.answer = 0;
                     scope.currentCategory = Window.currentQuestion.category;
 

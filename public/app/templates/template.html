@@ -35,7 +35,7 @@
                                 'cat2':category == categories[2],
                                 'cat3':category == categories[1],
                                 'cat4':category == categories[0],
-                                'catFade':category.category_completed}" ng-repeat="category in categories | reverse">{{category.name}}</h1>
+                                'catFade':category.category_completed}" ng-repeat="category in categories | reverse">{{ categoryToHebrewName(category.name) }}</h1>
 
                     </div>
 
