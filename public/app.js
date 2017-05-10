@@ -332,7 +332,11 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
                 scope.start();
             }
             scope.goToTickets = function() {
-                window.location.href = 'https://profile-test.midburn.org/he';
+                if (Window.game.user_id != 0) {
+                    window.location.href = 'https://profile.midburn.org/he/user/' + Window.game.user_id '/tickets';
+                } else {
+                    window.location.href = 'https://profile-test.midburn.org/he';
+                }
             }
         }
     }
