@@ -305,8 +305,8 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
                     // get token
                     notify(res)
                 }, function() {
-                    // token unavailable, login
-                    login(notify)
+                    $("#main-page").hide();
+                    alert("סשיין המשחק פג, אנא התחבר למערכת הפרופילים ונסה שוב");
                 });
 
                 var notify = function(TOKEN) {
@@ -321,20 +321,6 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
                         // notify succeed
                         console.log(res);
                     }, errorCallback);
-                }
-
-                var login = function(callback) {
-                    var LOGIN_URL = "https://profile-test.midburn.org/en/api/user/login"
-                    var data = {
-                        "username": "sir_ruvzi@hotmail.com",
-                        "password": "WholeNew1"
-                    }
-                    $http.post(LOGIN_URL, data, null).then(function(res) {
-                        var TOKEN = res.getElementsByTagName('result')[0].textContent
-                        callback(TOKEN)
-                    }, function() {
-                        // login failed!
-                    })
                 }
             }
             scope.resetGame = function() {
