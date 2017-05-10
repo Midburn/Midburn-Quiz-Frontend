@@ -1,10 +1,5 @@
-<!--Start Game Button-->
-
-
 <!--Quiz area-->
 <div id="quiz-page" class="sixteen-nine">
-    <!--<div id="game-start-wrapper" class="well card">-->
-
     <div class="content">
         <div id="quiz-is-over-alert" class="modal" ng-show="passedQuiz">
             <div id="gameOverPopup" class="container">
@@ -16,20 +11,11 @@
                 </div>
             </div>
         </div>
-
-
-
         <div ng-show="!quizOver" class="full-size">
             <div id="wrapper" class="full-size">
                 <div class="full-size">
-
                     <div class="categories-wrapper">
                         <p id="startCover" ng-if="!gameStarted"></p>
-                        <!-- <video class="categories-video" ng-if="gameStarted" autoplay loop autobuffer>
-                            <source src="./assets/side-menu-video.mp4" type="video/mp4">
-                            <source src="./assets/side-menu-video.webm" type="video/webm">
-                              <source src="./assets/side-menu-video.ogv" type="video/ogg">
-                        </video> -->
                         <img src="./assets/burning-man.gif" style="max-width:100%;z-index:-11;position:absolute;top:0;left:0;">
                         <h1 class="category-text" ng-class="{'cat0':category == categories[4],
                                 'cat1':category == categories[3],
@@ -37,9 +23,7 @@
                                 'cat3':category == categories[1],
                                 'cat4':category == categories[0],
                                 'catFade':category.category_completed}" ng-repeat="category in categories | reverse">{{ categoryToHebrewName(category.name) }}</h1>
-
                     </div>
-
                     <div class="quiz-zone">
                         <div class="header">
                             <a id="linkto_facebook" href="https://www.facebook.com/midburns/" target="_blank">
@@ -79,7 +63,6 @@
                 </div>
             </div>
         </div>
-
         <div id="quiz-correct-answer-alert" class="fade-screen" onclick="$('#quiz-correct-answer-alert').fadeOut();">
             <div class="container">
                 <div class="clearfix">

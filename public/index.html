@@ -8,7 +8,6 @@
     <title>Midburn Quiz</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/6.0.0/normalize.css">
     <link rel="stylesheet" href="css/style.css" />
     <link rel="manifest" href="manifest.json">
@@ -26,9 +25,9 @@
     <div id="main-page">
         <!-- Opening -->
         <div class="modal flex-center anim-fadeIn" id="Modal">
-            <div id="popupModal" class="modal-content" ng-controller="LangController">
-                <h1>{{ 'TITLE' | translate }}</h1>
-                <p class="desc">{{ 'DESC' | translate }}</p>
+            <div id="popupModal" class="modal-content" ng-controller="IntroController">
+                <h1>{{ intro.title }}</h1>
+                <p class="desc">{{ intro.desc }}</p>
                 <button id="startBtn" ng-click="start()" ng-show="!inProgress"></button>
             </div>
         </div>
@@ -36,10 +35,9 @@
         <quiz></quiz>
     </div>
     <script src="config.js"></script>
-    <script src="app/LangConfig.js"></script>
     <script src="app.js"></script>
     <script src="app/controllers/Quiz.js"></script>
-    <script src="app/controllers/LangController.js"></script>
+    <script src="app/controllers/IntroController.js"></script>
     <script src="app/components/Header/Header.js"></script>
     <script src="app/components/Orientation/Orientation.js"></script>
     <script src="js/ga.js"></script>
