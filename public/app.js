@@ -324,7 +324,6 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
                 }
             }
             scope.resetGame = function() {
-
                 passedQuiz = false;
                  gameOverPopUp.style.display = "none";
                 for (var i = 0; i < Window.game.categories.length; i++) {
@@ -333,9 +332,7 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
                 scope.start();
             }
             scope.goToTickets = function() {
-                alert("going to tickets");
-               window.location.href = 'http://ynet.co.il';
-
+                window.location.href = 'https://profile-test.midburn.org/he';
             }
         }
     }
