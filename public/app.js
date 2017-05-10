@@ -95,6 +95,7 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
                     Window.currentQuestion.answer = 0;
                     scope.currentCategory = Window.currentQuestion.category;
 
+
                     if (Window.currentQuestion) {
                         scope.question = Window.currentQuestion.question;
                         scope.options = Window.currentQuestion.options;
@@ -139,13 +140,13 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
                     var category = categories[i];
 
                     if (!scope.isCategoryCompleted(category)) {
-                        // alert("not done!!! " + category.name);
                         return category;
                     } else {
-                        if (category.name == scope.currentCategory) {
+                        if (scope.categoryToHebrewName(category.name) ==  scope.currentCategory) {
+
                             canGetHint = true;
                             canSkipQuestion = true;
-                            // alert("done " + category.name);
+
                         }
                     }
                 }
