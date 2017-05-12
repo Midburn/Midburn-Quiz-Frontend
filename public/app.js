@@ -272,6 +272,7 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
                     // do different things based on API's response on user's answer
                     if (response.data.response == true) {
                         Window.currentQuestion.userSelectedElement.classList.add("correct");
+                        Window.currentQuestion.userSelectedElement.classList.add("hide-hover");
                         scope.answersToCompleateCategory[correctStreak] = "achieved";
                         correctStreak++;
                         if (correctStreak < gameVariables.numOfcurrectAnswerInStreak) {

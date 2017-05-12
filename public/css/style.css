@@ -707,4 +707,7 @@ div#change-viewport-alert {
   .answer-option:hover {
       background: #66b1f0;
   }
+  answer-option.hide-hover:hover {
+      background: #000;
+  }
 }
