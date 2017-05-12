@@ -53,9 +53,9 @@
                         <div class="helper-buttons-area">
                             <!-- Helper buttons -->
                             <div class="input-group-btn" id="life-line">
-                                <button id="btnHint" ng-click="getHint()" ng-show="answerMode" ng-disabled="!checkCanGetHint()">
+                                <button id="btnHint" ng-click="getHint()" ng-disabled="!answerMode || !checkCanGetHint()">
                                 </button>
-                                <button class="btnSkip" ng-click="skipQuestion()" ng-show="answerMode" ng-disabled="!checkCanSkipQuestion()">
+                                <button class="btnSkip" ng-click="skipQuestion()" ng-disabled="!answerMode || !checkCanSkipQuestion()">
                                 </button>
                             </div>
                         </div>
