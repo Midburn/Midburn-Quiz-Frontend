@@ -1,4 +1,3 @@
-<!--Quiz area-->
 <div id="quiz-page" class="sixteen-nine">
     <div class="content">
         <div id="quiz-is-over-alert" class="modal" ng-show="passedQuiz">
@@ -16,7 +15,7 @@
                 <div class="full-size">
                     <div class="categories-wrapper">
                         <p id="startCover" ng-if="!gameStarted"></p>
-                        <img src="./assets/burning-man.gif" style="max-width:100%;z-index:-11;position:absolute;top:0;left:0;">
+                        <img id="theman-gif" src="" data-src="./assets/burning-man.gif" style="max-width:100%;z-index:-11;position:absolute;top:0;left:0;">
                         <h1 class="category-text" ng-class="{'cat0':category == categories[4],
                                 'cat1':category == categories[3],
                                 'cat2':category == categories[2],
@@ -63,27 +62,5 @@
                 </div>
             </div>
         </div>
-        <div id="quiz-correct-answer-alert" class="fade-screen" onclick="$('#quiz-correct-answer-alert').fadeOut();">
-            <div class="container">
-                <div class="clearfix">
-                    <div class="jumbotron">
-                        <h1>תשובה נכונה</h1>
-                        <div style="margin-top: 20px;">
-                            <p>
-                                <a class="btn game-btn" href="#" role="button" onclick="$('#quiz-correct-answer-alert').fadeOut();">סגור</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
-<script>
-    // Hide quiz is over
-    $("#quiz-is-over-alert").toggle();
-    // Hide quiz alert
-    $('#quiz-no-answer-alert').toggle();
-    // Hide correct answer alert
-    $('#quiz-correct-answer-alert').toggle();
-</script>

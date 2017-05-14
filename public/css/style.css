@@ -164,13 +164,6 @@ body {
     position: relative;
 }
 
-.sixteen-nine:before {
-    display: block;
-    content: "";
-    width: 100%;
-    padding-top: 56.25%;
-}
-
 .sixteen-nine>.content {
     position: absolute;
     top: 0;
@@ -551,7 +544,6 @@ body {
     /* Could be more or less, depending on screen size */
     height: auto;
     padding: 1em;
-    background-color: rgb(45, 95, 136);
     background-color: rgba(45, 95, 136, 0.76);
 }
 
@@ -567,35 +559,8 @@ body {
 
 /* Modal Content/Box */
 
-.startBtnContainer {
-    top: 0%;
-    height: 40%;
-    position: relative;
-}
-
-#startBtn {
-    background: url(../assets/Group_6.png) no-repeat;
-    background-size: 100%;
-    border: none;
-    padding: 0 3em;
-    display: flex;
-    margin: auto;
-    height: 50px;
-    width: 180px;
-}
-
-#startBtn:active {
-    background: url(../assets/Group_5.png) no-repeat;
-    background-size: 100%;
-}
-
 button:focus {
     outline: 0;
-}
-
-#intro {
-    height: 100%;
-    width: 100%;
 }
 
 .desc {
@@ -659,6 +624,7 @@ button:focus {
 
 #goToTicketBtn:active {
     background: url(../assets/Group_1.png) no-repeat;
+    background-size: 100%;
 }
 
 #playAgainBtn {
@@ -669,6 +635,7 @@ button:focus {
 
 #playAgainBtn:active {
     background: url(../assets/Group_2.png) no-repeat;
+    background-size: 100%;
 }
 
 #endGameButtons {
@@ -693,13 +660,6 @@ div#change-viewport-alert {
     }
     div#main-page {
         display: none;
-    }
-}
-
-@media (max-width: 768px) {
-    #startBtn {
-        height: 30px;
-        width: 120px;
     }
 }
 

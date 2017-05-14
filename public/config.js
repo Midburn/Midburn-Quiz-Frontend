@@ -1,23 +1,12 @@
-var getConfigFromConfigFile = function () {
-    var _config;
-    $.ajax({
-        url: 'config.json',
-        success: function (data) {
-            _config = data;
-        },
-        async: false,
-        dataType: 'json'
-    });
-    return _config;
-};
-
-var configFile = getConfigFromConfigFile();
-var app = angular.module('quizApp', ['ngResource', 'pascalprecht.translate']);
+var config = {
+    "api_url": "https://burner-games-staging.herokuapp.com/api/v1"
+}
+var app = angular.module('quizApp', []);
 
 // Constants
 app.constant('config', {
-    API_URL: configFile.api_url,
-    userId: configFile.user_id
+    API_URL: config.api_url,
+    userId: config.user_id
 });
 
 // Init question-answer vars
