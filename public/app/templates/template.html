@@ -15,7 +15,8 @@
                 <div class="full-size">
                     <div class="categories-wrapper">
                         <p id="startCover" ng-if="!gameStarted"></p>
-                        <img id="theman-gif" src="" data-src="./assets/burning-man.gif" class="hidden" style="max-width:100%;z-index:-11;position:absolute;top:0;left:0;">
+                        <!--in the img tag there was class="hidden" which make the gif invisible. so i deleted it"-->
+                        <img id="theman-gif" src="" data-src="./assets/burning-man.gif" style="max-width:100%;z-index:-11;position:absolute;top:0;left:0;">
                         <h1 class="category-text" ng-class="{'cat0':category == categories[4],
                                 'cat1':category == categories[3],
                                 'cat2':category == categories[2],

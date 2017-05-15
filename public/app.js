@@ -2,7 +2,7 @@
  * Midburn Quiz app - )'( let it burn!
  */
 var gameVariables = {
-    numOfcurrectAnswerInStreak: 3
+    numOfcurrectAnswerInStreak: 3, numOfRecivedQuestions : 0, numOfQuestionsToResetLifeLine: 13
 };
 
 // Quiz question directive
@@ -68,6 +68,13 @@ app.directive('quiz', function($http, config, $rootScope) {
 
             // Quiz get question
             scope.getQuestion = function(category) {
+                gameVariables.numOfRecivedQuestions++;
+                if (gameVariables.numOfRecivedQuestions == gameVariables.numOfQuestionsToResetLifeLine ) {
+                    canGetHint = true;
+                    canSkipQuestion = true;
+                    gameVariables.numOfRecivedQuestions = 0;
+
+                }
                 // Get question request
                 var getQuestionRequest = {
                     method: 'POST',
@@ -137,6 +144,7 @@ app.directive('quiz', function($http, config, $rootScope) {
                         return category;
                     } else {
                         if (scope.categoryToHebrewName(category.name) == scope.currentCategory) {
+                            gameVariables.numOfRecivedQuestions = 0;
                             canGetHint = true;
                             canSkipQuestion = true;
                         }
