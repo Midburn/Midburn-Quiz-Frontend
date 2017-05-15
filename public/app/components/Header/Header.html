@@ -1,11 +1,54 @@
-<button id="goFS">Full-screen!</button >
-<div class="links">
-    <a class="icn-facebook" href="https://www.facebook.com/midburns/" target="_blank"></a>
-    <a class="icn-guide" href="http://midburn.org/he-survival-guide/" target="_blank"></a>
-</div>
-<div class="progress-area text-center">
-    <span class="current-category" ng-bind="category">{{ category.name }}</span>
-    <div class="answers-progress">
-        <span class="answer-feedback" ng-repeat="i in answersToCompleateCategory track by $index " ng-class="{ 'blink': i == 'in-progress', 'done': i == 'achieved'}"></span>
+<div class="header flex-center">
+    <style media="screen">
+        .header {
+            padding: 5px 5% 0;
+        }
+
+        .header-buttons>.icn {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .header-buttons>.full-screen {
+            margin: 0 8px;
+        }
+
+        .current-category {
+            display: inline-block;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            margin-right: 10%;
+        }
+
+        .btn-facebook {
+            background-image: url(./assets/facebook.png);
+        }
+
+        .btn-guide {
+            background-image: url(./assets/guid.png);
+        }
+
+        @media (min-width: 768px) {
+            .current-category {
+                font-size: 38px;
+                flex-basis: 65%;
+                text-align: center;
+            }
+            .header-buttons>.icn {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+    <div class="header-buttons flex-center">
+        <div full-screen></div>
+        <a class="icn btn-guide" href="https://www.facebook.com/midburns/" target="_blank"></a>
+        <a class="icn btn-facebook" href="http://midburn.org/he-survival-guide/" target="_blank"></a>
     </div>
+    <span class="current-category">{{ category }}</span>
 </div>

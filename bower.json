@@ -18,9 +18,8 @@
     "tests"
   ],
   "dependencies": {
-    "angular-translate": "^2.15.1",
     "bootstrap": "^3.3.7",
-    "font-awesome": "^4.7.0",
-    "angular-resource": "^1.6.4"
+    "angularjs": "1.6.4",
+    "jquery": "3.2.1"
   }
 }

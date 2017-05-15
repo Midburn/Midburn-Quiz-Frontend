@@ -1,0 +1,38 @@
+<div>
+    <style media="screen">
+        #startBtn {
+            background: url(./assets/Group_6.png) no-repeat;
+            background-size: 100%;
+            border: none;
+            padding: 0 3em;
+            display: block;
+            margin: auto;
+            height: 50px;
+            width: 180px;
+        }
+
+        #startBtn:active {
+            background: url(./assets/Group_5.png) no-repeat;
+            background-size: 100%;
+        }
+
+        #startBtn[disabled] {
+            opacity: 0.6
+        }
+
+        @media (max-width: 768px) {
+            #startBtn {
+                height: 30px;
+                width: 120px;
+            }
+        }
+    </style>
+    <div class="intro modal anim-fadeIn" id="Modal">
+        <div id="popupModal" class="modal-content">
+            <h1>{{ intro.title }}</h1>
+            <p class="desc">{{ intro.desc }}</p>
+            <div loader></div>
+            <button id="startBtn" ng-show="!inProgress" disabled="true"></button>
+        </div>
+    </div>
+</div>
