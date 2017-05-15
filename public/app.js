@@ -1,7 +1,7 @@
 /**
  * Midburn Quiz app - )'( let it burn!
  */
-var gameVariables =  {numOfcurrectAnswerInStreak:3, numOfAskedQuestions : 0, numOfQuestionsToResetLifeLine: 4
+var gameVariables =  {numOfcurrectAnswerInStreak:3, numOfAskedQuestions : 0, numOfQuestionsToResetLifeLine: 10
 };
 
 // Quiz question directive
