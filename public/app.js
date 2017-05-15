@@ -2,7 +2,7 @@
  * Midburn Quiz app - )'( let it burn!
  */
 var gameVariables = {
-    numOfcurrectAnswerInStreak: 3, numOfRecivedQuestions : 0, numOfQuestionsToResetLifeLine: 13
+    numOfcurrectAnswerInStreak: 3, numOfRecivedQuestions : 0, numOfQuestionsToResetLifeLine: 10
 };
 
 // Quiz question directive
