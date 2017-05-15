@@ -1,7 +1,8 @@
 /**
  * Midburn Quiz app - )'( let it burn!
  */
-var gameVariables =  {numOfcurrectAnswerInStreak:3};
+var gameVariables =  {numOfcurrectAnswerInStreak:3, numOfAskedQuestions : 0, numOfQuestionsToResetLifeLine: 4
+};
 
 // Quiz question directive
 app.directive('quiz', function(quizFactory, $http, config, $location) {
@@ -79,6 +80,13 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
 
             // Quiz get question
             scope.getQuestion = function(category) {
+            gameVariables.numOfAskedQuestions++;
+            alert(gameVariables.numOfAskedQuestions);
+            if(gameVariables.numOfAskedQuestions == gameVariables.numOfQuestionsToResetLifeLine) {
+                canSkipQuestion = true;
+                canGetHint = true;
+                gameVariables.numOfAskedQuestions = 0;
+            }
                 // Get question request
                 var getQuestionRequest = {
                     method: 'POST',
@@ -152,6 +160,7 @@ app.directive('quiz', function(quizFactory, $http, config, $location) {
 
                             canGetHint = true;
                             canSkipQuestion = true;
+                            gameVariables.numOfAskedQuestions = 0;
 
                         }
                     }
