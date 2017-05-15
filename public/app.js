@@ -305,15 +305,8 @@ app.directive('quiz', function($http, config, $rootScope) {
             // lazy load burning man gif
             document.onreadystatechange = function() {
                 if (document.readyState === "complete") {
-                    lazyLoadGif()
                     googleAnalyticsEvents()
                 }
-            }
-
-            function lazyLoadGif() {
-                var theman_gif = document.querySelector('#theman-gif')
-                theman_gif.src = theman_gif.attributes['data-src'].nodeValue
-                theman_gif.classList.remove('hidden')
             }
         }
     }

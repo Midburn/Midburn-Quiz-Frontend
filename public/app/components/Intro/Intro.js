@@ -9,12 +9,16 @@ app.directive('intro', function($http, config) {
             var userId = config.userId || uid || 0;
             var introModal = document.getElementById('Modal'); // welcome modal
             var startBtn = document.getElementById("startBtn");
-            
+
             startBtn.onclick = function() {
                 introModal.style.display = "none";
                 scope.start();
+
+                // Lazy load burning man
+                var theman_gif = document.querySelector('#theman-gif')
+                theman_gif.src = theman_gif.attributes['data-src'].nodeValue
             }
-            
+
             // Init the quiz game, request new game
             ;(function functionName() {
               var requestNewGame = {
@@ -38,7 +42,7 @@ app.directive('intro', function($http, config) {
                   return;
               });
             })()
-            
+
             // Text Labels
             scope.intro = {
                 title: 'משחקי הברן',
