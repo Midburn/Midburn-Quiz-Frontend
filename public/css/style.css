@@ -23,6 +23,11 @@ body {
 
 /* END FONTS */
 
+.flex-center {
+    display: flex;
+    align-items: center;
+}
+
 .lanEN {
     direction: ltr !important;
 }
@@ -51,7 +56,6 @@ body {
 
 .quiz-zone {
     width: 75%;
-    padding: 5%;
     background: url(../assets/bg2.png);
     background-size: cover;
     border: 0;
@@ -177,14 +181,10 @@ body {
     height: 100vh;
 }
 
-.header {
-    height: 10%;
-    position: absolute;
-    top: 15px;
-}
-
 .question-area {
-    height: 80vh;
+    height: auto;
+    overflow-y: hidden;
+    padding: 0 5% 0;
 }
 
 .question {
@@ -193,35 +193,6 @@ body {
     margin: 2% 0;
     font-family: Assistant-Regular;
     color: #faffff;
-}
-
-#btnHint {
-    background: url(../assets/remove-two-wrong-answers.png) no-repeat center;
-    background-size: contain;
-}
-
-#btnHint:disabled {
-    background: url(../assets/remove-two-wrong-answers-pushed.png) no-repeat center;
-    cursor: pointer;
-    background-size: contain;
-    border: none;
-    width: 20%;
-    height: 44%;
-    margin-left: 10%;
-}
-
-.btnSkip {
-    background: url(../assets/skip-question.png) no-repeat center;
-    background-size: contain;
-}
-
-.btnSkip:disabled {
-    background: url(../assets/next-question-pushed.png) no-repeat center;
-    background-size: contain;
-    cursor: pointer;
-    border: none;
-    width: 22%;
-    height: 27%;
 }
 
 
@@ -313,107 +284,6 @@ body {
     pointer-events: none;
     background-size: 16px 16px;
     background-image: linear-gradient(-45deg, gray 25%, transparent 25%, transparent 50%, gray 50%, gray 75%, transparent 75%, transparent);
-}
-
-.social-img {
-    height: 80%;
-}
-
-.guid-img {
-    height: 50%;
-}
-
-.helper-buttons-area {
-    height: 80px;
-    width: 100%;
-    position: absolute;
-    top: auto;
-    bottom: 0;
-    right: 0;
-}
-
-.helper-buttons-area #life-line {
-    background: #3e577f;
-    border-radius: 100%;
-    height: 140px;
-    width: 170px;
-    display: block;
-    margin: 0 auto;
-    position: relative;
-    top: 20px;
-    padding: 15px;
-}
-
-.helper-buttons-area #life-line button {
-    cursor: pointer;
-    border: 0;
-    width: 50px;
-    height: 50px;
-    margin: 0 10px;
-}
-
-.progress-area {
-    top: 0;
-    position: absolute;
-    width: 25%;
-    height: 10%;
-    right: 31%;
-    text-align: center;
-}
-
-.current-category {
-    display: inline-block;
-    margin: 4% auto 0;
-    font-family: Assistant-Regular;
-    font-size: 1.5vw;
-    font-weight: 200;
-    color: #ffffff;
-    height: 40%;
-    width: 100%;
-}
-
-.answers-progress {
-    width: 100%;
-    height: 40%;
-}
-
-.answer-feedback {
-    background: url(../assets/top-state-inactive.png);
-    background-size: cover;
-    border-radius: 25px;
-    display: inline-block;
-    height: 15px;
-    width: 15px;
-    margin: 2%;
-}
-
-.answer-feedback.done {
-    background: url(../assets/top-state-active.png);
-    background-size: cover;
-    border-radius: 25px;
-}
-
-@-webkit-keyframes current-question-glow {
-    from {
-        background-color: #3b5e7b;
-        -webkit-box-shadow: 0 0 9px #3b5e7b;
-    }
-    50% {
-        background-color: #3b5e7b;
-        -webkit-box-shadow: 0 0 30px #ffe3bb;
-        background: url(../assets/top-state-active.png);
-        background-size: cover;
-    }
-    to {
-        background-color: #3b5e7b;
-        -webkit-box-shadow: 0 0 9px #3b5e7b;
-    }
-}
-
-.answer-feedback.blink {
-    -webkit-animation-name: current-question-glow;
-    -webkit-animation-duration: 1.5s;
-    -webkit-animation-iteration-count: infinite;
 }
 
 
@@ -533,15 +403,10 @@ body {
 
 .modal-content {
     display: block;
-    position: fixed;
-    /* Stay in place */
     z-index: 1;
-    /* Sit on top */
-    right: 6%;
     border-radius: 9px;
-    top: 20%;
-    width: 76%;
-    /* Could be more or less, depending on screen size */
+    margin: 10% auto;
+    max-width: 70%;
     height: auto;
     padding: 1em;
     background-color: rgba(45, 95, 136, 0.76);
@@ -664,10 +529,10 @@ div#change-viewport-alert {
 }
 
 @media (min-width: 768px) {
-  .answer-option:hover {
-      background: #66b1f0;
-  }
-  .answer-option.hide-hover:hover {
-      background: #000;
-  }
+    .answer-option:hover {
+        background: #66b1f0;
+    }
+    .answer-option.hide-hover:hover {
+        background: #000;
+    }
 }

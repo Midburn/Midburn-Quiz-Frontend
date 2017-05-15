@@ -24,20 +24,7 @@
                                 'catFade':category.category_completed}" ng-repeat="category in categories | reverse">{{ categoryToHebrewName(category.name) }}</h1>
                     </div>
                     <div class="quiz-zone">
-                        <div class="header">
-                            <a id="linkto_facebook" href="https://www.facebook.com/midburns/" target="_blank">
-                                <img class="social-img" src="./assets/facebook.png">
-                            </a>
-                            <a id="linkto_guide" href="http://midburn.org/he-survival-guide/" target="_blank">
-                                <img class="guid-img" src="./assets/guid.png">
-                            </a>
-                        </div>
-                        <div class="progress-area">
-                            <span class="current-category" ng-bind=" category"></span>
-                            <div class="answers-progress">
-                                <span class="answer-feedback" ng-repeat="i in answersToCompleateCategory track by $index " ng-class="{ 'blink': i == 'in-progress', 'done': i == 'achieved'}"></span>
-                            </div>
-                        </div>
+                        <div header></div>
                         <div class="question-area">
                             <div class="question"> {{ question}}</div>
                             <ul class="options" id="options">
@@ -49,15 +36,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="helper-buttons-area">
-                            <!-- Helper buttons -->
-                            <div class="input-group-btn" id="life-line">
-                                <button id="btnHint" ng-click="getHint()" ng-disabled="!answerMode || !checkCanGetHint()">
-                                </button>
-                                <button class="btnSkip" ng-click="skipQuestion()" ng-disabled="!answerMode || !checkCanSkipQuestion()">
-                                </button>
-                            </div>
-                        </div>
+                        <div helper-buttons></div>
                     </div>
                 </div>
             </div>

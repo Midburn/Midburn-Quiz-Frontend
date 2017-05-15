@@ -189,10 +189,13 @@ app.directive('quiz', function($http, config, $rootScope) {
                 });
                 canGetHint = false;
             };
+            $rootScope.quizGetHint = scope.getHint
+            
             scope.skipQuestion = function() {
                 scope.nextQuestion();
                 canSkipQuestion = false;
             }
+            $rootScope.quizSkipQuestion = scope.skipQuestion
 
             // Quiz reset
             scope.reset = function() {
@@ -303,6 +306,7 @@ app.directive('quiz', function($http, config, $rootScope) {
             document.onreadystatechange = function() {
                 if (document.readyState === "complete") {
                     lazyLoadGif()
+                    googleAnalyticsEvents()
                 }
             }
 
@@ -310,8 +314,6 @@ app.directive('quiz', function($http, config, $rootScope) {
                 var theman_gif = document.querySelector('#theman-gif')
                 theman_gif.src = theman_gif.attributes['data-src'].nodeValue
             }
-            
-            googleAnalyticsEvents()
         }
     }
 });
