@@ -1,30 +1,47 @@
-/* RESETS */
-
-body {
-    background: black;
-    overflow: hidden;
-}
-
-
 /* FONTS */
 
 @font-face {
     font-family: "Assistant-light";
     src: url(../css/fonts/ASSISTANT-LIGHT.TTF) format('truetype');
-    /* EDIT correction on this line */
 }
 
 @font-face {
     font-family: "Assistant-Regular";
     src: url(../css/fonts/ASSISTANT-REGULAR.TTF) format('truetype');
-    /* EDIT correction on this line */
+}
+
+
+/* RESETS */
+
+body {
+    background: black;
+    overflow: hidden;
+    font-family: Assistant-Regular;
 }
 
 
 /* END FONTS */
 
-.flex-center {
+.flex {
+    display: -webkit-box;
+    /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;
+    /* TWEENER - IE 10 */
+    display: -webkit-flex;
+    /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
     display: flex;
+    /* NEW, Spec - Firefox, Chrome, Opera */
+}
+
+.flex-center {
+    display: -webkit-box;
+    /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;
+    /* TWEENER - IE 10 */
+    display: -webkit-flex;
+    /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex;
+    /* NEW, Spec - Firefox, Chrome, Opera */
     align-items: center;
 }
 
@@ -89,22 +106,14 @@ body {
 }
 
 .category-text {
-    color: #999999;
-    position: relative;
-    display: block;
-    text-decoration: none;
-    border: none;
-    padding: 0;
+    color: #e6e6e6;
     margin: 0;
     width: 100%;
-    height: 20.00%;
-    right: 0%;
+    height: 20vh;
+    line-height: 20vh;
     font-size: 2vw;
     text-align: center;
-    padding: 0;
-    padding-top: 22%;
-    z-index: 999;
-    background: url(../assets/Rectangle-1.png) no-repeat center;
+    background: #000;
     opacity: 1;
 }
 
@@ -141,11 +150,6 @@ body {
     -ms-transition: opacity 3s ease-in-out;
     -o-transition: opacity 3s ease-in-out;
     opacity: 0;
-}
-
-.category-done {
-    background: url(../assets/bg.png) no-repeat center;
-    background-size: cover;
 }
 
 .category-done {
@@ -191,7 +195,6 @@ body {
     font-size: 2.2vw;
     line-height: 4vw;
     margin: 2% 0;
-    font-family: Assistant-Regular;
     color: #faffff;
 }
 
@@ -201,21 +204,17 @@ body {
 .answer-option {
     border-radius: 10.7px;
     font-size: 1.5vw;
-    transition: all 0.2s;
     border: 0;
-    cursor: pointer;
-    text-align: right;
-    padding: 0;
-    margin-left: 4em;
-    margin-bottom: 1%;
-    opacity: 0.52;
-    background-color: #000;
-    color: white;
-    margin-top: 2%;
-    font-family: Assistant-light;
     font-weight: 300;
+    text-align: right;
+    margin-bottom: 1%;
+    opacity: 0.5;
+    background-color: #000;
     color: #ffffff;
+    margin-top: 2%;
     padding: 0;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .options {
@@ -255,26 +254,22 @@ body {
 }
 
 .correct {
-    font-family: Assistant-Regular;
     color: #32d4f0;
     box-shadow: 0 0 10px #32d4f0;
 }
 
 .correct:hover {
-    font-family: Assistant-Regular;
     color: #32d4f0;
     box-shadow: 0 0 10px #32d4f0;
     background: #000000;
 }
 
 .wrong {
-    font-family: Assistant-Regular;
     opacity: 0.81;
     color: #f05858;
 }
 
 .wrong:hover {
-    font-family: Assistant-Regular;
     opacity: 0.81;
     color: #f05858;
     background: #000000;
@@ -414,7 +409,6 @@ body {
 
 .modal h1 {
     color: #faffff;
-    font-family: Assistant-Regular;
     font-size: 4vw;
     font-weight: 800;
     text-align: center;
@@ -429,7 +423,6 @@ button:focus {
 }
 
 .desc {
-    font-family: Assistant-Regular;
     font-size: 1.7vw;
     color: #ffffff;
     margin-left: 5%;
@@ -444,7 +437,6 @@ button:focus {
     background-color: rgb(45, 95, 136);
     background-color: rgba(45, 95, 136, 0.76);
     color: #faffff;
-    font-family: Assistant-Regular;
     font-size: 2.5vw;
     border-radius: 9px;
 }
@@ -457,7 +449,6 @@ button:focus {
     background-color: rgb(45, 95, 136);
     background-color: rgba(45, 95, 136, 0.76);
     color: #faffff;
-    font-family: Assistant-Regular;
     font-size: 2.5vw;
     border-radius: 9px;
 }

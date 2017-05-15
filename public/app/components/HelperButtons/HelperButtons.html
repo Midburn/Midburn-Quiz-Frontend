@@ -1,27 +1,25 @@
-<div class="helper-buttons">
+<div class="helper-buttons flex-center">
     <style media="screen">
         .helper-buttons {
-            display: flex;
-            align-items: center;
             justify-content: space-around;
             width: 75%;
             position: fixed;
             bottom: 0;
             background: #000;
         }
-        
+
         .buttons>* {
             margin: 0 5px;
         }
-        
+
         .answers-progress {
             color: #FFF;
         }
-        
+
         .answers-progress>span {
             padding: 0 8px;
         }
-        
+
         ul.answer-list {
             list-style-type: none;
             padding: 0;
@@ -29,15 +27,15 @@
             width: auto;
             display: inline-block;
         }
-        
+
         .answer-list li:first-child {
             border-radius: 0 8px 8px 0;
         }
-        
+
         .answer-list li:last-child {
             border-radius: 8px 0 0 8px;
         }
-        
+
         .answer-feedback {
             display: inline-block;
             height: 18px;
@@ -48,14 +46,18 @@
             margin: 1px;
             vertical-align: middle;
         }
-        
+
         .answer-feedback.achieved {
             background-image: url(../assets/buttons/Icon_V.png);
             background-color: #27c2d7;
             background-repeat: no-repeat;
             background-position: center;
         }
-        
+
+        .answer-feedback.in-progress {
+          animation: bg-color-shift 2.5s linear infinite;
+        }
+
         .Btn {
             cursor: pointer;
             border: 0;
@@ -66,23 +68,23 @@
             background-color: transparent;
             background-position: center;
         }
-        
+
         .Btn-skip {
             background-image: url(../assets/buttons/Btn_NextQ_Normal.png);
         }
-        
+
         .Btn-skip:disabled {
             background-image: url(../assets/buttons/Btn_NextQ_Dis.png);
         }
-        
+
         .Btn-hint {
             background-image: url(../assets/buttons/Btn_50_Normal.png);
         }
-        
+
         .Btn-hint:disabled {
             background-image: url(../assets/buttons/Btn_50_Dis.png);
         }
-        
+
         .icn-wheel {
             background: url(../assets/buttons/Icon_LifeWheel.png) no-repeat 100%;
             display: inline-block;
@@ -90,7 +92,21 @@
             height: 45px;
             background-size: contain;
         }
-        
+
+        /* Questions indicator animation */
+        @keyframes bg-color-shift {
+            0% {
+                background: #27c2d7
+            }
+            50% {
+                background: #445d7a
+            }
+            100% {
+                background: #27c2d7
+            }
+        }
+
+        /* Desktop view only */
         @media (min-width: 768px) {
             .Btn {
                 width: 70px;

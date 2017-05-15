@@ -37,7 +37,7 @@ app.directive('quiz', function($http, config, $rootScope) {
                 scope.gameStarted = true;
             };
             $rootScope.start = scope.start;
-            
+
             scope.resetQuestionStreakIndicator = function() {
                 for (i = 0; i < gameVariables.numOfcurrectAnswerInStreak; i++) {
                     var state = 'not-achieved';
@@ -190,7 +190,7 @@ app.directive('quiz', function($http, config, $rootScope) {
                 canGetHint = false;
             };
             $rootScope.quizGetHint = scope.getHint
-            
+
             scope.skipQuestion = function() {
                 scope.nextQuestion();
                 canSkipQuestion = false;
@@ -301,7 +301,7 @@ app.directive('quiz', function($http, config, $rootScope) {
                     window.location.href = 'https://profile.midburn.org/he';
                 }
             }
-            
+
             // lazy load burning man gif
             document.onreadystatechange = function() {
                 if (document.readyState === "complete") {
@@ -313,6 +313,7 @@ app.directive('quiz', function($http, config, $rootScope) {
             function lazyLoadGif() {
                 var theman_gif = document.querySelector('#theman-gif')
                 theman_gif.src = theman_gif.attributes['data-src'].nodeValue
+                theman_gif.classList.remove('hidden')
             }
         }
     }
@@ -321,9 +322,9 @@ app.directive('quiz', function($http, config, $rootScope) {
 // filter for reverse list
 app.filter('reverse', function() {
     return function(items) {
-        if (items) 
+        if (items)
             return items.slice().reverse();
-        else 
+        else
             return [];
         }
     ;
