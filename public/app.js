@@ -2,7 +2,9 @@
  * Midburn Quiz app - )'( let it burn!
  */
 var gameVariables = {
-    numOfcurrectAnswerInStreak: 3
+    numOfcurrectAnswerInStreak: 3,
+    numOfAskedQuestions: 0,
+    numOfQuestionsToResetLifeLine: 10
 };
 
 // Quiz question directive
@@ -68,6 +70,12 @@ app.directive('quiz', function($http, config, $rootScope) {
 
             // Quiz get question
             scope.getQuestion = function(category) {
+                gameVariables.numOfAskedQuestions++;
+                if (gameVariables.numOfAskedQuestions == gameVariables.numOfQuestionsToResetLifeLine) {
+                    canSkipQuestion = true;
+                    canGetHint = true;
+                    gameVariables.numOfAskedQuestions = 0;
+                }
                 // Get question request
                 var getQuestionRequest = {
                     method: 'POST',
@@ -139,6 +147,7 @@ app.directive('quiz', function($http, config, $rootScope) {
                         if (scope.categoryToHebrewName(category.name) == scope.currentCategory) {
                             canGetHint = true;
                             canSkipQuestion = true;
+                            gameVariables.numOfAskedQuestions = 0;
                         }
                     }
                 }
@@ -264,7 +273,6 @@ app.directive('quiz', function($http, config, $rootScope) {
                 scope.answerMode = false;
 
             };
-            //I think its redundent function -- Liad
             scope.reset();
 
             scope.passTheTest = function() {
@@ -302,7 +310,6 @@ app.directive('quiz', function($http, config, $rootScope) {
                 }
             }
 
-            // lazy load burning man gif
             document.onreadystatechange = function() {
                 if (document.readyState === "complete") {
                     googleAnalyticsEvents()
@@ -315,9 +322,9 @@ app.directive('quiz', function($http, config, $rootScope) {
 // filter for reverse list
 app.filter('reverse', function() {
     return function(items) {
-        if (items)
+        if (items) 
             return items.slice().reverse();
-        else
+        else 
             return [];
         }
     ;

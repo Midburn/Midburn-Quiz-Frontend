@@ -5,8 +5,8 @@ function googleAnalyticsEvents() {
     ga_notify('links', 'guide', 'player clicked on guide link')
   })
   // click on the full-screen button
-  var guide_link = document.querySelector('#goFS')
-  guide_link.addEventListener('click', function() {
+  var fullscreen_btn = document.querySelector('#goFS')
+  fullscreen_btn.addEventListener('click', function() {
     ga_notify('buttons', 'fullscreen', 'player wants fullscreen')
   })
 }
