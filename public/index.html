@@ -7,39 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Midburn Quiz</title>
     <meta name="robots" content="noindex, nofollow">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/6.0.0/normalize.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//necolas.github.io/normalize.css/6.0.0/normalize.css">
     <link rel="stylesheet" href="css/style.css" />
     <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/angular-translate/angular-translate.min.js"></script>
 </head>
 
-<body class="lanHE" ng-controller="Quiz" ng-init="Init()" ng-cloak>
+<body class="lanHE" ng-cloak>
     <div orientation-alert></div>
     <div id="main-page">
-        <!-- Opening -->
-        <div class="modal flex-center anim-fadeIn" id="Modal">
-            <div id="popupModal" class="modal-content" ng-controller="IntroController">
-                <h1>{{ intro.title }}</h1>
-                <p class="desc">{{ intro.desc }}</p>
-                <button id="startBtn" ng-click="start()" ng-show="!inProgress"></button>
-            </div>
-        </div>
-        <!-- Quiz View -->
-        <quiz></quiz>
+        <!-- Quiz intro with start button -->
+        <div intro></div>
+        <!-- Quiz questions -->
+        <div quiz></div>
     </div>
     <script src="config.js"></script>
     <script src="app.js"></script>
-    <script src="app/controllers/Quiz.js"></script>
-    <script src="app/controllers/IntroController.js"></script>
+    <script src="app/components/Loader/Loader.js"></script>
+    <script src="app/components/Intro/Intro.js"></script>
+    <script src="app/components/FullScreen/FullScreen.js"></script>
     <script src="app/components/Header/Header.js"></script>
     <script src="app/components/Orientation/Orientation.js"></script>
+    <script src="app/components/HelperButtons/HelperButtons.js"></script>
     <script src="js/ga.js"></script>
 </body>
 

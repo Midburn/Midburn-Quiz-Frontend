@@ -1,32 +1,14 @@
-app.directive('quizHeader', function () {
+app.directive('header', function() {
     return {
         restrict: 'A',
+        replace: true,
         templateUrl: 'app/components/Header/Header.html',
-        link: function (scope, elem, attrs) {
+        link: function(scope, elem, attrs) {
+            var guide_link = document.querySelector('.btn-guide')
 
-            var doc = window.document;
-            var docEl = doc.documentElement;
-
-            var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen ||
-                docEl.msRequestFullscreen;
-            var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen ||
-                doc.msExitFullscreen;
-
-
-            if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement &&
-                !doc
-                .msFullscreenElement) {
-                // show fullscreen button
-                $('#goFS').css('top', 0).fadeIn()
-
-                $('#goFS').click(function () {
-                    requestFullScreen.call(docEl);
-                    $('#goFS').fadeOut()
-                })
-
-            } else {
-                cancelFullScreen.call(doc);
-            }
+            guide_link.addEventListener('click', function() {
+                ga_notify('links', 'guide', 'player clicked on guide link')
+            })
         }
     };
 });
