@@ -193,7 +193,6 @@ body {
 
 .question {
     font-size: 2.2vw;
-    line-height: 4vw;
     margin: 2% 0;
     color: #faffff;
 }
@@ -202,18 +201,17 @@ body {
 /* Answers */
 
 .answer-option {
-    border-radius: 10.7px;
+    border-radius: 10px;
     font-size: 1.5vw;
     border: 0;
     font-weight: 300;
     text-align: right;
-    margin-bottom: 1%;
-    opacity: 0.5;
     background-color: #000;
     color: #ffffff;
-    margin-top: 2%;
     padding: 0;
+    margin-bottom: 1%;
     cursor: pointer;
+    opacity: 0.5;
     transition: all 0.2s;
 }
 

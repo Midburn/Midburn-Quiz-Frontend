@@ -22,7 +22,7 @@ app.directive('intro', function($http, config) {
                 }, 1000)
             }
 
-            // Init the quiz game, request new game
+            // Init the quiz, request new game
             ;(function functionName() {
               var requestNewGame = {
                   method: 'POST',

@@ -309,12 +309,6 @@ app.directive('quiz', function($http, config, $rootScope) {
                     window.location.href = 'https://profile.midburn.org/he';
                 }
             }
-
-            document.onreadystatechange = function() {
-                if (document.readyState === "complete") {
-                    googleAnalyticsEvents()
-                }
-            }
         }
     }
 });
