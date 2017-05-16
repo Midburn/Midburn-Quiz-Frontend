@@ -17,6 +17,9 @@ app.directive('intro', function($http, config) {
                 // Lazy load burning man
                 var theman_gif = document.querySelector('#theman-gif')
                 theman_gif.src = theman_gif.attributes['data-src'].nodeValue
+                setTimeout(function () {
+                  document.querySelector('#theman-gif').classList.remove('hidden')
+                }, 1000)
             }
 
             // Init the quiz game, request new game
